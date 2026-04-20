@@ -1,0 +1,21 @@
+{
+  "name": "template-personal-portofolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaRuF2131/Template-Personal-Portofolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MaRuF2131/Template-Personal-Portofolio/issues"
+  },
+  "homepage": "https://github.com/MaRuF2131/Template-Personal-Portofolio#readme"
+}
