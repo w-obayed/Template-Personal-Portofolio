@@ -1,21 +1,23 @@
 {
-  "name": "template-personal-portofolio",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "portfollio-1",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MaRuF2131/Template-Personal-Portofolio.git"
+  "dependencies": {
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/MaRuF2131/Template-Personal-Portofolio/issues"
-  },
-  "homepage": "https://github.com/MaRuF2131/Template-Personal-Portofolio#readme"
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4"
+  }
 }
