@@ -1,8 +1,16 @@
+import services from '@/API&Services/services'
 import React from 'react'
 
-function navbar() {
+const navbar = async () => {
+  const nav =  services("navbar")||[]
   return (
-    <div>navbar maruffffffff</div>
+    <div>
+      {
+        nav.map((item,i)=>{
+          return <div key={i}>{item.name}</div>
+        })
+     }
+    </div>
   )
 }
 
