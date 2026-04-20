@@ -4,6 +4,49 @@ const serviceCall = (srv)=>{
     if(srv==="navbar"){
         return navlist
     }
+    if(srv==="hero"){
+        return [{
+            title: "Hero Section",
+            description: "Welcome to my portfolio!"
+        }]
+    }
+    if(srv==="EducationAndExperience"){
+        return [
+            {
+            title: "Skill Experience",
+            institute: "Tech University",
+            postion: "Software Engineer",
+            point:"GPA 80%",
+            date: "2020-2024",
+            description: "I have experience in React, Node.js, and more."
+         },
+            {
+            title: "Skill Experience",
+            institute: "Tech University",
+            postion: "Software Engineer",
+            point:"GPA 80%",
+            date: "2020-2024",
+            description: "I have experience in React, Node.js, and more."
+         },
+            {
+            title: "Skill Experience",
+            institute: "Tech University",
+            postion: "Software Engineer",
+            point:"GPA 80%",
+            date: "2020-2024",
+            description: "I have experience in React, Node.js, and more."
+         },
+            {
+            title: "Skill Experience",
+            institute: "Tech University",
+            postion: "Software Engineer",
+            point:"GPA 80%",
+            date: "2020-2024",
+            description: "I have experience in React, Node.js, and more."
+         },
+
+      ]
+    }
   
 }
 
@@ -11,8 +54,8 @@ const servivesList={
   "navbar":()=>{
       return serviceCall("navbar")
     },
-   "hero":()=>{
-
+   "EducationAndExperience":()=>{
+         return serviceCall("EducationAndExperience")
    },
    "hero":()=>{
 
@@ -46,16 +89,16 @@ const navlist=[
 
 
 
-async function services(conditions) {
-    if (conditions) {
+ function services(conditions) {
+    if (!conditions) {
         // Perform some logic based on conditions
-        return <div>Services with conditions met</div>;
+        return [];
     }  
     const serviceComponent = servivesList[conditions];
     if (serviceComponent) {
-        return await serviceComponent();
+        return  serviceComponent();
     } else {
-        return <div>No service found for the given conditions</div>;
+        return [];
     }
 }
 
