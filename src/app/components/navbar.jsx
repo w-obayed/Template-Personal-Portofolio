@@ -1,9 +1,220 @@
-import React from 'react'
+"use client";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import GradientButton from "./ui/gradientButton";
 
-function navbar() {
+const NAV_LINKS = [
+  { label: "Home", href: "#" },
+  { label: "Services", href: "#" },
+  { label: "Works", href: "#" },
+  { label: "Testimonials", href: "#" },
+  { label: "Pricing", href: "#" },
+  { label: "Contact", href: "#" },
+];
+
+// Hamburger icon
+function HamburgerIcon({ open }) {
   return (
-    <div>navbar maruffffffff</div>
-  )
+    <div className="relative w-6 h-5 flex flex-col justify-between cursor-pointer">
+      <motion.span
+        className="block h-[2px] w-full bg-white rounded-full origin-center"
+        animate={open ? { rotate: 45, y: 9 } : { rotate: 0, y: 0 }}
+        transition={{ duration: 0.3 }}
+      />
+      <motion.span
+        className="block h-[2px] w-full bg-white rounded-full"
+        animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+        transition={{ duration: 0.2 }}
+      />
+      <motion.span
+        className="block h-[2px] w-full bg-white rounded-full origin-center"
+        animate={open ? { rotate: -45, y: -9 } : { rotate: 0, y: 0 }}
+        transition={{ duration: 0.3 }}
+      />
+    </div>
+  );
 }
 
-export default navbar
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  return (
+    <>
+      {/* Google Font */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
+      `}</style>
+
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style={{
+          background: scrolled
+            ? "rgba(10,10,10,0.92)"
+            : "rgba(10,10,10,0.98)",
+          backdropFilter: "blur(14px)",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-12">
+          <div className="flex items-center justify-between h-16">
+
+            {/* Logo */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              className="flex items-center gap-3"
+            >
+              {/* Gradient orb logo */}
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                style={{
+                  background: "linear-gradient(135deg, #f97316 0%, #ec4899 60%, #8b5cf6 100%)",
+                  fontFamily: "'Syne', sans-serif",
+                }}
+              >
+                DH
+              </div>
+              <span
+                className="text-white text-base font-bold tracking-tight hidden sm:block"
+                style={{ fontFamily: "'Syne', sans-serif" }}
+              >
+                DLHA
+              </span>
+            </motion.div>
+
+            {/* Desktop Nav Links */}
+            <motion.ul
+              className="hidden md:flex items-center gap-1"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.07, delayChildren: 0.25 } },
+              }}
+            >
+              {NAV_LINKS.map((link) => (
+                <motion.li
+                  key={link.label}
+                  variants={{
+                    hidden: { opacity: 0, y: -10 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+                  }}
+                >
+                  <motion.a
+                    href={link.href}
+                    className="relative px-4 py-2 text-sm text-gray-300 rounded-md group"
+                    style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500 }}
+                    whileHover={{ color: "#ffffff" }}
+                  >
+                    {link.label}
+                    {/* Underline hover */}
+                    <motion.span
+                      className="absolute bottom-0.5 left-4 right-4 h-[1.5px] rounded-full"
+                      style={{
+                        background: "linear-gradient(90deg, #22c55e, #eab308, #a855f7)",
+                        scaleX: 0,
+                        originX: 0,
+                      }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.25 }}
+                    />
+                  </motion.a>
+                </motion.li>
+              ))}
+            </motion.ul>
+
+            {/* Right: CTA + Hamburger */}
+            <motion.div
+              className="flex items-center gap-4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <div className="hidden md:block">
+                <GradientButton>Download CV</GradientButton>
+              </div>
+
+              {/* Hamburger (mobile) */}
+              <button
+                className="md:hidden p-1"
+                onClick={() => setMenuOpen((v) => !v)}
+                aria-label="Toggle menu"
+              >
+                <HamburgerIcon open={menuOpen} />
+              </button>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Mobile Dropdown */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              key="mobile-menu"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden"
+              style={{
+                background: "rgba(10,10,10,0.97)",
+                borderTop: "1px solid rgba(255,255,255,0.07)",
+              }}
+            >
+              <motion.ul
+                className="flex flex-col px-6 py-4 gap-1"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+                }}
+              >
+                {NAV_LINKS.map((link) => (
+                  <motion.li
+                    key={link.label}
+                    variants={{
+                      hidden: { opacity: 0, x: -16 },
+                      visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+                    }}
+                  >
+                    <a
+                      href={link.href}
+                      className="block py-3 text-gray-300 text-base border-b border-white/5 hover:text-white transition-colors"
+                      style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500 }}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {link.label}
+                    </a>
+                  </motion.li>
+                ))}
+                <motion.li
+                  className="pt-4 pb-2"
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.35, delay: 0.35 } },
+                  }}
+                >
+                  <GradientButton onClick={() => setMenuOpen(false)}>
+                    Download CV
+                  </GradientButton>
+                </motion.li>
+              </motion.ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
+  );
+}
