@@ -2,7 +2,24 @@ import React from 'react'
 
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
-        return navlist
+        return [
+            {
+                name:"Home",
+                link:"#"
+            },
+            {
+                name:"About",
+                link:"#about"
+            },
+            {
+                name:"Works",
+                link:"#works"
+            },
+            {
+                name:"Resume",
+                link:"#resume"
+            }
+        ]
     }
     if(srv==="hero"){
         return [{
@@ -47,45 +64,12 @@ const serviceCall = (srv)=>{
 
       ]
     }
+
+    return []
   
 }
 
-const servivesList={
-  "navbar":()=>{
-      return serviceCall("navbar")
-    },
-   "EducationAndExperience":()=>{
-         return serviceCall("EducationAndExperience")
-   },
-   "hero":()=>{
 
-   },
-   "hero":()=>{
-
-   },
-   "hero":()=>{
-
-   },
-}
-
-const navlist=[
-    {
-        name:"Home",
-        link:"#"
-    },
-    {
-        name:"About",
-        link:"#about"
-    },
-    {
-        name:"Works",
-        link:"#works"
-    },
-    {
-        name:"Resume",
-        link:"#resume"
-    }
-]
 
 
 
@@ -94,12 +78,7 @@ const navlist=[
         // Perform some logic based on conditions
         return [];
     }  
-    const serviceComponent = servivesList[conditions];
-    if (serviceComponent) {
-        return  serviceComponent();
-    } else {
-        return [];
-    }
+        return  serviceCall(conditions) || [];
 }
 
 export default services
