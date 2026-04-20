@@ -1,43 +1,15 @@
+
 "use client";
+import services from "../../API&Services/services";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GradientButton from "./ui/gradientButton";
-
-const NAV_LINKS = [
-  { label: "Home", href: "#" },
-  { label: "Services", href: "#" },
-  { label: "Works", href: "#" },
-  { label: "Testimonials", href: "#" },
-  { label: "Pricing", href: "#" },
-  { label: "Contact", href: "#" },
-];
-
-// Hamburger icon
-function HamburgerIcon({ open }) {
-  return (
-    <div className="relative w-6 h-5 flex flex-col justify-between cursor-pointer">
-      <motion.span
-        className="block h-[2px] w-full bg-white rounded-full origin-center"
-        animate={open ? { rotate: 45, y: 9 } : { rotate: 0, y: 0 }}
-        transition={{ duration: 0.3 }}
-      />
-      <motion.span
-        className="block h-[2px] w-full bg-white rounded-full"
-        animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-        transition={{ duration: 0.2 }}
-      />
-      <motion.span
-        className="block h-[2px] w-full bg-white rounded-full origin-center"
-        animate={open ? { rotate: -45, y: -9 } : { rotate: 0, y: 0 }}
-        transition={{ duration: 0.3 }}
-      />
-    </div>
-  );
-}
+import HamburgerIcon from "./ui/hamburgerManu";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navManu= services("navbar") || [];
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10);
@@ -47,11 +19,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Google Font */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
-      `}</style>
-
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -103,7 +70,7 @@ export default function Navbar() {
                 visible: { transition: { staggerChildren: 0.07, delayChildren: 0.25 } },
               }}
             >
-              {NAV_LINKS.map((link) => (
+              {navManu.map((link) => (
                 <motion.li
                   key={link.label}
                   variants={{
@@ -113,7 +80,7 @@ export default function Navbar() {
                 >
                   <motion.a
                     href={link.href}
-                    className="relative px-4 py-2 text-sm text-gray-300 rounded-md group"
+                    className="relative px-4 py-2 text-base text-gray-300 rounded-md group"
                     style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500 }}
                     whileHover={{ color: "#ffffff" }}
                   >
@@ -181,7 +148,7 @@ export default function Navbar() {
                   visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
                 }}
               >
-                {NAV_LINKS.map((link) => (
+                {navManu.map((link) => (
                   <motion.li
                     key={link.label}
                     variants={{

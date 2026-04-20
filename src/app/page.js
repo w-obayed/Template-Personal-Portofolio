@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Navbar from "./components/navbar";
+import EducationAndExperience from "./components/educationAndExperience";
+import HeroSection from "./components/hero";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <h1>Home</h1>
+      <HeroSection />
+      <EducationAndExperience />
     </>
   );
 }
