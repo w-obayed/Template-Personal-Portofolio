@@ -56,6 +56,31 @@ const serviceCall = (srv)=>{
       ]
     }
 
+    if(srv==="services"){
+        return [
+          {
+            title: 'UI/UX DESIGN',
+            image: '/services/uiux.png',
+            bg: 'from-indigo-500 via-purple-500 to-pink-500',
+          },
+          {
+            title: 'WEB DESIGN',
+            image: '/services/webdesign.png',
+            bg: 'from-cyan-400 via-sky-500 to-blue-600',
+          },
+          {
+            title: 'LANDING PAGE',
+            image: '/services/landing.png',
+            bg: 'from-emerald-300 via-teal-400 to-cyan-500',
+          },
+          {
+            title: 'MOBILE APP',
+            image: '/services/mobile.png',
+            bg: 'from-orange-400 via-rose-500 to-pink-600',
+          },
+        ];
+    }
+
     return []
   
 }
