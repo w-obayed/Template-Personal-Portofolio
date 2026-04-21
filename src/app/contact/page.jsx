@@ -1,5 +1,5 @@
 // app/contact/page.js
-import Footer from "@/app/contact/components/footer"
+import Footer from "./components/footer"
 import Form from "./components/form";
 import ContactInfo from "./components/contactInfo";
 export default function Contact() {
