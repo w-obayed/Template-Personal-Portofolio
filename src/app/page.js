@@ -5,6 +5,7 @@ import HeroSection from "./components/hero";
 import Skills from "./components/skills";
 import ServiceCarousel from "./components/ServiceCarousel";
 import GalleryView from "./components/galleryView";
+import RollerScroll from "./components/rollerScroll";
 export default function Home() {
   return (
     <>
@@ -14,6 +15,7 @@ export default function Home() {
       <Skills></Skills>
       <ServiceCarousel />
       <GalleryView />
+      <RollerScroll></RollerScroll>
     </>
   );
 }
