@@ -4,6 +4,7 @@ import EducationAndExperience from "./components/educationAndExperience";
 import HeroSection from "./components/hero";
 import Skills from "./components/skills";
 import ServiceCarousel from "./components/ServiceCarousel";
+import GalleryView from "./components/galleryView";
 export default function Home() {
   return (
     <>
@@ -12,6 +13,7 @@ export default function Home() {
       <EducationAndExperience />
       <Skills></Skills>
       <ServiceCarousel />
+      <GalleryView />
     </>
   );
 }
