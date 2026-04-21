@@ -8,7 +8,7 @@ const serviceCall = (srv)=>{
            { label: "Works", href: "#" },
            { label: "Testimonials", href: "#" },
            { label: "Pricing", href: "#" },
-           { label: "Contact", href: "#" },
+           { label: "Contact", href: "/contact" },
         ]
     }
     if(srv==="hero"){

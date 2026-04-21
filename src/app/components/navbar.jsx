@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GradientButton from "./ui/gradientButton";
 import HamburgerIcon from "./ui/hamburgerManu";
+import Link from "next/link";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -78,12 +79,12 @@ export default function Navbar() {
                     visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
                   }}
                 >
-                  <motion.a
-                    href={link.href}
+                  <motion.div
                     className="relative px-4 py-2 text-base text-gray-300 rounded-md group"
                     style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500 }}
                     whileHover={{ color: "#ffffff" }}
                   >
+                   <Link href={link.href}>
                     {link.label}
                     {/* Underline hover */}
                     <motion.span
@@ -96,7 +97,8 @@ export default function Navbar() {
                       whileHover={{ scaleX: 1 }}
                       transition={{ duration: 0.25 }}
                     />
-                  </motion.a>
+                    </Link>
+                  </motion.div>
                 </motion.li>
               ))}
             </motion.ul>
