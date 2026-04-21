@@ -1,5 +1,5 @@
 "use client"
-import services from '@/API&Services/services';
+import services from '../../API&Services/services';
 import React, { useEffect } from 'react'
 
 function EducationAndExperience() {

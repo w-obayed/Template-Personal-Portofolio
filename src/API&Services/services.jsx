@@ -3,28 +3,19 @@ import React from 'react'
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
         return [
-            {
-                name:"Home",
-                link:"#"
-            },
-            {
-                name:"About",
-                link:"#about"
-            },
-            {
-                name:"Works",
-                link:"#works"
-            },
-            {
-                name:"Resume",
-                link:"#resume"
-            }
+           { label: "Home", href: "#" },
+           { label: "Services", href: "#" },
+           { label: "Works", href: "#" },
+           { label: "Testimonials", href: "#" },
+           { label: "Pricing", href: "#" },
+           { label: "Contact", href: "#" },
         ]
     }
     if(srv==="hero"){
         return [{
-            title: "Hero Section",
-            description: "Welcome to my portfolio!"
+            title: "Hello, Azad",
+            name:"Azad",
+            description: "Let's make something meaningful together.",
         }]
     }
     if(srv==="EducationAndExperience"){
