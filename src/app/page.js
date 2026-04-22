@@ -16,9 +16,9 @@ export default function Home() {
       <EducationAndExperience />
       <Skills></Skills>
       <ServiceCarousel />
+      <ModernSlider></ModernSlider>
       <GalleryView />
       <RollerScroll></RollerScroll>
-      <ModernSlider></ModernSlider>
       <WorkSlider></WorkSlider>
     </>
   );
