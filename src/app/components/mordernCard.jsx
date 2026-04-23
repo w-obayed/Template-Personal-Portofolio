@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Lenis from 'lenis';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel, EffectCreative } from "swiper/modules";
+import { EffectCards, Zoom } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/effect-creative";
+import "swiper/css/effect-cards";
 
 // ─── Card data (from provided component) ───────────────────────────────────
 const cards = [
@@ -143,85 +144,59 @@ function SlideCard({ card, isActive }) {
   const titleLines = card.title.split("\n");
 
   return (
-    <div
-      className="w-full h-screen flex items-center justify-center bg-black px-4"
-      style={{ willChange: "transform" }}
-    >
+    <div className="w-full h-screen flex items-center justify-center px-4 will-change-transform">
       <div
-        className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/5"
+        className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/5 bg-[#0d0f14] min-h-[460px] transition-shadow duration-600 ease-[ease]"
         style={{
-          background: "#0d0f14",
-          minHeight: "460px",
           boxShadow: isActive
             ? `0 0 80px -10px ${card.accent}40, 0 0 0 1px ${card.accent}20`
             : "none",
-          transition: "box-shadow 0.6s ease",
         }}
       >
         {/* Grid texture */}
         <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
+          className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] bg-size-[40px_40px]"
         />
 
         {/* Accent glow blob */}
         <div
-          className="absolute pointer-events-none"
+          className={`absolute pointer-events-none -top-[80px] -left-[60px] w-[340px] h-[340px] rounded-full transition-opacity duration-600 ease-[ease] ${
+            isActive ? "opacity-100" : "opacity-0"
+          }`}
           style={{
-            top: "-80px",
-            left: "-60px",
-            width: "340px",
-            height: "340px",
-            borderRadius: "50%",
             background: `radial-gradient(circle, ${card.accent}22 0%, transparent 70%)`,
-            transition: "opacity 0.6s ease",
-            opacity: isActive ? 1 : 0,
           }}
         />
 
-        <div className="relative z-10 flex h-full flex-col md:flex-row" style={{ minHeight: "460px" }}>
+        <div className="relative z-10 flex h-full flex-col md:flex-row min-h-[460px]">
           {/* ── LEFT ── */}
           <div className="flex-1 flex flex-col justify-center px-8 md:px-12 py-10 gap-5">
             {/* Big number */}
             <div
-              className="text-7xl font-black leading-none select-none"
-              style={{ color: `${card.accent}18`, fontFamily: "'Syne', sans-serif" }}
+              className="text-7xl font-black leading-none select-none font-['Syne',sans-serif]"
+              style={{ color: `${card.accent}18` }}
             >
               {card.num}
             </div>
 
             {/* Title */}
-            <div
-              className="text-3xl md:text-4xl font-bold text-white leading-tight"
-              style={{ fontFamily: "'Syne', sans-serif" }}
-            >
+            <div className="text-3xl md:text-4xl font-bold text-white leading-tight font-['Syne',sans-serif]">
               {titleLines.map((line, i) => (
                 <div key={i}>{line}</div>
               ))}
             </div>
 
             {/* Description */}
-            <p className="text-sm text-white/50 leading-relaxed max-w-xs" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <p className="text-sm text-white/50 leading-relaxed max-w-xs font-['DM_Sans',sans-serif]">
               {card.desc}
             </p>
 
             {/* CTA button */}
             <button
-              className="flex items-center gap-2.5 rounded-full px-5 py-2.5 text-white text-xs font-semibold tracking-widest w-fit transition-all duration-200 hover:bg-white/10"
-              style={{
-                border: `1px solid ${card.accent}55`,
-                fontFamily: "'DM Sans', sans-serif",
-                letterSpacing: "0.12em",
-              }}
+              className="flex items-center gap-2.5 rounded-full px-5 py-2.5 text-white text-xs font-semibold tracking-[0.12em] w-fit transition-all duration-200 hover:bg-white/10 font-['DM_Sans',sans-serif]"
+              style={{ border: `1px solid ${card.accent}55` }}
             >
-              <span
-                className="w-2 h-2 rounded-full animate-pulse"
-                style={{ background: "#4ade80" }}
-              />
+              <span className="w-2 h-2 rounded-full animate-pulse bg-[#4ade80]" />
               {card.btn}
             </button>
           </div>
@@ -229,23 +204,11 @@ function SlideCard({ card, isActive }) {
           {/* ── RIGHT ── */}
           <div className="w-full md:w-72 flex flex-col justify-center gap-4 px-6 md:px-0 md:pr-8 pb-8 md:py-8">
             {/* Quality box */}
-            <div
-              className="rounded-xl p-4"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-            >
-              <p
-                className="text-white text-sm font-semibold mb-1.5"
-                style={{ fontFamily: "'Syne', sans-serif" }}
-              >
+            <div className="rounded-xl p-4 bg-white/4 border border-white/8">
+              <p className="text-white text-sm font-semibold mb-1.5 font-['Syne',sans-serif]">
                 {card.quality}
               </p>
-              <p
-                className="text-white/45 text-xs leading-relaxed"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
-              >
+              <p className="text-white/45 text-xs leading-relaxed font-['DM_Sans',sans-serif]">
                 {card.qualityDesc}
               </p>
             </div>
@@ -255,15 +218,10 @@ function SlideCard({ card, isActive }) {
               {card.icons.map((icon, i) => (
                 <div
                   key={i}
-                  className="rounded-xl flex items-center justify-center font-bold"
+                  className="rounded-xl flex items-center justify-center font-bold w-[46px] h-[46px] border-[0.5px] border-white/[0.07] text-[10px] font-['DM_Sans',sans-serif]"
                   style={{
-                    width: "46px",
-                    height: "46px",
                     background: icon.bg,
                     color: icon.color,
-                    border: "0.5px solid rgba(255,255,255,0.07)",
-                    fontSize: "10px",
-                    fontFamily: "'DM Sans', sans-serif",
                   }}
                 >
                   {icon.label}
@@ -275,8 +233,8 @@ function SlideCard({ card, isActive }) {
 
         {/* Slide counter pill */}
         <div
-          className="absolute bottom-4 left-6 text-xs font-semibold tracking-widest"
-          style={{ color: card.accent, fontFamily: "'DM Sans', sans-serif" }}
+          className="absolute bottom-4 left-6 text-xs font-semibold tracking-widest font-['DM_Sans',sans-serif]"
+          style={{ color: card.accent }}
         >
           0{card.num} / 0{cards.length}
         </div>
@@ -290,126 +248,86 @@ export default function VerticalSlider() {
   const containerRef = useRef(null);
   const swiperRef = useRef(null);
   const lenisRef = useRef(null);
-  const rafRef   = useRef(null);
-  const lastScrollY = useRef(0);
-  const isSliding   = useRef(false);
+  const rafRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    let Lenis;
-    (async () => {
-      // Dynamic import so it's safe with Next.js SSR
-      const mod = await import("lenis");
-      Lenis = mod.default ?? mod.Lenis;
+  const lenis = new Lenis({
+    duration: 1.2,
+    smoothWheel: true,
+    smoothTouch: true,
+  });
 
-      lenisRef.current = new Lenis({
-        duration: 1.4,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: "vertical",
-        gestureOrientation: "vertical",
-        smoothWheel: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 2,
-      });
+  lenisRef.current = lenis;
 
-      lastScrollY.current = lenisRef.current.scroll;
-
-      // Drive Swiper from Lenis scroll deltas
-      lenisRef.current.on("scroll", ({ scroll }) => {
-        if (!swiperRef.current || !containerRef.current) {
-          lastScrollY.current = scroll;
-          return;
-        }
-
-        const swiper = swiperRef.current;
-        const rect = containerRef.current.getBoundingClientRect();
-        
-        // Calculate the absolute position of the container relative to the document
-        const containerTop = scroll + rect.top;
-        // The bottom threshold where the sticky unpins
-        const containerBottom = containerTop + rect.height - window.innerHeight;
-
-        const delta = scroll - lastScrollY.current;
-        lastScrollY.current = scroll;
-
-        if (isSliding.current) return;
-
-        // Check if we are currently inside the sticky/pinned zone
-        if (scroll >= containerTop && scroll <= containerBottom) {
-          const THRESHOLD = 6;
-          if (Math.abs(delta) < THRESHOLD) return;
-
-          isSliding.current = true;
-
-          if (delta > 0) {
-            // Scroll down
-            if (!swiper.isEnd) {
-              swiper.slideNext();
-              // Eliminate delay: teleport scroll to the exact bottom of sticky area immediately
-              if (swiper.isEnd) {
-                lenisRef.current.scrollTo(containerBottom, { immediate: true });
-                lastScrollY.current = containerBottom;
-              }
-            }
-          } else {
-            // Scroll up
-            if (!swiper.isBeginning) {
-              swiper.slidePrev();
-              // Eliminate delay: teleport scroll to the exact top of sticky area immediately
-              if (swiper.isBeginning) {
-                lenisRef.current.scrollTo(containerTop, { immediate: true });
-                lastScrollY.current = containerTop;
-              }
-            }
-          }
-          
-          // Cooldown matches Swiper transition speed to prevent rapid skipping
-          setTimeout(() => { isSliding.current = false; }, 680);
-        }
-      });
-
-      // RAF loop
-      const raf = (time) => {
-        lenisRef.current?.raf(time);
-        rafRef.current = requestAnimationFrame(raf);
-      };
-      rafRef.current = requestAnimationFrame(raf);
-    })();
-
-    return () => {
-      lenisRef.current?.destroy();
-      cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  // Dot / arrow nav — bypass Lenis, control Swiper directly
-  const goTo = (index) => {
-    if (!swiperRef.current) return;
-    swiperRef.current.slideTo(index);
+  // RAF loop
+  const raf = (time) => {
+    lenis.raf(time);
+    rafRef.current = requestAnimationFrame(raf);
   };
+  rafRef.current = requestAnimationFrame(raf);
+
+  // Scroll handler
+  lenis.on("scroll", () => {
+    if (!swiperRef.current || !containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const scrollableDistance = rect.height - window.innerHeight;
+
+    let progress = -rect.top / scrollableDistance;
+    progress = Math.max(0, Math.min(1, progress));
+
+    const swiper = swiperRef.current;
+
+    // 🔥 Smooth translate (visual movement)
+    const totalTranslate = swiper.height * (cards.length - 1);
+    const translate = progress * totalTranslate;
+    swiper.setTranslate(-translate);
+
+    // 🔥 Sync active index (IMPORTANT for "slider feel")
+    const newIndex = Math.round(progress * (cards.length - 1));
+
+    if (swiper.activeIndex !== newIndex) {
+      swiper.activeIndex = newIndex;
+      setActiveIndex(newIndex);
+    }
+  });
+
+  return () => {
+    lenis.destroy();
+    cancelAnimationFrame(rafRef.current);
+  };
+}, []);
 
   return (
-    <>
-      <div ref={containerRef} className="relative bg-black" style={{ height: `${cards.length * 100}vh` }}>
-        {/* Sticky Swiper viewport */}
-        <div className="sticky top-0 h-screen overflow-hidden">
-          <Swiper
-            onSwiper={(swiper) => { swiperRef.current = swiper; }}
-            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-            direction="vertical"
-            mousewheel={false}
-            allowTouchMove={false} // Manage touch completely via Lenis to ensure our custom scroll logic persists flawlessly
-            speed={680}
-            className="w-full h-screen"
-          >
-            {cards.map((card, i) => (
-              <SwiperSlide key={i} style={{ height: "100vh" }}>
-                <SlideCard card={card} isActive={activeIndex === i} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+    <div
+      ref={containerRef}
+      className="relative bg-black"
+      style={{ height: `${cards.length * 100}vh` }}
+    >
+      {/* Sticky Swiper */}
+      <div className="sticky top-0 h-screen">
+        <Swiper
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          direction="vertical"
+          effect={"cards"}
+         cardsEffect={{ perSlideOffset: 8, perSlideRotate: 0, slideShadows: false, }}
+          modules={[EffectCards]}
+          slidesPerView={1}
+          allowTouchMove={false}
+          speed={600}
+          className="w-full h-screen mySwiper"
+        >
+          {cards.map((card, i) => (
+            <SwiperSlide key={i} className="h-screen">
+              <SlideCard
+                card={card}
+                isActive={activeIndex === i}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
-    </>
+    </div>
   );
 }

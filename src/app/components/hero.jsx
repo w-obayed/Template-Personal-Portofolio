@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import services from "../../API&Services/services";
 import Lenis from "lenis";
 import StatsBar from "./ui/statbar";
+import Image from "next/image";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -102,10 +103,16 @@ export default function HeroSection() {
 
         {/* Placeholder person image — transparent PNG from web */}
         <div
-          className="absolute z-10 -bottom-5 left-1/2 -translate-x-1/2 w-full h-full flex items-end justify-center"
+          className="absolute z-10 bottom-0 left-1/2 -translate-x-1/2 w-full h-full flex items-end justify-center"
         >
           {/* Silhouette placeholder that matches the design aesthetic */}
-          <img src="https://www.pngarts.com/files/2/Cristiano-Ronaldo-PNG-Picture.png" alt="Cristiano Ronaldo PNG Picture" />
+          <Image
+            src="/azad.png"
+            alt="Azad"
+            width={1000}
+            height={1000}
+            className="w-full h-auto"
+          />
         </div>
       </motion.div>
     </section>
