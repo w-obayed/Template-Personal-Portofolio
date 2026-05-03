@@ -3,7 +3,7 @@ import React from 'react'
 function serviceCard({item}) {
   return (
            <div
-                className="group rounded-[28px] border border-white/15 bg-white/5 backdrop-blur-md p-4 shadow-lg"
+                className="group rounded-[28px] bg-white/5 backdrop-blur-md p-4 shadow-lg"
               >
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white text-lg md:text-xl font-bold tracking-wide">
@@ -14,7 +14,7 @@ function serviceCard({item}) {
                   </button>
                 </div>
 
-                <div className={`rounded-[22px] overflow-hidden bg-gradient-to-r ${item.bg} p-2`}>
+                <div className={`rounded-[22px] overflow-hidden bg-linear-to-r p-2`}>
                   <div className="relative h-44 md:h-52 rounded-[18px] overflow-hidden bg-black/20 flex items-center justify-center">
                     <img
                       src={item?.image}

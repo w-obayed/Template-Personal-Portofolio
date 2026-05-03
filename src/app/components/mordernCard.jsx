@@ -1,13 +1,10 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
-import Lenis from 'lenis';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCards, Zoom } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-cards";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import { cn } from "../../lib/utils";
 
-// ─── Card data (from provided component) ───────────────────────────────────
+
 const cards = [
   {
     num: "1",
@@ -105,53 +102,19 @@ const cards = [
       { label: "VLT", color: "#ffffff", bg: "#1a1a1a" },
     ],
   },
-  {
-    num: "4",
-    title: "AI & Machine\nLearning",
-    desc: "Harness the power of data. We build intelligent systems that learn, adapt and create real business value.",
-    btn: "GET STARTED",
-    quality: "Data-driven results",
-    qualityDesc:
-      "From NLP to computer vision, we deploy production-ready AI models tailored precisely to your domain.",
-    accent: "#f97316",
-    icons: [
-      { label: "PT",  color: "#ee4c2c", bg: "#1a0500" },
-      { label: "TF",  color: "#ff6f00", bg: "#1a0a00" },
-      { label: "SK",  color: "#f7931e", bg: "#1a0f00" },
-      { label: "HF",  color: "#ffd21e", bg: "#1a1400" },
-      { label: "OAI", color: "#ffffff", bg: "#111"    },
-      { label: "CV",  color: "#5c85d6", bg: "#001628" },
-      { label: "NLP", color: "#00d4aa", bg: "#001a15" },
-      { label: "LLM", color: "#a855f7", bg: "#0f001a" },
-      { label: "RAG", color: "#38bdf8", bg: "#001a2e" },
-      { label: "PD",  color: "#4dabf7", bg: "#0a0a1a" },
-      { label: "NP",  color: "#4dabf7", bg: "#001628" },
-      { label: "SP",  color: "#ff6b6b", bg: "#1a0000" },
-      { label: "KRS", color: "#d00000", bg: "#1a0000" },
-      { label: "MLF", color: "#0194e2", bg: "#001628" },
-      { label: "DBR", color: "#ff3621", bg: "#1a0500" },
-      { label: "VTX", color: "#4285f4", bg: "#001628" },
-      { label: "SM",  color: "#ff9900", bg: "#1a0f00" },
-      { label: "AML", color: "#0089d6", bg: "#001628" },
-      { label: "WNB", color: "#ffbe00", bg: "#1a1400" },
-      { label: "COL", color: "#f9ab00", bg: "#1a1000" },
-    ],
-  },
 ];
 
 // ─── Single slide card ──────────────────────────────────────────────────────
-function SlideCard({ card, isActive }) {
+function SlideCard({ card, style }) {
   const titleLines = card.title.split("\n");
 
   return (
-    <div className="w-full h-screen flex items-center justify-center px-4 will-change-transform">
+    <div
+      className="w-full h-full flex items-center justify-center px-4 will-change-transform absolute top-0 left-0"
+      style={style}
+    >
       <div
-        className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/5 bg-[#0d0f14] min-h-[460px] transition-shadow duration-600 ease-[ease]"
-        style={{
-          boxShadow: isActive
-            ? `0 0 80px -10px ${card.accent}40, 0 0 0 1px ${card.accent}20`
-            : "none",
-        }}
+        className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/5 bg-[#0d0f14] h-[95%] transition-shadow duration-600 ease-[ease]"
       >
         {/* Grid texture */}
         <div
@@ -160,9 +123,10 @@ function SlideCard({ card, isActive }) {
 
         {/* Accent glow blob */}
         <div
-          className={`absolute pointer-events-none -top-[80px] -left-[60px] w-[340px] h-[340px] rounded-full transition-opacity duration-600 ease-[ease] ${
-            isActive ? "opacity-100" : "opacity-0"
-          }`}
+          className={cn(
+            "absolute pointer-events-none -top-[80px] -left-[60px] w-[340px] h-[340px] rounded-full transition-opacity duration-600 ease-[ease]",
+            "opacity-100"
+          )}
           style={{
             background: `radial-gradient(circle, ${card.accent}22 0%, transparent 70%)`,
           }}
@@ -204,7 +168,7 @@ function SlideCard({ card, isActive }) {
           {/* ── RIGHT ── */}
           <div className="w-full md:w-72 flex flex-col justify-center gap-4 px-6 md:px-0 md:pr-8 pb-8 md:py-8">
             {/* Quality box */}
-            <div className="rounded-xl p-4 bg-white/4 border border-white/8">
+            <div className="rounded-xl p-4 bg-white/4 border border-white/80">
               <p className="text-white text-sm font-semibold mb-1.5 font-['Syne',sans-serif]">
                 {card.quality}
               </p>
@@ -245,88 +209,70 @@ function SlideCard({ card, isActive }) {
 
 // ─── Main component ─────────────────────────────────────────────────────────
 export default function VerticalSlider() {
-  const containerRef = useRef(null);
-  const swiperRef = useRef(null);
+  const sectionRef = useRef(null);
   const lenisRef = useRef(null);
-  const rafRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0); // 0 → 1
 
   useEffect(() => {
-  const lenis = new Lenis({
-    duration: 1.2,
-    smoothWheel: true,
-    smoothTouch: true,
-  });
+    const lenis = new Lenis({ smoothWheel: true });
+    lenisRef.current = lenis;
 
-  lenisRef.current = lenis;
+    const raf = (t) => {
+      lenis.raf(t);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
 
-  // RAF loop
-  const raf = (time) => {
-    lenis.raf(time);
-    rafRef.current = requestAnimationFrame(raf);
-  };
-  rafRef.current = requestAnimationFrame(raf);
+    lenis.on("scroll", () => {
+      const rect = sectionRef.current.getBoundingClientRect();
+      const total = window.innerHeight;
+      const scrolled = Math.min(Math.max(-rect.top / total, 0), 1);
+      setProgress(scrolled);
+    });
 
-  // Scroll handler
-  lenis.on("scroll", () => {
-    if (!swiperRef.current || !containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const scrollableDistance = rect.height - window.innerHeight;
-
-    let progress = -rect.top / scrollableDistance;
-    progress = Math.max(0, Math.min(1, progress));
-
-    const swiper = swiperRef.current;
-
-    // 🔥 Smooth translate (visual movement)
-    const totalTranslate = swiper.height * (cards.length - 1);
-    const translate = progress * totalTranslate;
-    swiper.setTranslate(-translate);
-
-    // 🔥 Sync active index (IMPORTANT for "slider feel")
-    const newIndex = Math.round(progress * (cards.length - 1));
-
-    if (swiper.activeIndex !== newIndex) {
-      swiper.activeIndex = newIndex;
-      setActiveIndex(newIndex);
-    }
-  });
-
-  return () => {
-    lenis.destroy();
-    cancelAnimationFrame(rafRef.current);
-  };
-}, []);
+    return () => lenis.destroy();
+  }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="relative bg-black"
-      style={{ height: `${cards.length * 100}vh` }}
-    >
-      {/* Sticky Swiper */}
-      <div className="sticky top-0 h-screen">
-        <Swiper
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-          direction="vertical"
-          effect={"cards"}
-         cardsEffect={{ perSlideOffset: 8, perSlideRotate: 0, slideShadows: false, }}
-          modules={[EffectCards]}
-          slidesPerView={1}
-          allowTouchMove={false}
-          speed={600}
-          className="w-full h-screen mySwiper"
-        >
-          {cards.map((card, i) => (
-            <SwiperSlide key={i} className="h-screen">
+    <div ref={sectionRef} className="h-[200vh] bg-black">
+      <div className="sticky top-0 h-screen flex items-center justify-center">
+
+        <div className="relative w-full h-[500px]">
+          {cards.map((card, i) => {
+            // 👇 control each card timing
+            const totalTransitions = cards.length - 1;
+            const relativeProgress = progress * totalTransitions;
+            const diff = i - relativeProgress;
+
+            let y = 0;
+            let scale = 1;
+            const opacity = 1; // No opacity change
+
+            if (diff > 0) {
+              // Card is waiting in the stack below
+              y = diff * 20; // 20px stack gap
+              scale = 1 - diff * 0.05;
+            } else {
+              // Card is active or moving up
+              // 500px card height + 20px gap = 520px
+              y = diff * 520;
+              scale = 1;
+            }
+
+            return (
               <SlideCard
+                key={i}
                 card={card}
-                isActive={activeIndex === i}
+                style={{
+                  transform: `translateY(${y}px) scale(${scale})`,
+                  opacity,
+                  zIndex: cards.length - i,
+                }}
               />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            );
+          })}
+        </div>
+
       </div>
     </div>
   );

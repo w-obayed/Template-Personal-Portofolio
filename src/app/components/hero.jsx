@@ -41,9 +41,6 @@ export default function HeroSection() {
     <section
       className="relative w-full min-h-screen rounded-b-[50px] overflow-hidden flex flex-col items-center justify-start pt-24 pb-0 font-['DM_Sans',sans-serif] bg-[linear-gradient(160deg,#0a0a0f_0%,#0f0a1e_40%,#140d2a_70%,#0a0a0f_100%)]"
     >
-      {/* ── Background ambient blobs ── */}
-
-      {/* Top-right orange/purple ambient */}
       <div
         className="absolute pointer-events-none right-60 bottom-0 w-[1500px] h-[1500px] rounded-[50%] overflow-hidden shadow-2xl bg-[radial-gradient(ellipse_at_top_right,rgba(194,100,30,0.55)_0%,rgba(120,30,180,0.35)_55%,transparent_80%)]"
       />
@@ -116,7 +113,7 @@ export default function HeroSection() {
         </div>
       </motion.div>
     </section>
-    <div className="bg-[linear-gradient(135deg,#a54fe7,#f57c5b,#ce66a0,#b759c8,#e77473,#c25fb5,#db6d89,#9948fb)]"><StatsBar /></div>
+    <div className="bg-primary"><StatsBar /></div>
     </>
   );
 }

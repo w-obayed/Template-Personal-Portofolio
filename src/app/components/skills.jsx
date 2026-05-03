@@ -2,7 +2,7 @@ import React from 'react'
 
 function skills() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f001f] via-[#1a0033] to-[#2a0044] text-white py-16 px-6 font-sans">
+    <div className=" bg-linear-to-br from-[#0f001f] via-[#1a0033] to-[#2a0044] text-white py-16 px-6 font-sans">
       <div className="max-w-4xl mx-auto">
 
         {/* Skills Section */}
