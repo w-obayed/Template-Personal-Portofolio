@@ -9,7 +9,7 @@ function photoCard({ src }) {
        src={src} 
        alt="Description"
        priority
-       className="rounded-lg aspect-[4/3] shadow-md object-fit w-78 h-58" 
+       className="rounded-lg aspect-4/3 shadow-md object-cover size-full" 
     />
   )
 }

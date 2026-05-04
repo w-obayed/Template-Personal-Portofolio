@@ -1,15 +1,18 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import "swiper/css";
 
-// ✅ শুধু এই array-তে value দাও — বাকি সব auto card হয়ে যাবে
 const projects = [
   {
     id: 1,
     client: "KTM",
     category: "Case study",
-    bgColor: "#7c2c00",        // card background color
-    accentColor: "#ff6a00",    // glow / accent color
+    bgColor: "#7c2c00",
+    accentColor: "#ff6a00",
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
     imageAlt: "KTM motorcycle app on laptop and phone",
   },
@@ -49,224 +52,197 @@ const projects = [
     image: "https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?w=600&q=80",
     imageAlt: "Archi design platform",
   },
+  {
+    id: 6,
+    client: "NovaPay",
+    category: "Case study",
+    bgColor: "#111827",
+    accentColor: "#60a5fa",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80",
+    imageAlt: "NovaPay fintech mobile app",
+  },
+  {
+    id: 7,
+    client: "Shopora",
+    category: "Case study",
+    bgColor: "#3b0a2a",
+    accentColor: "#fb7185",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
+    imageAlt: "Shopora ecommerce platform",
+  },
+  {
+    id: 8,
+    client: "CloudNest",
+    category: "Case study",
+    bgColor: "#0f172a",
+    accentColor: "#38bdf8",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",
+    imageAlt: "CloudNest dashboard analytics",
+  },
+  {
+    id: 9,
+    client: "Buildify",
+    category: "Case study",
+    bgColor: "#1c1917",
+    accentColor: "#f59e0b",
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80",
+    imageAlt: "Buildify construction management app",
+  },
+  {
+    id: 10,
+    client: "EduSpark",
+    category: "Case study",
+    bgColor: "#0b2a1a",
+    accentColor: "#34d399",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80",
+    imageAlt: "EduSpark learning platform UI",
+  },
 ];
 
-// ✅ Card Template — এটাই সব কার্ডের জন্য ব্যবহার হয়
-function ProjectCard({ project, style, onClick }) {
-  return (
-    <div
-      onClick={onClick}
-      className="absolute top-0 rounded-2xl overflow-hidden cursor-pointer select-none"
-      style={{
-        width: "420px",
-        height: "420px",
-        background: project.bgColor,
-        boxShadow: `0 0 60px ${project.accentColor}33`,
-        transition: "all 0.55s cubic-bezier(.4,0,.2,1)",
-        ...style,
-      }}
-    >
-      {/* Card Header */}
-      <div className="flex items-center justify-between px-5 pt-5 pb-3">
-        <span className="text-white text-lg font-semibold tracking-wide">
-          {project.client}
-        </span>
-        <div className="flex items-center gap-2">
-          <span className="text-white/60 text-sm">{project.category}</span>
-          <div
-            className="w-7 h-7 rounded-full flex items-center justify-center border border-white/20"
-            style={{ background: "rgba(255,255,255,0.1)" }}
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 10L10 2M10 2H4M10 2V8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
+// 1 intro slide + 10 project cards
+const TOTAL_SLIDES = 1 + projects.length;
 
-      {/* Card Image */}
-      <div className="mx-3 rounded-xl overflow-hidden" style={{ height: "340px" }}>
-        <img
-          src={project.image}
-          alt={project.imageAlt}
-          className="w-full h-full object-cover"
-          draggable={false}
-        />
-      </div>
-    </div>
-  );
-}
+// How much vertical scroll distance each slide gets (vh units)
+const VH_PER_SLIDE = 30;
 
 export default function WorkSlider() {
-  const [current, setCurrent] = useState(0);
-  const dragStartX = useRef(null);
-  const total = projects.length;
+  const swiperRef   = useRef(null);   // Swiper instance
+  const containerRef = useRef(null);  // Outer scroll-distance div
+  const activeIdxRef = useRef(0);     // Last slid-to index (avoids re-firing)
+  const rafIdRef    = useRef(null);
 
-  const prev = () => setCurrent((c) => (c - 1 + total) % total);
-  const next = () => setCurrent((c) => (c + 1) % total);
+  useEffect(() => {
+    const lenis = new Lenis({ smoothWheel: true });
 
-  // Position each card relative to current
-  function getCardStyle(index) {
-    const diff = ((index - current + total) % total);
-    // Convert to signed: -2, -1, 0, 1, 2
-    const signed = diff > total / 2 ? diff - total : diff;
-
-    if (signed === 0) {
-      // Active / center card
-      return {
-        left: "50%",
-        transform: "translateX(-50%) scale(1)",
-        zIndex: 10,
-        opacity: 1,
-        filter: "brightness(1)",
-      };
-    } else if (signed === 1) {
-      // Right card — partially visible
-      return {
-        left: "50%",
-        transform: "translateX(32%) scale(0.88)",
-        zIndex: 7,
-        opacity: 0.75,
-        filter: "brightness(0.6)",
-      };
-    } else if (signed === -1) {
-      // Left card — partially visible
-      return {
-        left: "50%",
-        transform: "translateX(-132%) scale(0.88)",
-        zIndex: 7,
-        opacity: 0.75,
-        filter: "brightness(0.6)",
-      };
-    } else if (signed === 2) {
-      return {
-        left: "50%",
-        transform: "translateX(80%) scale(0.76)",
-        zIndex: 4,
-        opacity: 0.3,
-        filter: "brightness(0.4)",
-      };
-    } else if (signed === -2) {
-      return {
-        left: "50%",
-        transform: "translateX(-180%) scale(0.76)",
-        zIndex: 4,
-        opacity: 0.3,
-        filter: "brightness(0.4)",
-      };
-    } else {
-      return {
-        left: "50%",
-        transform: "translateX(-50%) scale(0.6)",
-        zIndex: 1,
-        opacity: 0,
-        pointerEvents: "none",
-      };
+    function raf(time) {
+      lenis.raf(time);
+      rafIdRef.current = requestAnimationFrame(raf);
     }
-  }
+    rafIdRef.current = requestAnimationFrame(raf);
 
-  // Drag / swipe support
-  const onDragStart = (e) => {
-    dragStartX.current = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
-  };
-  const onDragEnd = (e) => {
-    if (dragStartX.current === null) return;
-    const endX = e.type === "touchend" ? e.changedTouches[0].clientX : e.clientX;
-    const diff = dragStartX.current - endX;
-    if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
-    dragStartX.current = null;
-  };
+    lenis.on("scroll", () => {
+      const swiper    = swiperRef.current;
+      const container = containerRef.current;
+      if (!swiper || !container) return;
+
+      const rect           = container.getBoundingClientRect();
+      const scrollableH    = container.offsetHeight - window.innerHeight;
+
+      // 0 → 1 as the section scrolls through the viewport
+      const progress = Math.min(Math.max(-rect.top / scrollableH, 0), 1);
+
+      // Map to a slide index (0 … TOTAL_SLIDES-1)
+      const targetIdx = Math.min(
+        Math.round(progress * (TOTAL_SLIDES - 1)),
+        TOTAL_SLIDES - 1
+      );
+
+      // Only call slideTo when the target changes → real Swiper animation fires
+      if (targetIdx !== activeIdxRef.current) {
+        activeIdxRef.current = targetIdx;
+        swiper.slideTo(targetIdx); // ← native Swiper CSS slide transition
+      }
+    });
+
+    return () => {
+      cancelAnimationFrame(rafIdRef.current);
+      lenis.destroy();
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#0e1016] flex flex-col justify-center overflow-hidden">
-      {/* Ambient background glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 30% 50%, rgba(30,30,50,0.6) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-8 flex flex-col lg:flex-row items-center gap-16 lg:gap-0">
-
-        {/* LEFT TEXT */}
-        <div className="lg:w-[38%] shrink-0 flex flex-col gap-6">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-            We let{" "}
-            <span className="text-orange-400">our work</span>
-            <br />
-            speak for itself.
-          </h2>
-          <p className="text-white/50 text-sm leading-relaxed max-w-xs">
-            Our experts develop customized native apps and software solutions
-            using innovative technologies for your success.
-          </p>
-          <button className="flex items-center gap-2 border border-white/25 rounded-full px-5 py-2.5 text-white text-xs font-semibold tracking-widest hover:border-white/50 hover:bg-white/5 transition-all w-fit">
-            <span className="w-2 h-2 rounded-full bg-green-400 inline-block" />
-            GET IN TOUCH NOW
-          </button>
-
-          {/* Navigation arrows */}
-          <div className="flex items-center gap-3 mt-4">
-            <button
-              onClick={prev}
-              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-all"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M10 12L6 8L10 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <button
-              onClick={next}
-              className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-all"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M6 4L10 8L6 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-
-            {/* Dots */}
-            <div className="flex gap-1.5 ml-2">
-              {projects.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`rounded-full transition-all duration-300 ${
-                    i === current
-                      ? "w-5 h-2 bg-white"
-                      : "w-2 h-2 bg-white/30 hover:bg-white/50"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT — CARDS SLIDER */}
-        <div className="lg:flex-1 w-full">
-          <div
-            className="relative"
-            style={{ height: "440px" }}
-            onMouseDown={onDragStart}
-            onMouseUp={onDragEnd}
-            onTouchStart={onDragStart}
-            onTouchEnd={onDragEnd}
+    /*
+     * Outer div height = 100vh (sticky viewport) + scroll room for each slide.
+     * Each slide gets VH_PER_SLIDE vh of scroll distance before advancing.
+     */
+    <div
+      ref={containerRef}
+      className="bg-[#0e1016] w-full"
+      style={{ height: `${100 + (TOTAL_SLIDES - 1) * VH_PER_SLIDE}vh` }}
+    >
+      {/* Sticky panel — stays pinned while the outer div scrolls past */}
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+        <div className="w-full">
+          <Swiper
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            slidesPerView={3.2}
+            centeredSlides={true}
+            spaceBetween={20}
+            speed={500}            /* Swiper CSS transition duration (ms) */
+            allowTouchMove={false} /* scroll-driven only — disable drag    */
+            className="w-full mt-20"
           >
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                style={getCardStyle(index)}
-                onClick={() => {
-                  const diff = ((index - current + total) % total);
-                  const signed = diff > total / 2 ? diff - total : diff;
-                  if (signed === 1) next();
-                  else if (signed === -1) prev();
-                }}
-              />
+            {/* ── Intro slide ── */}
+            <SwiperSlide className="flex items-center justify-center">
+              <div className="shrink-0 flex flex-col gap-6 px-4">
+                <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight font-['Syne',sans-serif]">
+                  We let <span className="text-orange-400">our work</span>
+                  <br />speak for itself.
+                </h2>
+                <p className="text-white/50 text-sm leading-relaxed max-w-xs font-['DM_Sans',sans-serif]">
+                  Our experts develop customized native apps and software
+                  solutions using innovative technologies for your success.
+                </p>
+                <button className="flex items-center gap-2 border border-white/25 rounded-full px-5 py-2.5 text-white text-xs font-semibold tracking-widest hover:border-white/50 hover:bg-white/5 transition-all w-fit font-['DM_Sans',sans-serif]">
+                  <span className="w-2 h-2 rounded-full bg-green-400" />
+                  GET IN TOUCH NOW
+                </button>
+              </div>
+            </SwiperSlide>
+
+            {/* ── Project cards ── */}
+            {projects.map((project) => (
+              <SwiperSlide key={project.id}>
+                {({ isActive }) => (
+                  <div
+                    className="rounded-2xl overflow-hidden transition-all duration-500"
+                    style={{
+                      height:    "420px",
+                      background: project.bgColor,
+                      boxShadow:  isActive ? `0 0 60px ${project.accentColor}44` : "none",
+                      opacity:    isActive ? 1 : 0.5,
+                      transform:  isActive ? "scale(1)" : "scale(0.92)",
+                    }}
+                  >
+                    {/* Card header */}
+                    <div className="flex items-center justify-between px-5 pt-5 pb-3">
+                      <span className="text-white text-lg font-semibold tracking-wide font-['Syne',sans-serif]">
+                        {project.client}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-white/60 text-sm font-['DM_Sans',sans-serif]">
+                          {project.category}
+                        </span>
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center border border-white/20 bg-white/10">
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path
+                              d="M2 10L10 2M10 2H4M10 2V8"
+                              stroke="white"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card image */}
+                    <div className="mx-3 rounded-xl overflow-hidden h-[340px]">
+                      <img
+                        src={project.image}
+                        alt={project.imageAlt}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                      />
+                    </div>
+                  </div>
+                )}
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </div>
     </div>

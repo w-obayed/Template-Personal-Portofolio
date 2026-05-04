@@ -1,15 +1,11 @@
 "use client"
 import services from '../../API&Services/services';
-import React, { useEffect } from 'react'
+import React from 'react'
 
 function EducationAndExperience() {
   const educationData = services("EducationAndExperience") || [];
-  useEffect(() => {
-    console.log(educationData);
-  }, [educationData]);
-  console.log(educationData);
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f001f] via-[#1a0033] to-[#2a0044] text-white py-16 px-6 font-sans">
+    <div className="min-h-screen bg-linear-to-br from-[#0f001f] via-[#1a0033] to-[#2a0044] text-white py-16 px-6 font-sans">
       <div className="max-w-4xl mx-auto">
         
         {/* Title */}
@@ -24,7 +20,7 @@ function EducationAndExperience() {
             {educationData.map((item, index) => 
                 <div key={index} className="relative">
                   <div className="absolute -left-[9px] w-4 h-4 bg-purple-500 rounded-full border-4 border-[#1a0033]"></div>
-                  <div className="bg-gradient-to-br from-purple-900/80 to-pink-900/60 rounded-3xl p-6 ml-6 md:ml-8">
+                  <div className="bg-linear-to-br from-purple-900/80 to-pink-900/60 rounded-3xl p-6 ml-6 md:ml-8">
                     <div className="text-purple-300 text-sm font-medium">{item.date}</div>
                     <h3 className="text-xl font-semibold mt-1">{item.institute}</h3>
                     <p className="text-white/70">({item.point})</p>

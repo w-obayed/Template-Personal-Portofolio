@@ -6,20 +6,24 @@ import Skills from "./components/skills";
 import ServiceCarousel from "./components/ServiceCarousel";
 import GalleryView from "./components/galleryView";
 import RollerScroll from "./components/rollerScroll";
-import ModernSlider from "./components/mordernCard";
 import WorkSlider from "./components/workSlider";
+import VerticalSlider from "./components/mordernCard";
+import TrustBadges from "./components/trustbadge";
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <HeroSection />
-      <EducationAndExperience />
-      <Skills></Skills>
-      <ServiceCarousel />
-      <GalleryView />
-      <RollerScroll></RollerScroll>
-      <ModernSlider></ModernSlider>
-      <WorkSlider></WorkSlider>
+      <div className="bg-primary">
+        <Navbar />
+        <HeroSection />
+        <ServiceCarousel />
+        <VerticalSlider></VerticalSlider>
+        <GalleryView />
+        <RollerScroll></RollerScroll>
+        <WorkSlider></WorkSlider>
+        <EducationAndExperience />
+        <Skills></Skills>
+        <TrustBadges></TrustBadges>
+      </div>
     </>
   );
 }

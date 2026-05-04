@@ -61,24 +61,32 @@ const serviceCall = (srv)=>{
           {
             title: 'UI/UX DESIGN',
             image: '/services/uiux.png',
-            bg: 'from-indigo-500 via-purple-500 to-pink-500',
+
           },
           {
             title: 'WEB DESIGN',
             image: '/services/webdesign.png',
-            bg: 'from-cyan-400 via-sky-500 to-blue-600',
+
           },
           {
             title: 'LANDING PAGE',
             image: '/services/landing.png',
-            bg: 'from-emerald-300 via-teal-400 to-cyan-500',
+
           },
           {
             title: 'MOBILE APP',
             image: '/services/mobile.png',
-            bg: 'from-orange-400 via-rose-500 to-pink-600',
           },
         ];
+    }
+
+    if(srv === "stat"){
+      return[
+        { value: 325, suffix: "+", label: "Happy Client" },
+        { value: 5,   suffix: "+", label: "Years Exp." },
+        { value: 100, suffix: "+", label: "Completed Project" },
+        { value: 25,  suffix: "M+", label: "In tracked Revenue" },
+      ];
     }
 
     return []

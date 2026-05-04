@@ -1,4 +1,3 @@
-
 "use client";
 import services from "../../API&Services/services";
 import { useState, useEffect } from "react";
@@ -10,7 +9,7 @@ import Link from "next/link";
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navManu= services("navbar") || [];
+  const navManu = services("navbar") || [];
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10);
@@ -24,14 +23,12 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style={{
-          background: scrolled
-            ? "rgba(10,10,10,0.92)"
-            : "rgba(10,10,10,0.98)",
-          backdropFilter: "blur(14px)",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
-        }}
+        className={[
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-[14px] border-b",
+          scrolled
+            ? "bg-primary border-white/6"
+            : "bg-[rgba(10,10,10,0.98)] border-transparent",
+        ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16">
@@ -44,19 +41,10 @@ export default function Navbar() {
               className="flex items-center gap-3"
             >
               {/* Gradient orb logo */}
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold"
-                style={{
-                  background: "linear-gradient(135deg, #f97316 0%, #ec4899 60%, #8b5cf6 100%)",
-                  fontFamily: "'Syne', sans-serif",
-                }}
-              >
+              <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold bg-[linear-gradient(135deg,#f97316_0%,#ec4899_60%,#8b5cf6_100%)] font-['Syne',sans-serif]">
                 DH
               </div>
-              <span
-                className="text-white text-base font-bold tracking-tight hidden sm:block"
-                style={{ fontFamily: "'Syne', sans-serif" }}
-              >
+              <span className="text-white text-base font-bold tracking-tight hidden sm:block font-['Syne',sans-serif]">
                 DLHA
               </span>
             </motion.div>
@@ -80,23 +68,19 @@ export default function Navbar() {
                   }}
                 >
                   <motion.div
-                    className="relative px-4 py-2 text-base text-gray-300 rounded-md group"
-                    style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500 }}
+                    className="relative px-4 py-2 text-base text-gray-300 rounded-md group font-['DM_Sans',sans-serif] font-medium"
                     whileHover={{ color: "#ffffff" }}
                   >
-                   <Link href={link.href}>
-                    {link.label}
-                    {/* Underline hover */}
-                    <motion.span
-                      className="absolute bottom-0.5 left-4 right-4 h-[1.5px] rounded-full"
-                      style={{
-                        background: "linear-gradient(90deg, #22c55e, #eab308, #a855f7)",
-                        scaleX: 0,
-                        originX: 0,
-                      }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ duration: 0.25 }}
-                    />
+                    <Link href={link.href}>
+                      {link.label}
+                      {/* Underline hover */}
+                      <motion.span
+                        className="absolute bottom-0.5 left-4 right-4 h-[1.5px] rounded-full bg-[linear-gradient(90deg,#22c55e,#eab308,#a855f7)]"
+                        style={{ originX: 0 }}
+                        initial={{ scaleX: 0 }}
+                        whileHover={{ scaleX: 1 }}
+                        transition={{ duration: 0.25 }}
+                      />
                     </Link>
                   </motion.div>
                 </motion.li>
@@ -135,11 +119,7 @@ export default function Navbar() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="md:hidden overflow-hidden"
-              style={{
-                background: "rgba(10,10,10,0.97)",
-                borderTop: "1px solid rgba(255,255,255,0.07)",
-              }}
+              className="md:hidden overflow-hidden bg-[rgba(10,10,10,0.97)] border-t border-white/[0.07]"
             >
               <motion.ul
                 className="flex flex-col px-6 py-4 gap-1"
@@ -160,8 +140,7 @@ export default function Navbar() {
                   >
                     <a
                       href={link.href}
-                      className="block py-3 text-gray-300 text-base border-b border-white/5 hover:text-white transition-colors"
-                      style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500 }}
+                      className="block py-3 text-gray-300 text-base border-b border-white/5 hover:text-white transition-colors font-['DM_Sans',sans-serif] font-medium"
                       onClick={() => setMenuOpen(false)}
                     >
                       {link.label}
