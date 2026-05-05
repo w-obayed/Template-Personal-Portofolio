@@ -103,10 +103,16 @@ function StatItem({ value, suffix, label, delay }) {
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
       className="flex flex-col gap-2 px-6 sm:px-8 py-3 sm:py-1 text-center md:text-left"
     >
-      <div className="font-black leading-none tracking-tight text-white font-['Syne',sans-serif] text-4xl md:text-4xl min-[1050px]:text-7xl">
-        {count}
-        <span className="text-[#e8521a]">{suffix}</span>
-      </div>
+      <div className="
+  font-black leading-none tracking-tight text-white font-['Syne',sans-serif]
+
+  text-[clamp(2.2rem,6vw,3.4rem)]
+  md:text-4xl
+  min-[1050px]:text-[clamp(2.2rem,6vw,3.4rem)]
+">
+  {count}
+  <span className="text-[#e8521a]">{suffix}</span>
+</div>
 
       <div className="text-gray-400 font-normal tracking-[0.01em] font-['DM_Sans',sans-serif] text-[clamp(0.8rem,1.3vw,1rem)]">
         {label}
