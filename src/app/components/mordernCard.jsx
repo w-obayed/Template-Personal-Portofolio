@@ -175,7 +175,7 @@ export default function VerticalSlider() {
           <h1 className="font-['DM_Sans',sans-serif] text-4xl font-bold text-white leading-tight">Not just a software partner , but rather a holistic solution.</h1>
         </div>
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="relative w-full h-[500px]">
+        <div className="relative w-full h-[600px]">
           {cards.map((card, i) => {
             // 👇 control each card timing
             const totalTransitions = cards.length - 1;
@@ -193,7 +193,7 @@ export default function VerticalSlider() {
             } else {
               // Card is active or moving up
               // 500px card height + 20px gap = 520px
-              y = diff * 520;
+              y = diff * 620;
               scale = 1;
             }
 
