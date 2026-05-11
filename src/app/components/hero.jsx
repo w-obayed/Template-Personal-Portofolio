@@ -90,7 +90,7 @@ export default function HeroSection() {
 
         {/* Outer gradient ring */}
         <div
-          className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[linear-gradient(170deg,#7c3aed_0%,#c026d3_45%,#f472b6_80%,#fb923c_100%)] z-1"
+          className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[linear-gradient(170deg,#9747FF_0%,#9747ff_45%,#fe814b_80%,#fb923c_100%)] z-1"
         />
 
         {/* Inner dark circle — creates the ring effect */}

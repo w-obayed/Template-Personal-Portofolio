@@ -60,22 +60,22 @@ const serviceCall = (srv)=>{
         return [
           {
             title: 'UI/UX DESIGN',
-            image: '/services/uiux.png',
+            image: 'https://i.ibb.co.com/rGS7GrXX/e479bfea714d6dba2971c7155f820e2a8b8bba6c.png',
 
           },
           {
             title: 'WEB DESIGN',
-            image: '/services/webdesign.png',
+            image: 'https://i.ibb.co.com/rGS7GrXX/e479bfea714d6dba2971c7155f820e2a8b8bba6c.png',
 
           },
           {
             title: 'LANDING PAGE',
-            image: '/services/landing.png',
+            image: 'https://i.ibb.co.com/rGS7GrXX/e479bfea714d6dba2971c7155f820e2a8b8bba6c.png',
 
           },
           {
             title: 'MOBILE APP',
-            image: '/services/mobile.png',
+            image: 'https://i.ibb.co.com/rGS7GrXX/e479bfea714d6dba2971c7155f820e2a8b8bba6c.png',
           },
         ];
     }

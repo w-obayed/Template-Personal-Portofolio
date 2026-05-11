@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import Navbar from "./components/navbar";
 import EducationAndExperience from "./components/educationAndExperience";
 import HeroSection from "./components/hero";
@@ -9,6 +10,7 @@ import RollerScroll from "./components/rollerScroll";
 import WorkSlider from "./components/workSlider";
 import VerticalSlider from "./components/mordernCard";
 import TrustBadges from "./components/trustbadge";
+
 export default function Home() {
   return (
     <>
