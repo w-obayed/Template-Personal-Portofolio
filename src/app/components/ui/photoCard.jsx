@@ -4,12 +4,12 @@ import React from 'react'
 function photoCard({ src }) {
   return (
     <Image 
-       width={350} 
-       height={300} 
+       width={200} 
+       height={200} 
        src={src} 
        alt="Description"
        priority
-       className="rounded-lg aspect-4/3 shadow-md object-cover size-full" 
+       className="rounded-lg max-h-[150px] object-cover size-full aspect-4/3 shadow-md" 
     />
   )
 }

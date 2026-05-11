@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
-import { cn } from "../../lib/utils";
 import SoftwareDevelopmentCard from "./ui/softwareDevelopmentCard";
 
 
@@ -39,114 +38,11 @@ const cards = [
   },
 ];
 
-// ─── Single slide card ──────────────────────────────────────────────────────
-function SlideCard({ card, style }) {
-  const titleLines = card.title.split("\n");
-
-  return (
-    <div
-      className="w-full h-full flex items-center justify-center px-4 will-change-transform absolute top-0 left-0"
-      style={style}
-    >
-      <div
-        className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/5 bg-[#0d0f14] h-[95%] transition-shadow duration-600 ease-[ease]"
-      >
-        {/* Grid texture */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none bg-[linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] bg-size-[40px_40px]"
-        />
-
-        {/* Accent glow blob */}
-        <div
-          className={cn(
-            "absolute pointer-events-none -top-[80px] -left-[60px] w-[340px] h-[340px] rounded-full transition-opacity duration-600 ease-[ease]",
-            "opacity-100"
-          )}
-          style={{
-            background: `radial-gradient(circle, ${card.accent}22 0%, transparent 70%)`,
-          }}
-        />
-
-        <div className="relative z-10 flex h-full flex-col md:flex-row min-h-[460px]">
-          {/* ── LEFT ── */}
-          <div className="flex-1 flex flex-col justify-center px-8 md:px-12 py-10 gap-5">
-            {/* Big number */}
-            <div
-              className="text-7xl font-black leading-none select-none font-['Syne',sans-serif]"
-              style={{ color: `${card.accent}18` }}
-            >
-              {card.num}
-            </div>
-
-            {/* Title */}
-            <div className="text-3xl md:text-4xl font-bold text-white leading-tight font-['Syne',sans-serif]">
-              {titleLines.map((line, i) => (
-                <div key={i}>{line}</div>
-              ))}
-            </div>
-
-            {/* Description */}
-            <p className="text-sm text-white/50 leading-relaxed max-w-xs font-['DM_Sans',sans-serif]">
-              {card.desc}
-            </p>
-
-            {/* CTA button */}
-            <button
-              className="flex items-center gap-2.5 rounded-full px-5 py-2.5 text-white text-xs font-semibold tracking-[0.12em] w-fit transition-all duration-200 hover:bg-white/10 font-['DM_Sans',sans-serif]"
-              style={{ border: `1px solid ${card.accent}55` }}
-            >
-              <span className="w-2 h-2 rounded-full animate-pulse bg-[#4ade80]" />
-              {card.btn}
-            </button>
-          </div>
-
-          {/* ── RIGHT ── */}
-          <div className="w-full md:w-72 flex flex-col justify-center gap-4 px-6 md:px-0 md:pr-8 pb-8 md:py-8">
-            {/* Quality box */}
-            <div className="rounded-xl p-4 bg-white/4 border border-white/80">
-              <p className="text-white text-sm font-semibold mb-1.5 font-['Syne',sans-serif]">
-                {card.quality}
-              </p>
-              <p className="text-white/45 text-xs leading-relaxed font-['DM_Sans',sans-serif]">
-                {card.qualityDesc}
-              </p>
-            </div>
-
-            {/* Icons grid 5×4 */}
-            <div className="grid grid-cols-5 gap-1.5">
-              {card.icons.map((icon, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl flex items-center justify-center font-bold w-[46px] h-[46px] border-[0.5px] border-white/[0.07] text-[10px] font-['DM_Sans',sans-serif]"
-                  style={{
-                    background: icon.bg,
-                    color: icon.color,
-                  }}
-                >
-                  {icon.label}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Slide counter pill */}
-        <div
-          className="absolute bottom-4 left-6 text-xs font-semibold tracking-widest font-['DM_Sans',sans-serif]"
-          style={{ color: card.accent }}
-        >
-          0{card.num} / 0{cards.length}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── Main component ─────────────────────────────────────────────────────────
 export default function VerticalSlider() {
   const sectionRef = useRef(null);
   const lenisRef = useRef(null);
-  const [progress, setProgress] = useState(0); // 0 → 1
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const lenis = new Lenis({ smoothWheel: true });
@@ -177,22 +73,19 @@ export default function VerticalSlider() {
       <div className="sticky top-0 h-screen flex items-center justify-center">
         <div className="relative w-full h-[600px]">
           {cards.map((card, i) => {
-            // 👇 control each card timing
             const totalTransitions = cards.length - 1;
             const relativeProgress = progress * totalTransitions;
             const diff = i - relativeProgress;
 
             let y = 0;
             let scale = 1;
-            const opacity = 1; // No opacity change
+            const opacity = 1; 
 
             if (diff > 0) {
-              // Card is waiting in the stack below
-              y = diff * 20; // 20px stack gap
+              y = diff * 20; 
               scale = 1 - diff * 0.05;
             } else {
-              // Card is active or moving up
-              // 500px card height + 20px gap = 520px
+              
               y = diff * 620;
               scale = 1;
             }
