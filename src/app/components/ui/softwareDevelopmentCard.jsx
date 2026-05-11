@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Autoplay } from "swiper/modules";
 import Image from "next/image";
+import MessageCard from "./messageCard";
 
 
 const techIcons = [
@@ -182,7 +183,7 @@ export default function SoftwareDevelopmentCard({ card, style }) {
                 </Swiper>
               </div></CardContent>}
 
-              {card.num === "3" && <CardContent>Design 2</CardContent>}
+              {card.num === "3" && <CardContent><MessageCard/></CardContent>}
 
             </Card>
 
