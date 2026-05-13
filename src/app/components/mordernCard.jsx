@@ -66,12 +66,12 @@ export default function VerticalSlider() {
 
   return (
     <div ref={sectionRef} className="h-[200vh] bg-black pt-16">
-      <div className="flex flex-col items-center justify-center gap-4 z-10 w-full max-w-[760px] mx-auto text-center">
+      <div className="flex flex-col items-center justify-center gap-4 z-10 w-full max-w-[760px] mx-auto text-center px-4 pb-20">
           <p className="font-['DM_Sans',sans-serif] text-base font-bold tracking-[0.12em] text-muted-foreground">our service</p>
-          <h1 className="font-['DM_Sans',sans-serif] text-4xl font-bold text-white leading-tight">Not just a software partner , but rather a holistic solution.</h1>
-        </div>
+          <h1 className="font-['DM_Sans',sans-serif] text-[clamp(1.5rem,5vw,3.5rem)] font-bold text-white leading-tight">Not just a software partner , but rather a holistic solution.</h1>
+      </div>
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="relative w-full h-[600px]">
+        <div className="relative w-full h-[700px] md:h-[600px]">
           {cards.map((card, i) => {
             const totalTransitions = cards.length - 1;
             const relativeProgress = progress * totalTransitions;

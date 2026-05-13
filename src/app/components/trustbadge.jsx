@@ -1,7 +1,5 @@
 "use client";
-
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 /* ── Badge data ──────────────────────────────────────────────────────────── */
 const badges = [
@@ -160,19 +158,9 @@ function Card({ badge, index }) {
 
 /* ── Main section ────────────────────────────────────────────────────────── */
 export default function TrustBadges() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const fadeUp = (delay = 0) => ({
-    initial: { opacity: 0, y: 18 },
-    animate: inView ? { opacity: 1, y: 0 } : {},
-    transition: { duration: 0.9, ease: "easeOut", delay },
-  });
-
   return (
     <div
-      ref={ref}
-      className="min-h-screen bg-[radial-gradient(ellipse_at_30%_20%,#0f1728_0%,#0a0e18_60%,#0d1117_100%)] flex flex-col items-center justify-center px-7 py-[60px] font-['DM_Sans','Helvetica_Neue',sans-serif] relative overflow-hidden"
+      className="bg-[radial-gradient(ellipse_at_30%_20%,#0f1728_0%,#0a0e18_60%,#0d1117_100%)] flex flex-col items-center justify-center px-7 py-[60px] font-['DM_Sans','Helvetica_Neue',sans-serif] relative overflow-hidden"
     >
       {/* CSS-only: @property for conic-gradient angle animation */}
       <style>{`
@@ -198,44 +186,11 @@ export default function TrustBadges() {
         transition={{ duration: 20, ease: "easeInOut", repeat: Infinity }}
       />
 
-      {/* Header */}
-      <div className="text-center mb-[50px] z-10">
-        <motion.p
-          className="text-[9px] font-bold uppercase text-white/[0.28] tracking-[4.5px] mb-2.5"
-          {...fadeUp(0.1)}
-        >
-          TRUSTED &amp; RECOGNIZED
-        </motion.p>
-        <motion.h2
-          className="text-[clamp(26px,4vw,42px)] font-extrabold text-white mb-2.5 tracking-[-1px] leading-[1.1]"
-          {...fadeUp(0.25)}
-        >
-          Awards &amp; Partnerships
-        </motion.h2>
-        <motion.p
-          className="text-[14px] text-white/[0.36] max-w-[370px] mx-auto leading-[1.65]"
-          {...fadeUp(0.4)}
-        >
-          Recognized by industry leaders and trusted by top-tier organizations worldwide.
-        </motion.p>
-      </div>
-
       {/* Cards */}
       <div className="flex gap-[18px] flex-wrap justify-center items-stretch z-10 w-full max-w-[1160px]">
         {badges.map((b, i) => <Card key={i} badge={b} index={i} />)}
       </div>
-
-      {/* Footer divider */}
-      <motion.div
-        className="mt-[52px] flex items-center gap-4 z-10 w-full max-w-[760px]"
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 1.2, delay: 1 }}
-      >
-        <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/[0.07]" />
-        <span className="text-[9px] tracking-[3px] text-white/[0.16] uppercase">verified</span>
-        <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/[0.07]" />
-      </motion.div>
+     
     </div>
   );
 }

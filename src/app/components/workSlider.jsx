@@ -157,7 +157,7 @@ export default function WorkSlider() {
      */
     <div
       ref={containerRef}
-      className="bg-[#0e1016] w-full"
+      className="bg-[#0e1016] w-full px-4 md:px-0"
       style={{ height: `${100 + (TOTAL_SLIDES - 1) * VH_PER_SLIDE}vh` }}
     >
       {/* Sticky panel — stays pinned while the outer div scrolls past */}
@@ -168,15 +168,28 @@ export default function WorkSlider() {
               swiperRef.current = swiper;
             }}
             slidesPerView={3.2}
-            centeredSlides={true}
             spaceBetween={20}
-            speed={500}            /* Swiper CSS transition duration (ms) */
-            allowTouchMove={false} /* scroll-driven only — disable drag    */
+            speed={500}           
+            allowTouchMove={false}
+            breakpoints={{
+            320: {
+                 slidesPerView: 1.2,
+                 centeredSlides: false,
+            },
+            640: {
+                 slidesPerView: 2.2,
+                 centeredSlides: true,
+            },
+            1024: {
+                 slidesPerView: 3.2,
+                 centeredSlides: true,
+            },
+            }}
             className="w-full mt-20"
           >
             {/* ── Intro slide ── */}
-            <SwiperSlide className="flex items-center justify-center">
-              <div className="shrink-0 flex flex-col gap-6 px-4">
+            <SwiperSlide className="flex items-center justify-center ">
+              <div className="shrink-0 flex flex-col gap-6 px-4 ">
                 <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight font-['Syne',sans-serif]">
                   We let <span className="text-orange-400">our work</span>
                   <br />speak for itself.
