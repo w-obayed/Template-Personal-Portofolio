@@ -81,6 +81,17 @@ export default function GalleryView() {
               disableOnInteraction: false,
          }}
          allowTouchMove={false} 
+         breakpoints={{
+                    320: {
+                      slidesPerView: 1.5,
+                    },
+                    640: {
+                      slidesPerView: 2.5,
+                    },
+                    1024: {
+                      slidesPerView: 6.5,
+                    },
+                  }}
          className='w-full h-auto'
 >
          {
@@ -113,6 +124,17 @@ export default function GalleryView() {
               reverseDirection: true,
          }}
          allowTouchMove={false} 
+         breakpoints={{
+                    320: {
+                      slidesPerView: 1.5,
+                    },
+                    640: {
+                      slidesPerView: 2.5,
+                    },
+                    1024: {
+                      slidesPerView: 6.5,
+                    },
+                  }}
          className='w-full h-auto'
         >
          {
@@ -144,6 +166,17 @@ export default function GalleryView() {
               disableOnInteraction: false,
          }}
          allowTouchMove={false} 
+         breakpoints={{
+                    320: {
+                      slidesPerView: 1.5,
+                    },
+                    640: {
+                      slidesPerView: 2.5,
+                    },
+                    1024: {
+                      slidesPerView: 6.5,
+                    },
+                  }}
          className='w-full h-auto'
         >
          {

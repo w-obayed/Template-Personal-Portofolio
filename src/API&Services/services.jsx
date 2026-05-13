@@ -1,4 +1,3 @@
-import React from 'react'
 
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
@@ -89,70 +88,139 @@ const serviceCall = (srv)=>{
       ];
     }
 
-    if (srv === "discovery") {
+   if (srv === "discovery") {
   return [
     {
       phase: { id: 0, label: "Discovery" },
       detail: {
-        title: "Free Initial Consultation",
-        duration: "45 minutes",
-        description: [
-          "We begin with a detailed conversation to fully understand your idea, business goals, target audience, and expectations. This session helps us identify core requirements, potential challenges, and define a clear project direction before moving into planning and execution.",
-          "During this phase, we carefully analyze your needs and gather all necessary information about features, functionality, and technical constraints. This ensures we are aligned on scope, priorities, and success criteria so the project starts with clarity and confidence.",
-          "The outcome of this stage is a structured understanding of your project vision, along with a clear roadmap that guides the design and development process, reducing risk and ensuring efficient execution from start to finish."
+        steps: [
+          {
+            title: "Initial Understanding",
+            duration: "15 minutes",
+            description:
+              "We begin by understanding your idea, goals, and expectations in detail. This helps us align on the project vision, identify key requirements, and establish a strong foundation for smooth communication and clear direction throughout the entire development process.",
+          },
+          {
+            title: "Requirement Analysis",
+            duration: "20 minutes",
+            description:
+              "We carefully analyze your business needs, target audience, and technical requirements. This ensures we clearly define features, scope, and constraints so the project starts with accurate planning and avoids confusion or misalignment later.",
+          },
+          {
+            title: "Project Roadmap",
+            duration: "10 minutes",
+            description:
+              "We create a structured roadmap outlining the full development journey, including milestones, timelines, and deliverables. This gives you a clear overview of how the project will progress from start to final delivery.",
+          },
         ],
       },
     },
+
     {
       phase: { id: 1, label: "UI / UX Design" },
       detail: {
-        title: "Solution Planning & Offer Preparation",
-        duration: "2–3 days",
-        description: [
-          "We translate your requirements into structured user flows, wireframes, and design concepts that focus on usability, clarity, and user experience, ensuring the product is intuitive and aligned with your business objectives and customer needs.",
-          "Our design process includes analyzing user behavior, interface structure, and visual hierarchy to create a seamless experience. We ensure every screen serves a purpose and supports both functionality and aesthetic consistency across the entire product.",
-          "At the end of this stage, you receive a complete design direction along with a well-defined solution plan, including features, layout structure, and development roadmap, making the next phase efficient and predictable."
+        steps: [
+          {
+            title: "User Flow Design",
+            duration: "1 day",
+            description:
+              "We design user flows that map how users will interact with the product. This ensures smooth navigation, logical structure, and a user-friendly experience that aligns with your business goals and improves engagement.",
+          },
+          {
+            title: "Wireframing",
+            duration: "1 day",
+            description:
+              "We create wireframes that define layout structure and content placement. This helps visualize the product early, ensuring clarity before moving into visual design and reducing the need for major changes later.",
+          },
+          {
+            title: "UI Design System",
+            duration: "1 day",
+            description:
+              "We build a consistent design system including colors, typography, and components. This ensures visual harmony across the product and speeds up development with reusable, scalable UI elements.",
+          },
         ],
       },
     },
+
     {
       phase: { id: 2, label: "Development" },
       detail: {
-        title: "Product Development",
-        duration: "1–2 weeks",
-        description: [
-          "We convert approved designs into a fully functional product using modern frameworks and clean architecture, ensuring scalability, performance, and maintainability while following best practices in frontend and backend development.",
-          "During development, we focus on building secure, optimized, and responsive features that work smoothly across devices. Continuous integration and structured coding practices ensure stability and reduce future maintenance complexity.",
-          "You receive regular updates throughout the development cycle, allowing transparency and feedback integration, so the final product matches your expectations and business requirements without unnecessary delays or rework."
+        steps: [
+          {
+            title: "Frontend Development",
+            duration: "3–5 days",
+            description:
+              "We convert UI designs into responsive and interactive interfaces using modern frameworks. Focus is on performance, scalability, and ensuring a smooth user experience across all devices and screen sizes.",
+          },
+          {
+            title: "Backend Development",
+            duration: "4–6 days",
+            description:
+              "We build secure and scalable backend systems including APIs, authentication, and database structure. This ensures the application runs efficiently with strong data handling and system reliability.",
+          },
+          {
+            title: "Integration",
+            duration: "2–3 days",
+            description:
+              "We connect frontend and backend systems, ensuring seamless data flow and feature functionality. This step ensures everything works together as a complete, fully functional product.",
+          },
         ],
       },
     },
+
     {
       phase: { id: 3, label: "Quality Assurance" },
       detail: {
-        title: "Testing & Optimization",
-        duration: "3–5 days",
-        description: [
-          "We perform thorough testing across browsers, devices, and screen sizes to ensure the application works reliably in all environments, identifying and resolving any functional or visual issues before deployment.",
-          "Our QA process includes performance optimization, bug fixing, and usability checks to ensure smooth interactions, fast loading times, and a consistent experience for every user regardless of platform or device.",
-          "The goal of this stage is to deliver a stable, production-ready product that meets quality standards, ensuring users experience a seamless and error-free interface from the moment of launch."
+        steps: [
+          {
+            title: "Functional Testing",
+            duration: "2 days",
+            description:
+              "We test all features to ensure they work as expected in real-world scenarios. This includes checking user flows, forms, logic, and overall application behavior for consistency and reliability.",
+          },
+          {
+            title: "Cross-Device Testing",
+            duration: "2 days",
+            description:
+              "We test the application across different browsers, devices, and screen sizes to ensure responsive design and consistent performance everywhere.",
+          },
+          {
+            title: "Performance Optimization",
+            duration: "1 day",
+            description:
+              "We optimize loading speed, reduce unnecessary code, and improve overall performance to ensure fast and smooth user experience under all conditions.",
+          },
         ],
       },
     },
+
     {
       phase: { id: 4, label: "Go Live" },
       detail: {
-        title: "Deployment & Launch",
-        duration: "1 day",
-        description: [
-          "We deploy your project to a live production environment with careful configuration to ensure zero downtime, smooth migration, and proper setup of all services required for stable operation.",
-          "Security, performance, and reliability are verified during deployment to ensure everything runs correctly under real-world conditions, minimizing risks and ensuring a smooth launch experience for users.",
-          "After launch, we remain available for support, monitoring, and quick adjustments, ensuring your product continues to run efficiently and any unexpected issues are resolved promptly."
+        steps: [
+          {
+            title: "Production Deployment",
+            duration: "1 day",
+            description:
+              "We deploy the application to a live production environment with proper configuration, ensuring stability, security, and zero downtime during launch.",
+          },
+          {
+            title: "Final Verification",
+            duration: "1 day",
+            description:
+              "We perform final checks after deployment to ensure everything is working correctly in the live environment, including APIs, UI, and performance.",
+          },
+          {
+            title: "Post Launch Support",
+            duration: "Ongoing",
+            description:
+              "We provide continuous support after launch, handling bug fixes, improvements, and monitoring to ensure long-term stability and smooth operation.",
+          },
         ],
       },
     },
   ];
-}
+   }
 
     return []
   

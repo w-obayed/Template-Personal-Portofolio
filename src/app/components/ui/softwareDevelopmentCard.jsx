@@ -40,7 +40,7 @@ const techIcons = [
 export default function SoftwareDevelopmentCard({ card, style }) {
   return (
     <div
-      className="w-full h-full flex items-center justify-center px-4 will-change-transform absolute top-0 left-0"
+      className="w-full h-full flex flex-wrap items-center justify-center px-4 will-change-transform absolute top-0 left-0"
       style={style}
     >
       <div className="relative w-full max-w-6xl rounded-2xl overflow-hidden border-[0.5px] border-gray-400 h-full transition-shadow duration-600 ease-[ease]"
@@ -48,7 +48,6 @@ export default function SoftwareDevelopmentCard({ card, style }) {
       >
 
         {/* 🔥 Overlay (from your first design) */}
-        {/* <div className="absolute inset-0 rounded-2xl overflow-hidden bg-linear-to-r from-[#0c1120ee] via-[#0c112099] to-[#0c112055]" /> */}
        <div className="absolute inset-0 rounded-2xl bg-gray-900/90" />
 
         {/* 🔥 Glow blob (keep from slider system) */}
@@ -59,23 +58,23 @@ export default function SoftwareDevelopmentCard({ card, style }) {
           }}
         />
 
-        <div className="relative z-10 flex flex-col md:flex-row min-h-[420px] h-full">
+        <div className="relative z-10 flex flex-col md:flex-row md:min-h-[420px] md:h-full">
 
           {/* ───────── LEFT (your design) ───────── */}
-          <div className="flex-1 flex flex-col justify-center px-10 py-12 space-y-5">
+          <div className="flex-1 flex flex-col justify-center px-10 mb-4 md:mb-0 py-5 md:py-12 space-y-3 md:space-y-4 lg:space-y-5">
 
             {/* Big number */}
-            <h1 className="text-9xl leading-[128px] font-medium font-['Syne',sans-serif] text-[#889bc3]">
+            <h1 className="text-[clamp(3rem,8vw,128px)] font-medium font-['Syne',sans-serif] text-[#889bc3]">
               {card.num}
             </h1>
 
             {/* Title */}
-            <h1 className="text-[58px] font-extrabold text-white/80 leading-[55px] font-['Syne',sans-serif]">
+            <h1 className="text-[clamp(1.5rem,4vw,58px)] font-extrabold text-white/80 font-['Syne',sans-serif]">
               {card.title}
             </h1>
 
             {/* Description */}
-            <p className="text-xl text-muted-foreground max-w-[80%] leading-7 font-['DM_Sans',sans-serif]">
+            <p className="text-[clamp(1rem,2vw,16px)] text-muted-foreground max-w-[80%] font-['DM_Sans',sans-serif]">
               {card.desc}
             </p>
 
@@ -87,11 +86,11 @@ export default function SoftwareDevelopmentCard({ card, style }) {
           </div>
 
           {/* ───────── RIGHT (shadcn card from your first design) ───────── */}
-          <div className="flex items-center justify-end px-8 py-8">
+          <div className="flex items-center justify-end px-8 md:py-8">
 
-            <Card className="w-[350px] bg-gradient-to-r from-[#16171c] via-[#1f2128] to-white/5 backdrop-blur-3xl rounded-2xl">
+            <Card className="w-full md:w-[350px] border-none shadow-none bg-transparent md:border md:shadow md:bg-card md:bg-gradient-to-r from-[#16171c] via-[#1f2128] to-white/5 md:backdrop-blur-3xl rounded-2xl">
 
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-2 hidden md:block">
                 <CardTitle className="text-white text-xl font-bold">
                   {card.quality}
                 </CardTitle>
