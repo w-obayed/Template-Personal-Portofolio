@@ -10,9 +10,9 @@ export default function MobileTabView({ slides, currentIndex, onSelect }) {
           <button
             key={phase.id}
             onClick={() => onSelect(i)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all duration-300 backdrop-blur-md ${i === currentIndex
-                ? 'bg-blue-500/20 border-blue-400/50 text-white shadow-[0_0_20px_rgba(59,130,246,0.4)]'
-                : 'bg-white/5 border-white/10 text-white/40 hover:text-white/70 hover:bg-white/10'
+            className={`px-4 py-2 rounded-xl text-[18px] font-normal text-nowrap shadow-xl/20 transition-all duration-500 backdrop-blur-md ${i === currentIndex
+                ? 'bg-slate-400 text-white text-xl font-bold shadow-[0_0_35px_rgba(59,130,246,0.6)]'
+                : 'bg-white/5 border-white/10 text-white/40'
               }`}
           >
             {phase.label}
@@ -21,32 +21,33 @@ export default function MobileTabView({ slides, currentIndex, onSelect }) {
       </div>
 
       {/* Active content card */}
-      <div
-        key={currentIndex}
-        className="relative overflow-hidden rounded-3xl border border-blue-400/30 bg-white/4 backdrop-blur-xl p-6"
-        style={{ animation: 'fadeSlideIn 0.35s ease forwards' }}
-      >
-        <div className="absolute inset-0 bg-blue-500/5 pointer-events-none" />
-        <div className="relative z-10 flex flex-col gap-4">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <span className="text-xs uppercase tracking-[0.25em] text-blue-300">Phase {currentIndex + 1}</span>
-              <h3 className="mt-1 text-xl font-bold text-white">{detail.title}</h3>
+     <div className="space-y-4">
+      {
+      detail.steps?.map((item, i) => (
+      <div key={i} className="relative z-10 w-full flex ">
+        <div className="w-full flex flex-col gap-5">
+          <div className="relative overflow-hidden rounded-3xl bg-[radial-gradient(ellipse_at_top,rgba(250,250,250,0.3)_0%,rgba(0,0,0,1)_40%)] backdrop-blur-xl p-6 lg:p-8 shadow-[0_0_50px_rgba(59,130,246,0.25)]">
+            {/* Glow */}
+            <div className="absolute inset-0 bg-blue-500/10 blur-3xl pointer-events-none" />
+            <div  className="relative z-10">
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <span className="shrink-0 rounded-full text-2xl text-white/60">
+                  {item.title}
+                </span>
+                <span className="shrink-0 rounded-full text-sm text-white/60">
+                  {item.duration}
+                </span>
+              </div>
+              <p className="max-w-[90%] text-sm lg:text-base leading-relaxed text-white/60">
+                    {item.description}
+              </p>
             </div>
-            <span className="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/60">
-              {detail.duration}
-            </span>
           </div>
-          <p className="text-sm leading-relaxed text-white/60">{detail.description}</p>
         </div>
       </div>
-
-      <style>{`
-        @keyframes fadeSlideIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+        ))
+       }
+     </div>
     </div>
   );
 }

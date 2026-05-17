@@ -39,7 +39,7 @@ export default function HeroSection() {
   return (
     <>
     <section
-      className="relative w-full min-h-screen rounded-b-[50px] overflow-hidden flex flex-col items-center justify-start pt-24 pb-0 font-['DM_Sans',sans-serif] bg-[linear-gradient(160deg,#0a0a0f_0%,#0f0a1e_40%,#140d2a_70%,#0a0a0f_100%)]"
+      className="relative w-full h-full rounded-b-[50px] overflow-hidden flex flex-col items-center justify-start pt-24 pb-0 font-['DM_Sans',sans-serif] bg-[linear-gradient(160deg,#0a0a0f_0%,#0f0a1e_40%,#140d2a_70%,#0a0a0f_100%)]"
     >
       <div
         className="hidden lg:block absolute pointer-events-none right-60 bottom-0 w-full h-[1600px] z-0 rounded-tr-[50%] rounded-br-[50%] overflow-hidden shadow-2xl bg-[linear-gradient(65deg,#000000_0%,#000000_30%,#4f46e5_60%,#9147ff_70%,#eab308_90%)]"
@@ -78,38 +78,28 @@ export default function HeroSection() {
         {heroData[0]?.description}
       </motion.h1>
 
-      {/* ── Image Stage ── */}
       <motion.div
         custom={0.28}
         initial="hidden"
         animate="visible"
         variants={fadeUp}
-        className="relative flex items-end justify-center w-full max-w-[800px] min-h-[720px]"
+        className="relative flex items-end justify-center w-full max-w-[950px] min-h-[400px] md:min-h-screen"
       >
-        {/* Glow behind */}
-        <div className="absolute -bottom-100 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(168,85,247,0.35)_0%,transparent_70%)] z-0 pointer-events-none" />
-
-        {/* Outer gradient ring */}
         <div
-          className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-[linear-gradient(170deg,#9747FF_0%,#9747ff_45%,#fe814b_80%,#fb923c_100%)] z-1"
+          className="absolute -bottom-[20%] md:-bottom-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] md:size-full rounded-full bg-[linear-gradient(170deg,#9747FF_0%,#9747ff_45%,#fe814b_80%,#fb923c_100%)] z-1"
         />
-
-        {/* Inner dark circle — creates the ring effect */}
         <div
-          className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[650px] h-[650px] rounded-full bg-[#0f0a1e] z-2"
+          className="absolute -bottom-[7%] md:-bottom-[7%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] md:w-[75%] md:h-[75%] rounded-full bg-[#0f0a1e] z-2"
         />
-
-        {/* Placeholder person image — transparent PNG from web */}
         <div
-          className="absolute z-10 bottom-0 left-1/2 -translate-x-1/2 w-full h-full flex items-end justify-center"
+          className="absolute z-10 bottom-0 left-1/2 -translate-x-1/2 size-[400px] md:size-full flex items-end justify-center"
         >
           {/* Silhouette placeholder that matches the design aesthetic */}
           <Image
-            src="/azad.png"
+            src={heroData[0]?.src}
             alt="Azad"
-            width={800}
-            height={800}
-            className="w-full h-full"
+            fill
+            className="size-full object-cover aspect-4/3"
           />
         </div>
       </motion.div>

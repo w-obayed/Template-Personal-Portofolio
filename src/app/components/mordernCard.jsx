@@ -1,107 +1,123 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Lenis from "lenis";
+import services from "../../API&Services/services";
 import "lenis/dist/lenis.css";
-import SoftwareDevelopmentCard from "./ui/softwareDevelopmentCard";
+import ServiceCoreCard from "./ui/serviceCoreCard";
 
-
-const cards = [
-  {
-    num: "1",
-    title: "Software\nDevelopment",
-    desc: "We use innovative solutions to create customized software and/or improve existing software.",
-    btn: "SPEAK TO OUR EXPERTS",
-    quality: "Quality in focus",
-    qualityDesc:
-      "Through feedback and iterations, we continuously improve your app, and our work is based on the latest state of the art.",
-    backgroundImage: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=900&q=80",
-  },
-  {
-    num: "2",
-    title: "UI/UX\nDesign",
-    desc: "Beautiful, intuitive interfaces crafted with precision. We turn ideas into delightful digital experiences.",
-    btn: "VIEW OUR PORTFOLIO",
-    quality: "Design-first approach",
-    qualityDesc:
-      "Every pixel is intentional. We prototype, test, and iterate until the experience feels completely effortless.",
-      backgroundImage: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=900&q=80",
-  },
-  {
-    num: "3",
-    title: "IT consulting / digitization",
-    desc: "Scale with confidence. We architect, deploy and manage cloud infrastructure for maximum reliability.",
-    btn: "EXPLORE SOLUTIONS",
-    quality: "Always online",
-    qualityDesc:
-      "99.9% uptime guaranteed. Automated pipelines, smart monitoring and rapid incident response included.",
-      backgroundImage: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=900&q=80",
-  },
-];
+// ─── Constants ──────────────────────────────────────────────────────────────
+// Each slide gets one full viewport of scroll distance.
+// Total section height = 100vh (sticky pin) + N×100vh (slide transitions).
+const VH_PER_SLIDE = 100;
 
 // ─── Main component ─────────────────────────────────────────────────────────
 export default function VerticalSlider() {
-  const sectionRef = useRef(null);
-  const lenisRef = useRef(null);
-  const [progress, setProgress] = useState(0);
+  const sectionRef  = useRef(null);
+  const lenisRef    = useRef(null);
+  const progressRef = useRef(0);          // live value — no re-render cost
+  const cardRefs    = useRef([]);         // per-card DOM refs for direct updates
+
+  const coreExpertise = services("coreExpertise") || { items: [] };
+  const items = coreExpertise.items ?? [];
+  const N = items.length;
+
+  // ── Drive card transforms directly (no setState per scroll tick) ───────────
+  const updateCards = (progress) => {
+    const totalTransitions = Math.max(N - 1, 1);
+    const relativeProgress = progress * totalTransitions;
+
+    cardRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const diff = i - relativeProgress;
+      let y, scale;
+
+      if (diff > 0) {
+        // Card is ahead — stack slightly above with a subtle scale-down
+        y = diff * 24;
+        scale = Math.max(1 - diff * 0.04, 0.8);
+      } else {
+        // Card has been scrolled past — slide it up out of view
+        // Adding GAP_PX creates visible separation between outgoing and incoming cards
+        const GAP_PX = 16;
+        const cardH = el.offsetHeight || 600;
+        y = diff * (cardH + GAP_PX);
+        scale = 1;
+      }
+
+      el.style.transform = `translateY(${y}px) scale(${scale})`;
+    });
+  };
 
   useEffect(() => {
     const lenis = new Lenis({ smoothWheel: true });
     lenisRef.current = lenis;
 
+    let rafId;
     const raf = (t) => {
       lenis.raf(t);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     };
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     lenis.on("scroll", () => {
-      const rect = sectionRef.current.getBoundingClientRect();
-      const total = window.innerHeight;
-      const scrolled = Math.min(Math.max(-rect.top / total, 0), 1);
-      setProgress(scrolled);
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect        = section.getBoundingClientRect();
+      // Scrollable distance = total section height minus one viewport (the pin)
+      const scrollableH = section.offsetHeight - window.innerHeight;
+      const progress   = Math.min(Math.max(-rect.top / scrollableH, 0), 1);
+
+      progressRef.current = progress;
+      updateCards(progress);
     });
 
-    return () => lenis.destroy();
-  }, []);
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [N]);
+
+  // Section height: one viewport to enter + one per slide + one to exit
+  const sectionH = `${100 + N * VH_PER_SLIDE}vh`;
 
   return (
-    <div ref={sectionRef} className="h-[200vh] bg-black pt-16">
-      <div className="flex flex-col items-center justify-center gap-4 z-10 w-full max-w-[760px] mx-auto text-center px-4 pb-20">
-          <p className="font-['DM_Sans',sans-serif] text-base font-bold tracking-[0.12em] text-muted-foreground">our service</p>
-          <h1 className="font-['DM_Sans',sans-serif] text-[clamp(1.5rem,5vw,3.5rem)] font-bold text-white leading-tight">Not just a software partner , but rather a holistic solution.</h1>
-      </div>
-      <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="relative w-full h-[700px] md:h-[600px]">
-          {cards.map((card, i) => {
-            const totalTransitions = cards.length - 1;
-            const relativeProgress = progress * totalTransitions;
-            const diff = i - relativeProgress;
+    <div
+      ref={sectionRef}
+      className="bg-black pt-20 pb-20"
+      style={{ height: sectionH }}
+    >
+      {/* Sticky panel — stays pinned while the outer div scrolls past */}
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
-            let y = 0;
-            let scale = 1;
-            const opacity = 1; 
+        {/* ── Section header (always visible inside the sticky frame) ── */}
+        <div className="flex flex-col items-center gap-3 w-full md:max-w-[min(60%,760px)] mx-auto text-center px-4 mb-6 md:mb-10 shrink-0">
+          <h2 className="font-['DM_Sans',sans-serif] text-[clamp(1.5rem,4vw,3rem)] font-bold text-white leading-tight">
+            {coreExpertise.sectionTitle}
+          </h2>
+          <p className="font-['DM_Sans',sans-serif] text-sm md:text-base font-medium tracking-widest text-muted-foreground">
+            {coreExpertise.sectionDescription}
+          </p>
+        </div>
 
-            if (diff > 0) {
-              y = diff * 20; 
-              scale = 1 - diff * 0.05;
-            } else {
-              
-              y = diff * 620;
-              scale = 1;
-            }
-
-            return (
-              <SoftwareDevelopmentCard
-                key={i}
-                card={card}
-                style={{
-                  transform: `translateY(${y}px) scale(${scale})`,
-                  opacity,
-                  zIndex: cards.length - i,
-                }}
-              />
-            );
-          })}
+        {/* ── Card stack ── */}
+        <div className="relative w-full flex-1 min-h-0 px-4 md:px-8">
+          {items.map((card, i) => (
+            <div
+              key={i}
+              ref={(el) => { cardRefs.current[i] = el; }}
+              className="w-full absolute top-0 left-0 cardHeight"
+              style={{
+                // height: "min(600px, calc(100svh - 220px))",
+                transform: `translateY(${i * 24}px) scale(${Math.max(1 - i * 0.04, 0.8)})`,
+                zIndex: N - i,
+                willChange: "transform",
+              }}
+            >
+              <ServiceCoreCard card={card} />
+            </div>
+          ))}
         </div>
 
       </div>
