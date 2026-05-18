@@ -47,7 +47,7 @@ export default function HeroSection() {
 
       {/* Right large blob circle */}
       <div
-        className="absolute pointer-events-none -right-[40%] -bottom-[40%] w-[1000px] h-[1000px] rounded-[50%] shadow-2xl bg-[linear-gradient(180deg,rgba(80,20,160,0.5)_0%,rgba(168,50,200,0.4)_60%,transparent_100%)]"
+        className="absolute pointer-events-none -right-[40%] -bottom-[40%] w-[1000px] h-[1000px] rounded-[50%] shadow-2xl bg-[linear-gradient(135deg,hsla(266, 100%, 64%, 0.8) 0%,hsla(266, 100%, 64%, 0.5) 40%,hsla(18, 99%, 65%, 0.5) 70%,transparent 100%)]"
       />
 
       {/* ── Badge ── */}
