@@ -1,30 +1,80 @@
-import React from 'react'
 
-function serviceCard({item}) {
+import React from "react";
+import { ArrowUpRight } from "lucide-react";
+
+function ServiceCard({ item }) {
   return (
-           <div
-                className="group rounded-[28px] bg-white/5 backdrop-blur-md p-4 shadow-lg"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-white text-lg md:text-xl font-bold tracking-wide">
-                    {item?.title}
-                  </h3>
-                  <button className="w-11 h-11 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-black transition">
-                    ↗
-                  </button>
-                </div>
+    <div className="relative w-full h-full">
 
-                <div className={`rounded-[22px] overflow-hidden bg-linear-to-r p-2`}>
-                  <div className="relative h-44 md:h-52 rounded-[18px] overflow-hidden bg-black/20 flex items-center justify-center">
-                    <img
-                      src={item?.image}
-                      alt={item?.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-  )
+      {/* SVG shape */}
+      <svg
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 425 385"
+        fill="none"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Fill */}
+        <path
+          d="M6 46C6 23.9086 23.9086 6 46 6H278.5C300.591 6 318.5 23.9086 318.5 46V48.3942C318.5 81.5313 345.663 108.394 378.8 108.394C400.891 108.394 419 126.303 419 148.394V338.343C419 360.434 401.091 378.343 379 378.343H46C23.9086 378.343 6 360.434 6 338.343V46Z"
+          fill="white"
+          fillOpacity="0.06"
+        />
+
+        {/* Border */}
+        <path
+          d="M278.5 3C302.248 3 321.5 22.2518 321.5 46V48.3945C321.5 79.8551 347.3 105.394 378.8 105.395C402.529 105.395 422 124.627 422 148.395V338.343C422 362.091 402.748 381.343 379 381.343H46C22.2518 381.343 3.00012 362.091 3 338.343V46C3 22.2518 22.2518 3 46 3H278.5Z"
+          stroke="white"
+          strokeOpacity="0.18"
+          strokeWidth="4"
+        />
+
+        {/* Title (smaller) */}
+        <text
+          x="36"
+          y="62"
+          fontFamily="'Syne', sans-serif"
+          fontSize="20"   // reduced from 22
+          fontWeight="700"
+          letterSpacing="1"
+          fill="white"
+        >
+          {item?.title}
+        </text>
+
+        {/* Arrow background */}
+        <circle cx="370" cy="56" r="24" fill="black" fillOpacity="0.75" />
+      </svg>
+      <div
+        className="absolute z-10 flex items-center justify-center"
+        style={{
+          top: "14.5%",
+          right: "13%",
+          transform: "translate(50%, -50%)",
+          width: "2rem",
+          height: "2rem",
+        }}
+      >
+        <ArrowUpRight className="text-white size-5 md:size-8" />
+      </div>
+
+      {/* Image (reduced height + cleaner spacing) */}
+      <div
+        className="absolute left-[6%] right-[6%] bottom-[8%] overflow-hidden rounded-[14px]"
+        style={{ top: "35%" }} // was 26% → reduced image height
+      >
+        <video
+          src={item?.video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto object-cover"
+        />
+      </div>
+
+    </div>
+  );
 }
 
-export default serviceCard
+export default ServiceCard;

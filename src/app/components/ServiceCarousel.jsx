@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
@@ -15,7 +15,14 @@ export default function ServiceCarousel() {
   const service = services("services") || [];
 
   // TOTAL_SLIDES computed from real data length, not services.length (function arity)
-  const TOTAL_SLIDES = service.length;
+  const TOTAL_SLIDES = service.items.length;
+
+  // useSyncExternalStore: returns false on server, true on client — no setState, no extra render
+  const mounted = useSyncExternalStore(
+    () => () => {},  // subscribe (no-op — we don't need updates)
+    () => true,      // getSnapshot on client
+    () => false      // getServerSnapshot
+  );
 
   const swiperRef    = useRef(null);  // Swiper instance
   const containerRef = useRef(null);  // Outer scroll-distance div
@@ -75,35 +82,45 @@ export default function ServiceCarousel() {
 
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
-              <h2 className="text-4xl md:text-6xl font-extrabold text-white font-['Syne',sans-serif]">
-                My Services
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white font-['Syne',sans-serif]">
+               {service.sectionTitle}
               </h2>
               <p className="max-w-xl text-sm md:text-base text-white/80 leading-relaxed font-['DM_Sans',sans-serif]">
-                I help businesses and individuals bring their ideas to life through
-                thoughtful design. Whether you&apos;re building a product from scratch or
-                improving an existing one, I offer services that focus on both
-                aesthetics and usability.
+                {service.sectionDescription}
               </p>
             </div>
 
-            {/* Swiper */}
-            <div className="w-full">
-              <Swiper
-                onSwiper={(swiper) => {
-                  swiperRef.current = swiper;
-                }}
-                slidesPerView={3}
-                spaceBetween={15}
-                speed={500}            /* Swiper CSS transition duration (ms) */
-                allowTouchMove={false} /* scroll-driven only — disable drag   */
-                className="w-full h-auto"
-              >
-                {service.map((item, index) => (
-                  <SwiperSlide key={index}>
-                    <ServiceCard item={item} />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+            {/* Swiper — only rendered after client mount to avoid SSR 1-slide flash */}
+            <div className="w-full h-[340px]">
+              {mounted && (
+                <Swiper
+                  onSwiper={(swiper) => {
+                    swiperRef.current = swiper;
+                  }}
+                  slidesPerView={3}
+                  spaceBetween={15}
+                  breakpoints={{
+                    320: {
+                      slidesPerView: 1.1,
+                    },
+                    640: {
+                      slidesPerView: 2,
+                    },
+                    1024: {
+                      slidesPerView: 3,
+                    },
+                  }}
+                  speed={500}            /* Swiper CSS transition duration (ms) */
+                  allowTouchMove={false}
+                  className="w-full h-full"
+                >
+                  {service.items.map((item, index) => (
+                    <SwiperSlide key={index}>
+                      <ServiceCard item={item} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              )}
             </div>
 
           </div>

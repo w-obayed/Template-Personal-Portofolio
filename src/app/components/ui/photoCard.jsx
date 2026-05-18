@@ -3,14 +3,14 @@ import React from 'react'
 
 function photoCard({ src }) {
   return (
-    <Image 
-       width={350} 
-       height={300} 
-       src={src} 
-       alt="Description"
-       priority
-       className="rounded-lg aspect-4/3 shadow-md object-cover size-full" 
-    />
+   <div className="w-full h-[180px]">
+  <Image
+    src={src}
+    alt="Description"
+    fill
+    className="object-cover size-full aspect-4/3 shadow-md rounded-lg"
+  />
+</div>
   )
 }
 
