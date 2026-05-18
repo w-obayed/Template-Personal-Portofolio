@@ -45,10 +45,17 @@ function ServiceCard({ item }) {
         {/* Arrow background */}
         <circle cx="370" cy="56" r="24" fill="black" fillOpacity="0.75" />
       </svg>
-
-      {/* Lucide Arrow (HTML layer for better control) */}
-      <div className="absolute top-[34px] right-[26px] min-[500px]:right-[34px] md:right-[28px] lg:top-[34px] lg:right-[26px] xl:top-[34px] xl:right-[36px] z-10">
-        <ArrowUpRight className="text-white size-8" />
+      <div
+        className="absolute z-10 flex items-center justify-center"
+        style={{
+          top: "14.5%",
+          right: "13%",
+          transform: "translate(50%, -50%)",
+          width: "2rem",
+          height: "2rem",
+        }}
+      >
+        <ArrowUpRight className="text-white size-5 md:size-8" />
       </div>
 
       {/* Image (reduced height + cleaner spacing) */}
@@ -56,10 +63,13 @@ function ServiceCard({ item }) {
         className="absolute left-[6%] right-[6%] bottom-[8%] overflow-hidden rounded-[14px]"
         style={{ top: "35%" }} // was 26% → reduced image height
       >
-        <img
-          src={item?.image}
-          alt={item?.title}
-          className="w-full h-full object-cover"
+        <video
+          src={item?.video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto object-cover"
         />
       </div>
 

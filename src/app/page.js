@@ -10,6 +10,7 @@ import RollerScroll from "./components/rollerScroll";
 import WorkSlider from "./components/workSlider";
 import VerticalSlider from "./components/mordernCard";
 import TrustBadges from "./components/trustbadge";
+import Testimonial from "./components/testimonial";
 
 export default function Home() {
   return (
@@ -18,13 +19,14 @@ export default function Home() {
         <Navbar />
         <HeroSection />
         <ServiceCarousel />
-        <VerticalSlider></VerticalSlider>
+        <VerticalSlider />
         <GalleryView />
-        <RollerScroll></RollerScroll>
-        <WorkSlider></WorkSlider>
+        <RollerScroll />
+        <WorkSlider />
+        <Testimonial />
         <EducationAndExperience />
-        <Skills></Skills>
-        <TrustBadges></TrustBadges>
+        <Skills />
+        <TrustBadges />
       </div>
     </>
   );

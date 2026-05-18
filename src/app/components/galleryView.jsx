@@ -4,23 +4,20 @@ import React, { useEffect, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import PhotoCard from './ui/photoCard'
 import { Autoplay, Mousewheel } from 'swiper/modules';
+import serviceCall from '../../API&Services/services';
 import 'swiper/css';
 
-const images = [
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1491895200222-0fc4a4c35e18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FsZXJ5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-  ];
 
 
 export default function GalleryView() {
-  
   const swiperRefs = useRef([]);
+  const images = serviceCall("gallery") || [] ;
+
+  const slider1 = images.slice(0, 8);
+  const slider2 = images.slice(8, 16);
+  const slider3 = images.slice(16, 24);
+
+
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
@@ -95,7 +92,7 @@ export default function GalleryView() {
          className='w-full h-auto'
 >
          {
-           images.map((src, index) => (
+           slider1.map((src, index) => (
             <SwiperSlide key={index}>
                <PhotoCard src={src} />
             </SwiperSlide>
@@ -138,7 +135,7 @@ export default function GalleryView() {
          className='w-full h-auto'
         >
          {
-           images.map((src, index) => (
+           slider2.map((src, index) => (
             <SwiperSlide key={index}>
                <PhotoCard src={src} />
             </SwiperSlide>
@@ -180,7 +177,7 @@ export default function GalleryView() {
          className='w-full h-auto'
         >
          {
-           images.map((src, index) => (
+           slider3.map((src, index) => (
             <SwiperSlide key={index}>
                <PhotoCard src={src} />
             </SwiperSlide>

@@ -17,7 +17,7 @@ export default function DetailSlide({ detail, index, containerH }) {
         </span>
       </div>
 
-      <div className='relative z-10 w-full flex flex-col space-y-6 lg:-ml-[20%]'>
+      <div className='relative z-10 w-full flex flex-col space-y-6 2xl:-ml-[18%] xl:-ml-[12%] lg:-ml-[4%]'>
          {
       detail.steps?.map((item, i) => (
       <div key={i} className="relative z-10 w-full flex justify-end">

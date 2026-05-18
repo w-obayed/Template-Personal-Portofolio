@@ -134,3 +134,16 @@
 .swiper-wrapper {
   transition-timing-function: linear !important;
 }
+
+@layer utilities {
+  .cardHeight {
+    height: 700px;
+  }
+
+  /* Media query for screens wider than 768px to apply the desktop layout */
+  @media (min-width: 769px) {
+    .cardHeight {
+      height: min(600px, calc(100svh - 220px));
+    }
+  }
+}

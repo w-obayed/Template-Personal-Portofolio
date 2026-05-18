@@ -15,7 +15,7 @@ export default function ServiceCarousel() {
   const service = services("services") || [];
 
   // TOTAL_SLIDES computed from real data length, not services.length (function arity)
-  const TOTAL_SLIDES = service.length;
+  const TOTAL_SLIDES = service.items.length;
 
   // useSyncExternalStore: returns false on server, true on client — no setState, no extra render
   const mounted = useSyncExternalStore(
@@ -83,13 +83,10 @@ export default function ServiceCarousel() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
               <h2 className="text-4xl md:text-5xl font-extrabold text-white font-['Syne',sans-serif]">
-                My Services
+               {service.sectionTitle}
               </h2>
               <p className="max-w-xl text-sm md:text-base text-white/80 leading-relaxed font-['DM_Sans',sans-serif]">
-                I help businesses and individuals bring their ideas to life through
-                thoughtful design. Whether you&apos;re building a product from scratch or
-                improving an existing one, I offer services that focus on both
-                aesthetics and usability.
+                {service.sectionDescription}
               </p>
             </div>
 
@@ -117,7 +114,7 @@ export default function ServiceCarousel() {
                   allowTouchMove={false}
                   className="w-full h-full"
                 >
-                  {service.map((item, index) => (
+                  {service.items.map((item, index) => (
                     <SwiperSlide key={index}>
                       <ServiceCard item={item} />
                     </SwiperSlide>

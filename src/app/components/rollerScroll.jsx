@@ -17,8 +17,10 @@ import 'lenis/dist/lenis.css';
 const VH_PER_SLIDE = 60; // How much vertical scroll (vh) per slide
 
 export default function DiscoveryProcess() {
-  const slides = services("discovery") || [];
+  const processData = services("process") || [];
+  const slides = processData.body;
   const TOTAL = slides.length;
+  
 
   const masterRef    = useRef(null);
   const slaveRef     = useRef(null);
@@ -33,7 +35,7 @@ export default function DiscoveryProcess() {
   // ── Responsive ────────────────────────────────────────────
   useEffect(() => {
     const update = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1200);
       setSliderH(Math.max(380, window.innerHeight - 160));
     };
     update();
@@ -90,19 +92,17 @@ export default function DiscoveryProcess() {
 
   // ── UI ────────────────────────────────────────────────────
   return (
-    <div className="bg-[#05070d] text-white relative w-full py-16">
+    <div className="bg-[#05070d] text-white relative w-full">
+      <div className="flex flex-col gap-4 justify-center items-center mb-16 lg:w-[70%] w-full px-6 lg:px-0 mx-auto shrink-0 pt-16">
+        <h1 className="text-4xl font-semibold text-white/90">{processData.head.title}</h1>
+        <p className="text-muted-foreground text-base font-normal text-center">{processData.head.desc}</p>
+      </div>
       {/* Background glow (fixed or absolute relative to the section) */}
-      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500/10 blur-[180px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
+      <div className="hidden xl:block absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500/10 blur-[180px] rounded-full pointer-events-none" />
+      <div className="hidden xl:block absolute bottom-0 right-0 w-[600px] h-[600px] bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
 
       {isMobile ? (
         <div className="w-full mx-auto px-6 py-16 relative z-10">
-          <div className="flex justify-between items-center mb-16">
-            <h1 className="text-4xl font-semibold text-white/90">Our Process</h1>
-            <button className="px-5 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 transition">
-              For the inquiry &#8722; 1 minute
-            </button>
-          </div>
           <MobileTabView
             slides={slides}
             currentIndex={currentIndex}
@@ -120,27 +120,14 @@ export default function DiscoveryProcess() {
           className="relative w-full z-10"
           style={{ height: `${100 + (TOTAL - 1) * VH_PER_SLIDE}vh` }}
         >
-          <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6">
-            
-            {/* Header (stays fixed inside the sticky container) */}
-            <div className="flex justify-between items-center mb-16 w-full shrink-0 pt-16">
-              <h1 className="text-4xl font-semibold text-white/90">
-                Our Process
-              </h1>
-              <button className="px-5 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 transition">
-                For the inquiry &#8722; 1 minute
-              </button>
-            </div>
-
-            {/* Slider Content */}
-            <div className="flex flex-col lg:flex-row gap-10 w-full h-full flex-1 min-h-0">
-
-              {/* LEFT: Circle Phase Slider */}
-              <div className="lg:w-[44%] w-full h-full shrink-0 overflow-hidden">
-                <Swiper
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6 lg:px-10 xl:px-16">
+  
+            {/* LEFT: Circle Phase Slider */}
+            <div className="w-[46%] xl:w-[44%] 2xl:w-[40%] shrink-0 overflow-hidden">
+              <Swiper
                   modules={[EffectFade]}
                   effect="fade"
-                  fadeEffect={{crossFade: true}}
+                  fadeEffect={{ crossFade: true }}
                   slidesPerView={1}
                   speed={700}
                   allowTouchMove={false}
@@ -157,33 +144,34 @@ export default function DiscoveryProcess() {
                     </SwiperSlide>
                   ))}
                 </Swiper>
-              </div>
+            </div>
 
-              {/* RIGHT: Detail Slide Content */}
-              <div className="lg:w-[54%] w-full h-full overflow-hidden">
-                <Swiper
+            {/* GAP */}
+              <div className="w-[2%]" />
+
+            {/* RIGHT: Detail Slide Content */}
+            <div className="flex-1 min-w-0 overflow-hidden">
+              <Swiper
                   modules={[EffectFade]}
                   effect="fade"
-                  fadeEffect={{crossFade: true}}
+                  fadeEffect={{ crossFade: true }}
                   slidesPerView={1}
                   speed={700}
                   allowTouchMove={false}
                   onSwiper={(sw) => (slaveRef.current = sw)}
                   className="w-full h-full"
-                >
-                  {slides.map(({ detail, phase }, slideIdx) => (
-                    <SwiperSlide key={phase.id}>
-                      <DetailSlide
-                        detail={detail}
-                        index={slideIdx}
-                        total={TOTAL}
-                        containerH={sliderH}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-
+              >
+                {slides.map(({ detail, phase }, slideIdx) => (
+                  <SwiperSlide key={phase.id}>
+                    <DetailSlide
+                      detail={detail}
+                      index={slideIdx}
+                      total={TOTAL}
+                      containerH={sliderH}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           </div>
         </div>
