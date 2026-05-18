@@ -83,12 +83,15 @@ export default function Testimonial() {
               1024: {
                 slidesPerView: 2,
               },
+              1280: {
+                slidesPerView: 3,
+              }
             }}
             className="w-full overflow-visible"
           >
             {testimonial.map((item) => (
               <SwiperSlide key={item.id} className="transition-transform duration-300">
-                <div className="relative w-full h-full p-2 md:p-7 rounded-2xl bg-[#1a1a1a] border border-zinc-800">
+                <div className="relative w-full h-full p-2 md:p-7 rounded-2xl bg-[#1a1a1a] border border-zinc-800 hover:border-2">
                   
                   {/* Header */}
                   <div className="flex items-center justify-between mb-5">
@@ -110,8 +113,11 @@ export default function Testimonial() {
                     </div>
 
                     {/* Quote Icon */}
-                    <div className="shrink-0 w-[48px] h-[31px] border-2 border-orange-400 rounded flex items-center justify-center">
-                      <svg
+                    <div className="shrink-0 w-[48px] h-[31px]  flex items-center justify-center">
+                         <svg width="54" height="35" viewBox="0 0 54 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M28.4689 1L28.0178 2.32227L17.4514 33.3223L17.2209 34H1.30878L1.6535 32.7373L10.1066 1.7373L10.3078 1H28.4689ZM52.0158 1L51.5646 2.32227L40.9992 33.3223L40.7678 34H25.0139L25.3508 32.7412L33.6525 1.74121L33.8508 1H52.0158Z" stroke="#FE814C" stroke-width="2"/>
+                        </svg>
+{/*                       <svg
                         width="26"
                         height="19"
                         viewBox="0 0 26 19"
@@ -136,7 +142,7 @@ export default function Testimonial() {
                           strokeWidth="2.5"
                           strokeLinecap="round"
                         />
-                      </svg>
+                      </svg> */}
                     </div>
                   </div>
 
