@@ -1,77 +1,35 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Lenis from "lenis";
+import { Navigation } from "swiper/modules";
+import { useState } from "react";
 import services from "../../API&Services/services";
-import "lenis/dist/lenis.css";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import "swiper/css";
+import "swiper/css/navigation";
 
-const VH_PER_SLIDE = 30;
 
 export default function Testimonial() {
-  const swiperRef = useRef(null);
-  const containerRef = useRef(null);
-  const activeIdxRef = useRef(0);
-  const rafIdRef = useRef(null);
-
+  const [prevEl, setPrevEl] = useState(null);
+  const [nextEl, setNextEl] = useState(null);
   const testimonial = services("testimonial") || [];
-  const TOTAL_SLIDES = testimonial.length;
-
-  useEffect(() => {
-    const lenis = new Lenis({ smoothWheel: true });
-
-    function raf(time) {
-      lenis.raf(time);
-      rafIdRef.current = requestAnimationFrame(raf);
-    }
-    rafIdRef.current = requestAnimationFrame(raf);
-
-    lenis.on("scroll", () => {
-      const swiper = swiperRef.current;
-      const container = containerRef.current;
-      if (!swiper || !container) return;
-
-      const rect = container.getBoundingClientRect();
-      const scrollableH = container.offsetHeight - window.innerHeight;
-
-      const progress = Math.min(Math.max(-rect.top / scrollableH, 0), 1);
-
-      const targetIdx = Math.min(
-        Math.round(progress * (TOTAL_SLIDES - 1)),
-        TOTAL_SLIDES - 1
-      );
-
-      if (targetIdx !== activeIdxRef.current) {
-        activeIdxRef.current = targetIdx;
-        swiper.slideTo(targetIdx);
-      }
-    });
-
-    return () => {
-      cancelAnimationFrame(rafIdRef.current);
-      lenis.destroy();
-    };
-  }, [TOTAL_SLIDES]);
-
   return (
     <div
-      ref={containerRef}
-      className="bg-[#0e1016] w-full px-4 md:px-0"
-      style={{ height: `${100 + (TOTAL_SLIDES - 1) * VH_PER_SLIDE}vh` }}
+      className="bg-[#000000] w-full px-4 md:px-0"
     >
       {/* Sticky Section */}
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+      <div className="min-h-[600px] py-12 md:py-24 flex flex-col justify-center">
         <div className="w-full">
           <Swiper
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
-            slidesPerView={2}
+            slidesPerView={2.5}
+            modules={[Navigation]}
             centeredSlides={true}
-            spaceBetween={20}
+            spaceBetween={25}
             speed={500}
-            allowTouchMove={false}
+            navigation={{
+                prevEl,
+                nextEl,
+              }}
             breakpoints={{
               320: {
                 slidesPerView: 1.1,
@@ -84,14 +42,14 @@ export default function Testimonial() {
                 slidesPerView: 2,
               },
               1280: {
-                slidesPerView: 3,
+                slidesPerView: 2.5,
               }
             }}
             className="w-full overflow-visible"
           >
             {testimonial.map((item) => (
-              <SwiperSlide key={item.id} className="transition-transform duration-300">
-                <div className="relative w-full h-full p-2 md:p-7 rounded-2xl bg-[#1a1a1a] border border-zinc-800 hover:border-2">
+              <SwiperSlide key={item.id} className="h-auto flex transition-transform duration-300">
+                <div className="relative w-full h-full p-6 md:p-10 rounded-3xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 transition-colors flex flex-col">
                   
                   {/* Header */}
                   <div className="flex items-center justify-between mb-5">
@@ -114,10 +72,6 @@ export default function Testimonial() {
 
                     {/* Quote Icon */}
                     <div className="shrink-0 w-[48px] h-[31px]  flex items-center justify-center">
-{/*                          <svg width="54" height="35" viewBox="0 0 54 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                             <path d="M28.4689 1L28.0178 2.32227L17.4514 33.3223L17.2209 34H1.30878L1.6535 32.7373L10.1066 1.7373L10.3078 1H28.4689ZM52.0158 1L51.5646 2.32227L40.9992 33.3223L40.7678 34H25.0139L25.3508 32.7412L33.6525 1.74121L33.8508 1H52.0158Z" stroke="#FE814C" stroke-width="2"/>
-                        </svg> */}
-
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                           <defs>
                             <radialGradient id="prefix__b" cx="1.479" cy="12.788" fx="1.479" fy="12.788" r="9.655" gradientTransform="matrix(.8032 0 0 1.0842 2.459 -.293)" gradientUnits="userSpaceOnUse">
@@ -148,13 +102,32 @@ export default function Testimonial() {
                   </div>
 
                   {/* Text */}
-                  <p className="text-sm leading-relaxed text-zinc-300">
-                    {item.text}
-                  </p>
+                  <div className="grow">
+                    <p className="text-sm md:text-base leading-relaxed text-zinc-400 italic">
+                      &ldquo;{item.text}&rdquo;
+                    </p>
+                  </div>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
+        <div className="flex justify-center items-center gap-6 mt-12 mb-8">
+          <button 
+            ref={(node) => setPrevEl(node)}
+            className="custom-prev group p-4 rounded-full border-2 border-zinc-800 hover:border-orange-500 transition-all duration-300 bg-zinc-900/50 backdrop-blur-sm cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Previous testimonial"
+          >
+            <ArrowLeft className="w-6 h-6 text-zinc-400 group-hover:text-orange-500 transition-colors" />
+          </button>
+
+          <button 
+            ref={(node) => setNextEl(node)}
+            className="custom-next group p-4 rounded-full border-2 border-zinc-800 hover:border-orange-500 transition-all duration-300 bg-zinc-900/50 backdrop-blur-sm cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+            aria-label="Next testimonial"
+          >
+            <ArrowRight className="w-6 h-6 text-zinc-400 group-hover:text-orange-500 transition-colors" />
+          </button>
         </div>
       </div>
     </div>

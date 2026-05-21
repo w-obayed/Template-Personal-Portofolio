@@ -45,7 +45,7 @@ function Card({ badge, index }) {
           <p className="m-0 text-[10px] font-bold uppercase text-white font-['DM_Sans',sans-serif] tracking-[2.8px]">
             {badge.label}
           </p>
-          <img className="w-full h-[40px] aspect-4/3" src={badge.logo} alt="" />
+          <img className="w-full h-full overflow-hidden aspect-4/3" src={badge.logo} alt="" />
         </motion.div>
       </motion.div>
     </motion.div>

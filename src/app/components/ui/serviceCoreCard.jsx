@@ -34,18 +34,18 @@ export default function ServiceCoreCard({ card }) {
             </h1>
 
             {/* Title */}
-            <h1 className="text-[clamp(1.5rem,4vw,58px)] font-extrabold text-white/80 font-['Syne',sans-serif]">
+            <h1 className="text-[clamp(1.4rem,4vw,58px)] font-extrabold text-white/80 font-['Syne',sans-serif]">
               {card.title}
             </h1>
 
             {/* Description */}
-            <p className="text-[clamp(1rem,2vw,16px)] text-muted-foreground max-w-[80%] font-['DM_Sans',sans-serif]">
+            <p className="text-[clamp(1rem,2vw,16px)] text-muted-foreground md:max-w-[80%] max-w-[100%] font-['DM_Sans',sans-serif]">
               {card.desc}
             </p>
 
             {/* Button */}
             <button className="inline-flex w-fit font-['Syne',sans-serif] items-center gap-2 bg-white/90 hover:bg-white text-[#0a0d14] font-semibold text-xs tracking-widest px-6 py-3 rounded-full transition-all shadow-[0_0_0_4px_rgba(74,222,128,0.15)]">
-              <span className="w-2 h-2 rounded-full bg-green-400" />
+              <span className="w-2 h-2 hidden md:block rounded-full bg-green-400" />
               {card.btn}
             </button>
           </div>
@@ -55,19 +55,10 @@ export default function ServiceCoreCard({ card }) {
 
             <Card className="w-full md:w-[350px] border-none shadow-none bg-transparent md:border md:shadow md:bg-card md:bg-gradient-to-r from-[#16171c] via-[#1f2128] to-white/5 md:backdrop-blur-3xl rounded-2xl">
 
-              <CardHeader className="pb-2 hidden md:block">
-                <CardTitle className="text-white text-xl font-bold">
-                  {card.items.cardTitle}
-                </CardTitle>
-                <p className="text-muted-foreground text-base leading-relaxed">
-                  {card.items.cardDesc}
-                </p>
-              </CardHeader>
-
-              <CardContent className="space-y-2 px-0 p"><div className="">
+              <CardContent className="space-y-5 px-0 md:py-10"><div className="">
                <Swiper
                     modules={[Autoplay]}
-                    spaceBetween={8}
+                    spaceBetween={12}
                     slidesPerView={1.5}
                     loop={true}
                     freeMode={true}
@@ -83,12 +74,12 @@ export default function ServiceCoreCard({ card }) {
                         card.items.imageSrc.map((src, index) => (
                             <SwiperSlide key={index} >
                                 <Image
-                                    width={150} 
-                                    height={150} 
+                                    width={180} 
+                                    height={180} 
                                     src={src} 
                                     alt="Description"
                                     priority
-                                    className="rounded-lg max-h-[150px] aspect-4/3 shadow-md object-cover size-full" 
+                                    className="rounded-lg max-h-[180px] aspect-4/3 shadow-md object-cover size-full" 
                                 />
                             </SwiperSlide>
                         ))
@@ -98,7 +89,7 @@ export default function ServiceCoreCard({ card }) {
               <div className="">
                 <Swiper
                     modules={[Autoplay]}
-                    spaceBetween={8}
+                    spaceBetween={12}
                     slidesPerView={1.5}
                     loop={true}
                     freeMode={true}

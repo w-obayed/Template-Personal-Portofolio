@@ -23,9 +23,9 @@ export default function Home() {
         <GalleryView />
         <RollerScroll />
         <WorkSlider />
-        <Testimonial />
         <EducationAndExperience />
         <Skills />
+        <Testimonial />
         <TrustBadges />
       </div>
     </>
