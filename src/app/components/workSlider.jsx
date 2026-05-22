@@ -6,14 +6,14 @@ import Lenis from "lenis";
 import services from "../../API&Services/services";
 import "lenis/dist/lenis.css";
 import "swiper/css";
+import Link from "next/link";
 
-// How much vertical scroll distance each slide gets (vh units)
 const VH_PER_SLIDE = 30;
 
 export default function WorkSlider() {
-  const swiperRef   = useRef(null);   // Swiper instance
-  const containerRef = useRef(null);  // Outer scroll-distance div
-  const activeIdxRef = useRef(0);     // Last slid-to index (avoids re-firing)
+  const swiperRef   = useRef(null);   
+  const containerRef = useRef(null);  
+  const activeIdxRef = useRef(0);     
   const rafIdRef    = useRef(null);
 
   const projectData = services("Project") || [];
@@ -61,10 +61,6 @@ export default function WorkSlider() {
   }, []);
 
   return (
-    /*
-     * Outer div height = 100vh (sticky viewport) + scroll room for each slide.
-     * Each slide gets VH_PER_SLIDE vh of scroll distance before advancing.
-     */
     <div
       ref={containerRef}
       className="bg-[#0e1016] w-full px-4 md:px-0"
@@ -81,6 +77,8 @@ export default function WorkSlider() {
             spaceBetween={20}
             speed={500}           
             allowTouchMove={false}
+            preventClicks={false}
+            preventClicksPropagation={false}
             breakpoints={{
             320: {
                  slidesPerView: 1.2,
@@ -138,7 +136,13 @@ export default function WorkSlider() {
                         <span className="text-white/60 text-sm font-['DM_Sans',sans-serif]">
                           {item.category}
                         </span>
-                        <a href={item.url} className="w-7 h-7 rounded-full flex items-center justify-center border border-white/20 bg-white">
+                       <Link
+                           href={item.url}
+                           onClick={(e) => e.stopPropagation()}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className="w-7 h-7 rounded-full flex items-center justify-center border border-white/20 bg-white"
+                       >
                           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                             <path
                               d="M2 10L10 2M10 2H4M10 2V8"
@@ -148,7 +152,7 @@ export default function WorkSlider() {
                               strokeLinejoin="round"
                             />
                           </svg>
-                        </a>
+                        </Link>
                       </div>
                     </div>
 

@@ -1,3 +1,4 @@
+
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
         return [
@@ -14,7 +15,7 @@ const serviceCall = (srv)=>{
             title: "Hello, Azad",
             name:"Azad",
             description: "Let's make something meaningful together.",
-            src: "/azad-hero.png"
+            src: "/azad.png"
         }]
     }
     if(srv === "stat"){
@@ -65,9 +66,6 @@ const serviceCall = (srv)=>{
          backgroundImage:
           "/bg/bg-web.webp",
          items: {
-           cardTitle: "User-Centered Design",
-           cardDesc:
-           "We focus on clean layouts, intuitive UX, and responsive design to deliver seamless user experiences across all devices.",
            imageSrc: [
               "/slide/web-1.webp",
               "/slide/web-2.webp",
@@ -84,9 +82,6 @@ const serviceCall = (srv)=>{
             backgroundImage:
             "/bg/bg-custom.webp",
             items: {
-            cardTitle: "Built for Performance",
-            cardDesc:
-            "Through modern frameworks and clean architecture, we deliver fast, secure, and scalable digital solutions.",
             imageSrc: [
               "/slide/custom-1.webp",
               "/slide/custom-2.webp",
@@ -103,9 +98,6 @@ const serviceCall = (srv)=>{
             backgroundImage:
             "/bg/bg-graphics.webp",
             items: {
-            cardTitle: "Creative Visual Identity",
-            cardDesc:
-            "From branding to marketing assets, we craft designs that make your brand stand out with clarity and impact.",
             imageSrc: [
               "/slide/graphics-1.webp",
               "/slide/graphics-2.webp",
@@ -122,9 +114,6 @@ const serviceCall = (srv)=>{
             backgroundImage:
             "/bg/bg-videos.webp",
             items: {
-            cardTitle: "Cinematic Storytelling",
-            cardDesc:
-            "We transform raw footage into engaging, professional videos with smooth transitions, sound, and storytelling flow.",
             imageSrc: [
               "/slide/videos-1.webp",
               "/slide/videos-2.webp",
@@ -309,37 +298,37 @@ const serviceCall = (srv)=>{
             {
               id: 1,
               client: "KTM",
-              category: "Case study",
-              url:"#",
+              category: "view more",
+              url:"https://orange-blood.ktm.com/",
               bgColor: "#7c2c00",
               accentColor: "#ff6a00",
-              image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+              image: "/portfolio/portfolio-3.webp",
               imageAlt: "KTM motorcycle app on laptop and phone",
             },
             {
               id: 2,
-              client: "Vetain",
-              category: "Case study",
-              url:"#",
-              bgColor: "#3a3830",
+              client: "Bluelight",
+              category: "view more",
+              url:"https://www.bluelightairlines.org/",
+              bgColor: "#2a68f1",
               accentColor: "#b5a48a",
-              image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80",
-              imageAlt: "Vetain mobile app screens",
+              image: "/portfolio/portfolio-2.webp",
+              imageAlt: "bluelight",
             },
             {
               id: 3,
-              client: "FinFlow",
-              category: "Case study",
-              url:"#",
-              bgColor: "#0a2a4a",
+              client: "Azqira Web3",
+              category: "view more",
+              url:"https://www.azqira.com/",
+              bgColor: "#13e077",
               accentColor: "#2196f3",
-              image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
-              imageAlt: "FinFlow dashboard",
+              image: "/portfolio/portfolio-1.webp",
+              imageAlt: "Azqira Web3",
             },
             {
               id: 4,
               client: "Medica",
-              category: "Case study",
+              category: "view more",
               url:"#",
               bgColor: "#1a3a2a",
               accentColor: "#22c55e",
@@ -349,7 +338,7 @@ const serviceCall = (srv)=>{
             {
               id: 5,
               client: "Archi",
-              category: "Case study",
+              category: "view more",
               url:"#",
               bgColor: "#2a1a3a",
               accentColor: "#a855f7",
@@ -359,7 +348,7 @@ const serviceCall = (srv)=>{
             {
               id: 6,
               client: "NovaPay",
-              category: "Case study",
+              category: "view more",
               url:"#",
               bgColor: "#111827",
               accentColor: "#60a5fa",
@@ -369,7 +358,7 @@ const serviceCall = (srv)=>{
             {
               id: 7,
               client: "Shopora",
-              category: "Case study",
+              category: "view more",
               url:"#",
               bgColor: "#3b0a2a",
               accentColor: "#fb7185",
@@ -379,7 +368,7 @@ const serviceCall = (srv)=>{
             {
               id: 8,
               client: "CloudNest",
-              category: "Case study",
+              category: "view more",
               url:"#",
               bgColor: "#0f172a",
               accentColor: "#38bdf8",
@@ -389,7 +378,7 @@ const serviceCall = (srv)=>{
             {
               id: 9,
               client: "Buildify",
-              category: "Case study",
+              category: "view more",
               url:"#",
               bgColor: "#1c1917",
               accentColor: "#f59e0b",
@@ -399,7 +388,7 @@ const serviceCall = (srv)=>{
             {
               id: 10,
               client: "EduSpark",
-              category: "Case study",
+              category: "view more",
               url:"#",
               bgColor: "#0b2a1a",
               accentColor: "#34d399",
