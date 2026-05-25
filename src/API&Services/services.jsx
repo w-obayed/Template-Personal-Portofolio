@@ -1,3 +1,39 @@
+const cache = {};
+
+const apiCall = async (endpoint) => {
+  try {
+    // cache check
+    if (cache[endpoint]) {
+      console.log("From cache");
+      return cache[endpoint];
+    }
+
+    // fetch data
+    const response = await fetch(
+      `https://portfolio.azadhossen.com/wp-json/wp/v2/${endpoint}`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("data", data);
+
+    // cache save
+    cache[endpoint] = data[0]?.meta;
+
+    console.log("cache", cache[endpoint]);
+
+    return cache[endpoint];
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+};
 
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
@@ -539,6 +575,7 @@ const serviceCall = (srv)=>{
         // Perform some logic based on conditions
         return [];
     }  
+        apiCall(conditions);
         return  serviceCall(conditions) || [];
 }
 
