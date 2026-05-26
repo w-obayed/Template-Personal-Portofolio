@@ -1,3 +1,4 @@
+
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
         return [
@@ -565,6 +566,7 @@ function services(conditions) {
         // Perform some logic based on conditions
         return [];
     }  
+        apiCall(conditions);
         return  serviceCall(conditions) || [];
 }
 
