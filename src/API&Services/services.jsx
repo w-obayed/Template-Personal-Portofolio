@@ -1,4 +1,3 @@
-
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
         return [
@@ -500,6 +499,34 @@ const serviceCall = (srv)=>{
           ],
         };
     }
+    if(srv==="footer"){
+      return [
+              {
+                icon: "",
+                label: "E-mail",
+                value: "ferthoz2001@gmail.com",
+                href: "mailto:ferthoz2001@gmail.com",
+              },
+              {
+                icon: "",
+                label: "Call",
+                value: "9150369790",
+                href: "tel:9150369790",
+              },
+              {
+                icon: "",
+                label: "Linked In",
+                value: "Linkedin.com/in/ferthoz-begam0605/",
+                href: "https://linkedin.com/in/ferthoz-begam0605/",
+              },
+              {
+                icon: "",
+                label: "Behance",
+                value: "https://www.behance.net/014ferthozbegam",
+                href: "https://www.behance.net/014ferthozbegam",
+              },
+            ];
+    }
     if(srv==="badge"){
       return [
         {
@@ -531,10 +558,9 @@ const serviceCall = (srv)=>{
     }
 
     return []
-  
 }
 
- function services(conditions) {
+function services(conditions) {
     if (!conditions) {
         // Perform some logic based on conditions
         return [];
