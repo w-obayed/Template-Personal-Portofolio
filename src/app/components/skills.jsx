@@ -1,49 +1,35 @@
 import React from 'react'
+import services from '../../API&Services/services';
 
 function skills() {
+
+  const skillData = services("skill") || [];
+
   return (
-    <div className=" bg-linear-to-br from-[#0f001f] via-[#1a0033] to-[#2a0044] text-white py-16 px-6 font-sans">
-      <div className="max-w-4xl mx-auto">
+    <div className="bg-[#11081b] text-white py-6 pb-12 px-6">
+      <div className="max-w-6xl mx-auto">
 
         {/* Skills Section */}
-        <div className="mt-24 flex justify-center">
-          <div className="px-8 py-3 bg-white/10 backdrop-blur-md border border-purple-500/30 rounded-2xl text-lg font-medium">
+        <div className="flex justify-center">
+          <div className="px-6 py-2 border border-purple-500/30 rounded-2xl text-lg font-medium">
             Skills
           </div>
         </div>
 
-        <div className="mt-10 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8">
+        <div className="mt-10 bg-[#251c2d] backdrop-blur-xl border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] rounded-3xl p-8">
           <div className="grid md:grid-cols-3 gap-8">
-            
-            {/* UI & UX */}
-            <div>
-              <h4 className="text-center text-purple-300 font-semibold mb-4">UI & UX</h4>
-              <div className="flex justify-center gap-6 text-4xl">
-                <span>🎨</span>
-                <span>Xd</span>
-                <span>🌐</span>
-              </div>
-            </div>
-
-            {/* Graphic Design */}
-            <div>
-              <h4 className="text-center text-purple-300 font-semibold mb-4">GRAPHIC DESIGN</h4>
-              <div className="flex justify-center gap-6 text-4xl">
-                <span>𝐀𝐢</span>
-                <span>𝐏𝐬</span>
-              </div>
-            </div>
-
-            {/* Web Design */}
-            <div>
-              <h4 className="text-center text-purple-300 font-semibold mb-4">WEB DESIGN</h4>
-              <div className="flex justify-center gap-6 text-4xl">
-                <span className="text-orange-400">𝕊</span>
-                <span className="text-blue-400">𝕋</span>
-                <span className="text-yellow-400">𝐉𝐒</span>
-                <span className="text-purple-400">𝐁</span>
-              </div>
-            </div>
+             {skillData.map((skill, index) => (
+                <div key={index} className={`text-center flex-1 ${index !== skillData.length - 1 ? "md:border-r border-white/10 md:pr-6" : ""}`}>
+                    <h3 className="text-white text-2xl font-bold uppercase mb-6">{skill.title}</h3>
+                    <div className="flex justify-center gap-4 flex-wrap">
+                        {skill.items.map((item) => (
+                        <div key={item.name} className="w-12 h-12 rounded-xl bg-[#311A43] shadow-[0_0_15px_rgba(168,85,247,0.5)] flex items-center justify-center">
+                            <img src={`/icons/${item.icon}`} alt={item.name} className="w-7 h-7"/>
+                        </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
           </div>
         </div>
       </div>

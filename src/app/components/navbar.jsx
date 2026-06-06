@@ -5,11 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import GradientButton from "./ui/gradientButton";
 import HamburgerIcon from "./ui/hamburgerManu";
 import Link from "next/link";
+import Image from "next/image";
+
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navManu = services("navbar") || [];
+  const navManu = services("navbar");
+  console.log("navManu", navManu);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10);
@@ -31,7 +34,7 @@ export default function Navbar() {
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-12">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-20">
 
             {/* Logo */}
             <motion.div
@@ -40,13 +43,7 @@ export default function Navbar() {
               transition={{ delay: 0.15, duration: 0.5 }}
               className="flex items-center gap-3"
             >
-              {/* Gradient orb logo */}
-              <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold bg-[linear-gradient(135deg,#f97316_0%,#ec4899_60%,#8b5cf6_100%)] font-['Syne',sans-serif]">
-                DH
-              </div>
-              <span className="text-white text-base font-bold tracking-tight hidden sm:block font-['Syne',sans-serif]">
-                DLHA
-              </span>
+              <Image className="w-36 h-20" width={150} height={80} src={navManu[0]?.meta?.logo} alt="" />
             </motion.div>
 
             {/* Desktop Nav Links */}

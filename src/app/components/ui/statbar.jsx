@@ -33,18 +33,12 @@ function StatItem({ value, suffix, label, delay }) {
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
       className="flex flex-col gap-2 px-6 sm:px-8 py-3 sm:py-1 text-center md:text-left"
     >
-      <div className="
-  font-black leading-none tracking-tight text-white font-['Syne',sans-serif]
+      <div className="font-black leading-none tracking-tight text-white font-['Syne',sans-serif] text-[clamp(2.2rem,6vw,3.4rem)] md:text-4xl min-[1050px]:text-[clamp(2.2rem,6vw,3.4rem)]">
+        {count}
+        <span className="text-[#e8521a]">{suffix}</span>
+      </div>
 
-  text-[clamp(2.2rem,6vw,3.4rem)]
-  md:text-4xl
-  min-[1050px]:text-[clamp(2.2rem,6vw,3.4rem)]
-">
-  {count}
-  <span className="text-[#e8521a]">{suffix}</span>
-</div>
-
-      <div className="text-gray-400 font-normal tracking-[0.01em] font-['DM_Sans',sans-serif] text-[clamp(0.8rem,1.3vw,1rem)]">
+      <div className="text-white font-normal tracking-[0.01em] font-['DM_Sans',sans-serif] text-[clamp(0.8rem,1.3vw,1.5rem)]">
         {label}
       </div>
     </motion.div>
@@ -56,7 +50,7 @@ export default function StatsBar() {
 
   return (
     <div className="max-w-7xl mx-auto flex items-center justify-center py-6 my-8 px-3">
-      <div className="w-full flex flex-col md:flex-row items-stretch md:items-center justify-between bg-[#1c1c1e] rounded-2xl px-4 sm:px-6 py-6 sm:py-7 border-2 border-white/5">
+      <div className="w-full flex flex-col md:flex-row items-stretch md:items-center justify-between bg-white/10 rounded-2xl px-4 sm:px-6 py-6 sm:py-7 border-3 border-white/20">
         
         {STATS.map((stat, i) => (
           <div

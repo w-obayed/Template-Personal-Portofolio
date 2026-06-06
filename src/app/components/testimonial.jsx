@@ -15,7 +15,7 @@ export default function Testimonial() {
   const testimonial = services("testimonial") || [];
   return (
     <div
-      className="bg-[#000000] w-full px-4 md:px-0"
+      className="bg-[#11081b] w-full px-4 md:px-0"
     >
       {/* Sticky Section */}
       <div className="min-h-[600px] py-12 md:py-24 flex flex-col justify-center">

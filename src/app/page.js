@@ -11,23 +11,23 @@ import WorkSlider from "./components/workSlider";
 import VerticalSlider from "./components/mordernCard";
 import TrustBadges from "./components/trustbadge";
 import Testimonial from "./components/testimonial";
+import GetInTouch from "./components/footer";
 
 export default function Home() {
   return (
     <>
-      <div className="bg-primary">
-        <Navbar />
-        <HeroSection />
-        <ServiceCarousel />
-        <VerticalSlider />
-        <GalleryView />
-        <RollerScroll />
-        <WorkSlider />
-        <EducationAndExperience />
-        <Skills />
-        <Testimonial />
-        <TrustBadges />
-      </div>
+      <Navbar />
+      <HeroSection />
+      <ServiceCarousel />
+      <VerticalSlider />
+      <GalleryView />
+      <RollerScroll />
+      <WorkSlider />
+      <EducationAndExperience />
+      <Skills />
+      <Testimonial />
+      <GetInTouch />
+      <TrustBadges />
     </>
   );
 }

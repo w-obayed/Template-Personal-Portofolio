@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import services from "../../API&Services/services";
 import Lenis from "lenis";
-import StatsBar from "./ui/statbar";
 import Image from "next/image";
 
 const fadeUp = {
@@ -105,7 +104,6 @@ export default function HeroSection() {
       </motion.div>
       </div>
     </section>
-    <div className="bg-primary"><StatsBar /></div>
     </>
   );
 }

@@ -139,6 +139,19 @@
   .cardHeight {
     height: 700px;
   }
+  .bg-gradient-purple {
+     background:
+     radial-gradient(ellipse at top left, rgba(124, 58, 237, 0.3) 0%, transparent 60%),
+     radial-gradient(ellipse at bottom right, rgba(249, 115, 22, 0.2) 0%, transparent 60%),
+     #0f0a1a;
+  }
+
+  .bg-gradient-purple-2 {
+      background:
+        radial-gradient(ellipse at top left, rgba(124, 58, 237, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at bottom right, rgba(249, 115, 22, 0.2) 0%, transparent 60%),
+        #0f0a1a;
+    }
 
   /* Media query for screens wider than 768px to apply the desktop layout */
   @media (min-width: 769px) {

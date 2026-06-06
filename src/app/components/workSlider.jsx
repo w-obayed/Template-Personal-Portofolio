@@ -63,7 +63,7 @@ export default function WorkSlider() {
   return (
     <div
       ref={containerRef}
-      className="bg-[#0e1016] w-full px-4 md:px-0"
+      className="bg-[#05070d] w-full px-4 md:px-0"
       style={{ height: `${100 + (TOTAL_SLIDES - 1) * VH_PER_SLIDE}vh` }}
     >
       {/* Sticky panel — stays pinned while the outer div scrolls past */}

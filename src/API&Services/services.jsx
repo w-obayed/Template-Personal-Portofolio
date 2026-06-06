@@ -1,3 +1,40 @@
+const cache = {};
+
+const apiCall = async (endpoint) => {
+  try {
+    // cache check
+    if (cache[endpoint]) {
+      console.log("From cache");
+      return cache[endpoint];
+    }
+
+    // fetch data
+    const response = await fetch(
+      `https://portfolio.azadhossen.com/wp-json/wp/v2/${endpoint}`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("data", data);
+
+    // cache save
+    cache[endpoint] = data[0]?.meta;
+
+    console.log("cache", cache[endpoint]);
+
+    return cache[endpoint];
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+};
+
 
 const serviceCall = (srv)=>{
     if(srv==="navbar"){
@@ -482,51 +519,70 @@ const serviceCall = (srv)=>{
       ]
     }
     if(srv==="skill"){
-      return {
-           title: "Skills",
-           skillData: [
-            {
-              title: "UI & UX",
-              icons: ["/icons/figma.svg", "/icons/xd.svg", "/icons/wordpress.svg"],
-            },
-            {
-              title: "Graphic Design",
-              icons: ["/icons/ai.svg", "/icons/ps.svg"],
-            },
-            {
-              title: "Web Design",
-              icons: ["/icons/html.svg", "/icons/css.svg", "/icons/js.svg", "/icons/bootstrap.svg"],
-            },
-          ],
-        };
-    }
-    if(srv==="footer"){
       return [
-              {
-                icon: "",
-                label: "E-mail",
-                value: "ferthoz2001@gmail.com",
-                href: "mailto:ferthoz2001@gmail.com",
-              },
-              {
-                icon: "",
-                label: "Call",
-                value: "9150369790",
-                href: "tel:9150369790",
-              },
-              {
-                icon: "",
-                label: "Linked In",
-                value: "Linkedin.com/in/ferthoz-begam0605/",
-                href: "https://linkedin.com/in/ferthoz-begam0605/",
-              },
-              {
-                icon: "",
-                label: "Behance",
-                value: "https://www.behance.net/014ferthozbegam",
-                href: "https://www.behance.net/014ferthozbegam",
-              },
-            ];
+          {
+            title: "UI & UX",
+            items: [
+              { name: "Figma", icon: "figma.svg" },
+              { name: "Adobe XD", icon: "xd.svg" },
+              { name: "WordPress", icon: "wordpress.svg" },
+            ],
+          },
+          {
+            title: "Graphic Design",
+            items: [
+              { name: "Illustrator", icon: "illustrator.svg" },
+              { name: "Photoshop", icon: "photoshop.svg" },
+            ],
+          },
+          {
+            title: "Web Design",
+            items: [
+              { name: "HTML", icon: "html.svg" },
+              { name: "CSS", icon: "css.svg" },
+              { name: "JavaScript", icon: "js.svg" },
+              { name: "Bootstrap", icon: "bootstrap.svg" },
+            ],
+          },
+      ]
+    }
+    if(srv=== "footer"){
+      return {
+        social:[
+        {
+          icon: "/icon/icon-1.png",
+          label: "E-mail",
+          value: "ferthoz2001@gmail.com",
+          href: "mailto:ferthoz2001@gmail.com",
+        },
+        {
+          icon: "/icon/icon-2.png",
+          label: "Call",
+          value: "9150369790",
+          href: "tel:9150369790",
+        },
+        {
+          icon: "/icon/icon-3.png",
+          label: "Linkedin",
+          value: "Linkedin.com/in/ferthoz-begam0605/",
+          href: "https://linkedin.com/in/ferthoz-begam0605/",
+        },
+        {
+          icon: "/icon/icon-3.png",
+          label: "Behance",
+          value: "https://www.behance.net/014ferthozbegam",
+          href: "https://www.behance.net/014ferthozbegam",
+        },
+      ],
+      logo:"logo.webp",
+      nav:["Home", "About", "Skills", "Projects"],
+      icon:[
+        {icon:"/social-icon/linkedin.png", href:"#"},
+        {icon:"/social-icon/youtube.png", href:"#"},
+        {icon:"/social-icon/email.png", href:"#"},
+        {icon:"/social-icon/internet.png", href:"#"},
+      ]
+      }
     }
     if(srv==="badge"){
       return [
@@ -561,13 +617,11 @@ const serviceCall = (srv)=>{
     return []
 }
 
-function services(conditions) {
+ function services(conditions) {
     if (!conditions) {
-        // Perform some logic based on conditions
         return [];
-    }  
-        apiCall(conditions);
-        return  serviceCall(conditions) || [];
+    }
+    return apiCall(conditions) || [];
 }
 
 export default services

@@ -4,7 +4,13 @@ const nextConfig = {
   reactCompiler: true,
   reactStrictMode: true,
   images: {
-    domains: ["images.unsplash.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "portfolio.azadhossen.com",
+        pathname: "/wp-content/uploads/**",
+      },
+    ],
   },
 };
 export default nextConfig;

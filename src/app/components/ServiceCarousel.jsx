@@ -7,6 +7,7 @@ import 'lenis/dist/lenis.css';
 import services from '../../API&Services/services';
 import ServiceCard from "./ui/serviceCard";
 import 'swiper/css';
+import StatsBar from './ui/statbar';
 
 // How much vertical scroll distance each slide gets (vh)
 const VH_PER_SLIDE = 30;
@@ -71,6 +72,8 @@ export default function ServiceCarousel() {
   }, [TOTAL_SLIDES]);
 
   return (
+   <div className=' bg-gradient-purple-2 -mt-11 pt-11'>
+   <StatsBar />
     <div
       ref={containerRef}
       style={{ height: `${100 + (TOTAL_SLIDES - 1) * VH_PER_SLIDE}vh` }}
@@ -127,5 +130,6 @@ export default function ServiceCarousel() {
         </section>
       </div>
     </div>
+   </div>
   );
 }

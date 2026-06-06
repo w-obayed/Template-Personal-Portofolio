@@ -38,7 +38,7 @@ function Card({ badge, index }) {
 
         {/* Card face — lifts on hover via Framer Motion */}
         <motion.div
-          className="relative bg-gradient-to-br from-[#1c2338] to-[#131824] rounded-[14px] px-5 py-4 flex flex-col items-center gap-[13px] z-10 shadow-[0_5px_22px_rgba(0,0,0,0.38)]"
+          className="relative bg-linear-to-br from-[#1c2338] to-[#131824] rounded-[14px] px-5 py-4 flex flex-col items-center gap-[13px] z-10 shadow-[0_5px_22px_rgba(0,0,0,0.38)]"
           whileHover={{ y: -4, boxShadow: `0 18px 45px rgba(0,0,0,0.55), 0 0 24px ${badge.glowColor}28` }}
           transition={{ duration: 0.3 }}
         >
@@ -58,7 +58,7 @@ export default function TrustBadges() {
   
   return (
     <div
-      className="bg-[radial-gradient(ellipse_at_30%_20%,#0f1728_0%,#0a0e18_60%,#0d1117_100%)] flex flex-col items-center justify-center px-7 py-[60px] font-['DM_Sans','Helvetica_Neue',sans-serif] relative overflow-hidden"
+      className="bg-[#101014] flex flex-col items-center justify-center px-7 py-[60px] font-['DM_Sans','Helvetica_Neue',sans-serif] relative overflow-hidden"
     >
       {/* CSS-only: @property for conic-gradient angle animation */}
       <style>{`
