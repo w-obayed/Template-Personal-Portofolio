@@ -96,7 +96,7 @@ export default function HeroSection() {
               <img
                 src={heroData.src}
                 alt={heroData.name || "Hero"}
-                className="size-full"
+                className="size-full object-cover"
               />
             </div>
           </motion.div>
