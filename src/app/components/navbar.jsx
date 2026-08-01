@@ -1,24 +1,93 @@
 "use client";
-import services from "../../API&Services/services";
+import { useService } from "../../api/services";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GradientButton from "./ui/gradientButton";
 import HamburgerIcon from "./ui/hamburgerManu";
 import Link from "next/link";
 import Image from "next/image";
-
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navManu = services("navbar");
-  console.log("navManu", navManu);
+  const { data: navManu } = useService("navbar");
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
+  // Helper to resolve navigation targets for database menu items
+  const getTarget = (link) => {
+    const label = (link.label || "").trim().toLowerCase();
+    const href = (link.href || "").trim().toLowerCase();
+
+    if (label === "home" || href === "/" || href === "/#home") {
+      return { type: "route", path: "/" };
+    }
+    if (label === "contact" || href === "/contact" || href === "/#contact") {
+      return { type: "route", path: "/contact" };
+    }
+
+    let sectionId = "";
+    if (href.startsWith("#") && href.length > 1) {
+      sectionId = href.replace("#", "");
+    } else {
+      if (label.includes("service")) sectionId = "service";
+      else if (label.includes("work") || label.includes("project")) sectionId = "work";
+      else if (label.includes("testimonial")) sectionId = "testimonial";
+      else if (label.includes("skill")) sectionId = "skill";
+      else if (label.includes("experience") || label.includes("education")) sectionId = "experience";
+      else if (label.includes("gallery")) sectionId = "gallery";
+      else if (label.includes("pricing") || label.includes("portfolio")) sectionId = "portfolio";
+      else sectionId = label;
+    }
+
+    return { type: "section", sectionId };
+  };
+
+  // Handle navigation to sections or routes
+  const handleNavigation = (linkOrHref) => {
+    setMenuOpen(false);
+
+    let linkObj = typeof linkOrHref === "string" ? { label: "", href: linkOrHref } : linkOrHref;
+    const target = getTarget(linkObj);
+
+    if (target.type === "route") {
+      if (target.path === "/") {
+        if (pathname === "/") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          router.push("/");
+        }
+      } else {
+        if (pathname !== target.path) {
+          router.push(target.path);
+        }
+      }
+      return;
+    }
+
+    if (target.type === "section") {
+      if (pathname === "/") {
+        const element = document.getElementById(target.sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        router.push(`/#${target.sectionId}`);
+      }
+    }
+  };
+
+  // Handle WhatsApp button click
+  const handleWhatsAppClick = () => {
+    window.open("https://wa.me/8801638512035", "_blank");
+  };
 
   return (
     <>
@@ -34,7 +103,7 @@ export default function Navbar() {
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-12">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-22">
 
             {/* Logo */}
             <motion.div
@@ -43,7 +112,9 @@ export default function Navbar() {
               transition={{ delay: 0.15, duration: 0.5 }}
               className="flex items-center gap-3"
             >
-              <Image className="w-36 h-20" width={150} height={80} src={navManu[0]?.meta?.logo} alt="" />
+              <Link href="/">
+                <Image className="w-40 h-22" width={160} height={88} src={navManu?.logo || "/logo.webp"} alt="Logo" />
+              </Link>
             </motion.div>
 
             {/* Desktop Nav Links */}
@@ -56,7 +127,7 @@ export default function Navbar() {
                 visible: { transition: { staggerChildren: 0.07, delayChildren: 0.25 } },
               }}
             >
-              {navManu.map((link) => (
+              {(navManu?.menu || []).map((link) => (
                 <motion.li
                   key={link.label}
                   variants={{
@@ -64,22 +135,21 @@ export default function Navbar() {
                     visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
                   }}
                 >
-                  <motion.div
-                    className="relative px-4 py-2 text-base text-gray-300 rounded-md group font-['DM_Sans',sans-serif] font-medium"
+                  <motion.button
+                    onClick={() => handleNavigation(link)}
+                    className="relative px-4 py-2 text-xl text-gray-300 rounded-md group font-family-heading font-medium cursor-pointer bg-transparent border-none"
                     whileHover={{ color: "#ffffff" }}
                   >
-                    <Link href={link.href}>
-                      {link.label}
-                      {/* Underline hover */}
-                      <motion.span
-                        className="absolute bottom-0.5 left-4 right-4 h-[1.5px] rounded-full bg-[linear-gradient(90deg,#22c55e,#eab308,#a855f7)]"
-                        style={{ originX: 0 }}
-                        initial={{ scaleX: 0 }}
-                        whileHover={{ scaleX: 1 }}
-                        transition={{ duration: 0.25 }}
-                      />
-                    </Link>
-                  </motion.div>
+                    {link.label}
+                    {/* Underline hover */}
+                    <motion.span
+                      className="absolute bottom-0.5 left-4 right-4 h-[1.5px] rounded-full bg-[linear-gradient(90deg,#22c55e,#eab308,#a855f7)]"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.25 }}
+                      style={{ originX: 0 }}
+                    />
+                  </motion.button>
                 </motion.li>
               ))}
             </motion.ul>
@@ -91,13 +161,15 @@ export default function Navbar() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <div className="hidden md:block">
-                <GradientButton>Download CV</GradientButton>
+              <div className="hidden md:block font-family-heading">
+                <GradientButton onClick={handleWhatsAppClick} className="cursor-pointer">
+                  Whatsapp Now!
+                </GradientButton>
               </div>
 
               {/* Hamburger (mobile) */}
               <button
-                className="md:hidden p-1"
+                className="md:hidden p-1 font-family-heading"
                 onClick={() => setMenuOpen((v) => !v)}
                 aria-label="Toggle menu"
               >
@@ -127,7 +199,7 @@ export default function Navbar() {
                   visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
                 }}
               >
-                {navManu.map((link) => (
+                {(navManu?.menu || []).map((link) => (
                   <motion.li
                     key={link.label}
                     variants={{
@@ -135,13 +207,12 @@ export default function Navbar() {
                       visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
                     }}
                   >
-                    <a
-                      href={link.href}
-                      className="block py-3 text-gray-300 text-base border-b border-white/5 hover:text-white transition-colors font-['DM_Sans',sans-serif] font-medium"
-                      onClick={() => setMenuOpen(false)}
+                    <button
+                      onClick={() => handleNavigation(link)}
+                      className="block w-full text-left py-3 text-gray-300 text-base border-b border-white/5 hover:text-white transition-colors font-['DM_Sans',sans-serif] font-medium bg-transparent border-none p-0 cursor-pointer"
                     >
                       {link.label}
-                    </a>
+                    </button>
                   </motion.li>
                 ))}
                 <motion.li
@@ -151,8 +222,11 @@ export default function Navbar() {
                     visible: { opacity: 1, y: 0, transition: { duration: 0.35, delay: 0.35 } },
                   }}
                 >
-                  <GradientButton onClick={() => setMenuOpen(false)}>
-                    Download CV
+                  <GradientButton 
+                    onClick={handleWhatsAppClick}
+                    className="w-full cursor-pointer"
+                  >
+                    Whatsapp Now!
                   </GradientButton>
                 </motion.li>
               </motion.ul>

@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -133,6 +132,8 @@
 
 .swiper-wrapper {
   transition-timing-function: linear !important;
+  align-items: center !important;
+  
 }
 
 @layer utilities {
@@ -151,7 +152,19 @@
         radial-gradient(ellipse at top left, rgba(124, 58, 237, 0.3) 0%, transparent 60%),
         radial-gradient(ellipse at bottom right, rgba(249, 115, 22, 0.2) 0%, transparent 60%),
         #0f0a1a;
-    }
+  }
+
+  .bg-footer{
+    background: linear-gradient(135deg, hsla(260,40%,8%,1) 0%, hsla(280,35%,12%,1) 50%, hsla(240,30%,9%,1) 100%);
+  }
+
+  .font-family-heading{
+      font-family: "Bebas Neue", sans-serif;
+  }  
+
+  .font-family-description{
+    font-family: "Inter", sans-serif;
+  }
 
   /* Media query for screens wider than 768px to apply the desktop layout */
   @media (min-width: 769px) {

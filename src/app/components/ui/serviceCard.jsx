@@ -33,8 +33,8 @@ function ServiceCard({ item }) {
         <text
           x="36"
           y="62"
-          fontFamily="'Syne', sans-serif"
-          fontSize="20"   // reduced from 22
+          fontFamily="'Bebas Neue', sans-serif"
+          fontSize="24"   // reduced from 22
           fontWeight="700"
           letterSpacing="1"
           fill="white"

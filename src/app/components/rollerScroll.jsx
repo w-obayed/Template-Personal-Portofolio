@@ -1,15 +1,12 @@
 'use client';
-
 import { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade } from 'swiper/modules';
 import Lenis from 'lenis';
-
-import services from '../../API&Services/services';
+import { useService } from '../../api/services';
 import MobileTabView from './ui/mobileTabView';
 import CircleSlide from './ui/circleSlide';
 import DetailSlide from './ui/detailSlide';
-
 import 'swiper/css/effect-fade';
 import 'swiper/css';
 import 'lenis/dist/lenis.css';
@@ -17,8 +14,9 @@ import 'lenis/dist/lenis.css';
 const VH_PER_SLIDE = 60; // How much vertical scroll (vh) per slide
 
 export default function DiscoveryProcess() {
-  const processData = services("process") || [];
-  const slides = processData.body;
+ 
+  const {data:processData} = useService("process")
+  const slides = processData.body ?? [];
   const TOTAL = slides.length;
   
 
@@ -93,13 +91,13 @@ export default function DiscoveryProcess() {
   // ── UI ────────────────────────────────────────────────────
   return (
     <div className="bg-[#05070d] text-white relative w-full">
-      <div className="flex flex-col gap-4 justify-center items-center mb-16 lg:w-[70%] w-full px-6 lg:px-0 mx-auto shrink-0 pt-16">
-        <h1 className="text-4xl font-semibold text-white/90">{processData.head.title}</h1>
-        <p className="text-muted-foreground text-base font-normal text-center">{processData.head.desc}</p>
+      <div className="flex flex-col gap-4 justify-center items-center mb-16 lg:w-[70%] w-full px-6 lg:px-0 mx-auto shrink-0 pt-40">
+        <h2 className="font-family-heading text-4xl md:text-5xl font-semibold text-white/90">{processData.head.title}</h2>
+        <p className="font-family-description text-muted-foreground text-base font-normal text-center">{processData.head.desc}</p>
       </div>
       {/* Background glow (fixed or absolute relative to the section) */}
-      <div className="hidden xl:block absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500/10 blur-[180px] rounded-full pointer-events-none" />
-      <div className="hidden xl:block absolute bottom-0 right-0 w-[600px] h-[600px] bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
+      <div className="hidden xl:block absolute top-0 left-0 size-150 bg-blue-500/10 blur-[180px] rounded-full pointer-events-none" />
+      <div className="hidden xl:block absolute bottom-0 right-0 size-150 bg-cyan-500/10 blur-[180px] rounded-full pointer-events-none" />
 
       {isMobile ? (
         <div className="w-full mx-auto px-6 py-16 relative z-10">

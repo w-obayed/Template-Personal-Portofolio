@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import services from "../../API&Services/services";
+import { useService } from "../../api/services";
+import TrustBadges from "./trustbadge";
+import Link from "next/link";
 
 /* ─── Validation helpers ─────────────────────────────────────────── */
 const validators = {
@@ -18,7 +20,7 @@ const validators = {
   },
   phone: (v) => {
     if (!v.trim()) return "Phone number is required.";
-    if (!/^\+?[\d\s\-().]{7,15}$/.test(v))
+    if (!/^[+\d\s\-()]{7,20}$/.test(v.trim()))
       return "Please enter a valid phone number.";
     return "";
   },
@@ -35,7 +37,15 @@ const INITIAL_ERRORS = { name: "", email: "", phone: "", message: "" };
 const INITIAL_TOUCHED = { name: false, email: false, phone: false, message: false };
 
 export default function GetInTouch() {
-  const footerData = services("footer") || {};
+  const { data: footerData = {} } = useService("footer");
+
+  // Normalize footer data to handle API response structure
+  const normalizedData = {
+    social: Array.isArray(footerData.social) ? footerData.social : [],
+    logo: footerData.logo || "/logo.webp",
+    nav: Array.isArray(footerData.nav) ? footerData.nav : [],
+    icon: Array.isArray(footerData.icon) ? footerData.icon : [],
+  };
 
   const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState(INITIAL_ERRORS);
@@ -102,7 +112,7 @@ export default function GetInTouch() {
 
   return (
     <div
-      className="flex flex-col relative"
+      className="flex flex-col relative pt-20"
       style={{
         background:
           "linear-gradient(135deg, hsla(260,40%,8%,1) 0%, hsla(280,35%,12%,1) 50%, hsla(240,30%,9%,1) 100%)",
@@ -128,37 +138,37 @@ export default function GetInTouch() {
         {/* ── Left: contact list ──────────────────────────────── */}
         <div className="w-full lg:w-1/2 flex flex-col gap-8">
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-family-heading font-bold text-white tracking-tight"
             style={{ letterSpacing: "-0.02em" }}
           >
             Get In Touch
           </h2>
 
           <div className="flex flex-col gap-6 sm:gap-7">
-            {(footerData.social || []).map((item, index) => (
+            {(normalizedData.social || []).map((item, index) => (
               <a
                 key={index}
-                href={item.href}
+                href={item.href || "#"}
                 className="flex items-center gap-4 group no-underline"
-                target={item.href.startsWith("http") ? "_blank" : undefined}
+                target={item.href?.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
                 aria-label={`${item.label}: ${item.value}`}
               >
                 <img
                   className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl object-contain shrink-0"
-                  src={item.icon}
+                  src={item.icon || ""}
                   alt=""
                   aria-hidden="true"
                 />
                 <div>
-                  <p className="text-white font-semibold text-lg sm:text-xl leading-tight">
-                    {item.label}
-                  </p>
+                  <h3 className="text-white font-semibold font-family-heading text-lg sm:text-xl leading-tight">
+                    {item.label || ""}
+                  </h3>
                   <p
-                    className="text-sm sm:text-base mt-0.5 transition-opacity group-hover:opacity-70 break-all"
+                    className="text-sm sm:text-base mt-0.5 font-family-description transition-opacity group-hover:opacity-70 break-all"
                     style={{ color: "hsla(260, 50%, 65%, 1)" }}
                   >
-                    {item.value}
+                    {item.value || ""}
                   </p>
                 </div>
               </a>
@@ -181,7 +191,7 @@ export default function GetInTouch() {
                 <svg className="mt-0.5 shrink-0 w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                <span>Your message was sent successfully! I'll get back to you soon.</span>
+                <span>Your message was sent successfully! I&rsquo;ll get back to you soon.</span>
               </div>
             )}
 
@@ -194,7 +204,7 @@ export default function GetInTouch() {
                 <svg className="mt-0.5 shrink-0 w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
-                <span>Something went wrong. Please try again later.</span>
+                <span className="font-family-description text-sm font-normal">Something went wrong. Please try again later.</span>
               </div>
             )}
 
@@ -313,7 +323,7 @@ export default function GetInTouch() {
                   aria-required="true"
                   aria-invalid={!!(touched.message && errors.message)}
                   aria-describedby={touched.message && errors.message ? "contact-message-error" : undefined}
-                  className={`${fieldClass("message")} resize-y min-h-[100px]`}
+                  className={`${fieldClass("message")} resize-y min-h-25`}
                 />
                 {touched.message && errors.message && (
                   <p id="contact-message-error" role="alert" className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
@@ -329,7 +339,7 @@ export default function GetInTouch() {
                   type="submit"
                   disabled={status === "loading"}
                   aria-busy={status === "loading"}
-                  className="w-full sm:w-auto min-w-[160px] flex items-center justify-center gap-2 px-8 py-3 rounded-lg text-sm font-semibold text-white border border-[#644849] transition-all duration-200 hover:bg-[hsla(260,40%,25%,0.5)] hover:border-[hsla(260,50%,60%,0.7)] focus:outline-none focus:ring-2 focus:ring-[hsla(260,60%,65%,0.6)] disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full sm:w-auto min-w-40 flex items-center justify-center gap-2 px-8 py-3 rounded-lg text-sm font-semibold text-white border border-[#644849] transition-all duration-200 hover:bg-[hsla(260,40%,25%,0.5)] hover:border-[hsla(260,50%,60%,0.7)] focus:outline-none focus:ring-2 focus:ring-[hsla(260,60%,65%,0.6)] disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{ background: "transparent" }}
                 >
                   {status === "loading" ? (
@@ -366,41 +376,44 @@ export default function GetInTouch() {
       >
         {/* Logo */}
         <div className="flex items-center gap-1 shrink-0">
-          <img
-            className="w-24 sm:w-28 md:w-30"
-            src={footerData.logo}
-            alt="Logo"
-          />
+          <Link href="/" className="flex items-center gap-1 shrink-0">
+            <img
+              className="w-24 sm:w-28 md:w-30"
+              src={normalizedData.logo}
+              alt="Logo"
+            />
+          </Link>
         </div>
 
         {/* Nav */}
         <nav aria-label="Footer navigation" className="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
-          {(footerData.nav || []).map((l) => (
-            <a
-              key={l}
-              href="#"
-              className="text-sm sm:text-base transition-colors hover:text-white"
+          {(normalizedData.nav || []).map((item, index) => (
+            <Link
+              key={index}
+              href={item.href || "#"}
+              className="text-sm sm:text-lg text-white/80 font-medium transition-colors hover:text-white font-family-description "
               style={{ color: "hsla(0,0%,65%,1)", textDecoration: "none" }}
             >
-              {l}
-            </a>
+              {item.label || ""}
+            </Link>
           ))}
         </nav>
 
         {/* Social icons */}
         <div className="flex items-center gap-3 sm:gap-4" style={{ color: "hsla(0,0%,60%,1)" }}>
-          {(footerData.icon || []).map((item, index) => (
+          {(normalizedData.icon || []).map((item, index) => (
             <a
               key={index}
-              href={item.href}
+              href={item.href || "#"}
               className="hover:text-white transition-colors hover:opacity-80"
               aria-label={`Social link ${index + 1}`}
             >
-              <img className="w-8 sm:w-10" src={item.icon} alt="" aria-hidden="true" />
+              <img className="w-8 sm:w-10" src={item.icon || ""} alt="" aria-hidden="true" />
             </a>
           ))}
         </div>
       </footer>
+      <TrustBadges />
     </div>
   );
 }

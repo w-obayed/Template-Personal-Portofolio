@@ -63,7 +63,7 @@ export default function CircleSlide({ phases, activePhaseIndex, containerH }) {
             }}
           >
             <div
-              className={`px-4 py-2 rounded-xl text-sm font-medium text-nowrap shadow-xl/20 transition-all duration-500 backdrop-blur-md ${
+              className={`px-4 py-2 rounded-xl font-family-heading text-sm font-medium text-nowrap shadow-xl/20 transition-all duration-500 backdrop-blur-md ${
                 isActive
                   ? 'bg-slate-400 text-white text-3xl font-bold py-3 px-7 shadow-[0_0_35px_rgba(59,130,246,0.6)] scale-110'
                   : 'bg-white/5 border-white/10 text-white/40'

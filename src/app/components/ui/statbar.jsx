@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import services from "../../../API&Services/services";
+import { useService } from "../../../api/services";
 
 function useCountUp(target, duration = 1.6, inView = false) {
   const [count, setCount] = useState(0);
@@ -31,14 +31,14 @@ function StatItem({ value, suffix, label, delay }) {
       initial={{ opacity: 0, y: 18 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
-      className="flex flex-col gap-2 px-6 sm:px-8 py-3 sm:py-1 text-center md:text-left"
+      className="flex flex-col gap-2 px-6 sm:px-8 py-3 sm:py-1 text-center"
     >
-      <div className="font-black leading-none tracking-tight text-white font-['Syne',sans-serif] text-[clamp(2.2rem,6vw,3.4rem)] md:text-4xl min-[1050px]:text-[clamp(2.2rem,6vw,3.4rem)]">
+      <div className="font-black leading-none tracking-tight text-white font-family-heading text-[clamp(2.2rem,6vw,3.4rem)] md:text-4xl min-[1050px]:text-[clamp(2.2rem,6vw,3.4rem)]">
         {count}
         <span className="text-[#e8521a]">{suffix}</span>
       </div>
 
-      <div className="text-white font-normal tracking-[0.01em] font-['DM_Sans',sans-serif] text-[clamp(0.8rem,1.3vw,1.5rem)]">
+      <div className="text-white font-normal tracking-[0.01em] font-family-heading text-[clamp(0.8rem,1.3vw,1.5rem)]">
         {label}
       </div>
     </motion.div>
@@ -46,13 +46,15 @@ function StatItem({ value, suffix, label, delay }) {
 }
 
 export default function StatsBar() {
-  const STATS = services("stat");
+  const { data: STATS } = useService("stat");
+
+  if (!STATS) return null;
 
   return (
-    <div className="max-w-7xl mx-auto flex items-center justify-center py-6 my-8 px-3">
-      <div className="w-full flex flex-col md:flex-row items-stretch md:items-center justify-between bg-white/10 rounded-2xl px-4 sm:px-6 py-6 sm:py-7 border-3 border-white/20">
+    <div className="max-w-7xl mx-auto flex items-center justify-center pt-6 mt-8 px-3">
+      <div className="w-full flex flex-col md:flex-row items-stretch md:items-center justify-between bg-white/10 rounded-2xl px-4 sm:px-6 pt-6 sm:py-7 border-3 border-white/20">
         
-        {STATS.map((stat, i) => (
+        {(Array.isArray(STATS) ? STATS : []).map((stat, i) => (
           <div
             key={stat.label}
             className="flex flex-col md:flex-row items-stretch w-full md:w-auto"

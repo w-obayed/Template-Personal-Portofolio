@@ -9,25 +9,41 @@ import GalleryView from "./components/galleryView";
 import RollerScroll from "./components/rollerScroll";
 import WorkSlider from "./components/workSlider";
 import VerticalSlider from "./components/mordernCard";
-import TrustBadges from "./components/trustbadge";
 import Testimonial from "./components/testimonial";
 import GetInTouch from "./components/footer";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <HeroSection />
-      <ServiceCarousel />
-      <VerticalSlider />
-      <GalleryView />
+      <section id="home">
+        <Navbar />
+        <HeroSection />
+      </section>
+      <section id="service">
+        <ServiceCarousel />
+      </section>
+      <section id="portfolio">
+        <VerticalSlider />
+      </section>
+      <section id="gallery">
+        <GalleryView />
+      </section>
       <RollerScroll />
-      <WorkSlider />
-      <EducationAndExperience />
-      <Skills />
-      <Testimonial />
-      <GetInTouch />
-      <TrustBadges />
+      <section id="work">
+        <WorkSlider />
+      </section>
+      <section id="experience">
+        <EducationAndExperience />
+      </section>
+      <section id="skill">
+        <Skills />
+      </section>
+      <section id="testimonial">
+        <Testimonial />
+      </section>
+      <section id="contact">
+        <GetInTouch />
+      </section>
     </>
   );
 }

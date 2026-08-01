@@ -1,10 +1,9 @@
 'use client';
-
-import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
-import services from '../../API&Services/services';
+import { useService } from "../../api/services";
 import ServiceCard from "./ui/serviceCard";
 import 'swiper/css';
 import StatsBar from './ui/statbar';
@@ -13,16 +12,18 @@ import StatsBar from './ui/statbar';
 const VH_PER_SLIDE = 30;
 
 export default function ServiceCarousel() {
-  const service = services("services") || [];
+  const { data: service } = useService("service");
 
   // TOTAL_SLIDES computed from real data length, not services.length (function arity)
   const TOTAL_SLIDES = service.items.length;
 
-  // useSyncExternalStore: returns false on server, true on client — no setState, no extra render
   const mounted = useSyncExternalStore(
-    () => () => {},  // subscribe (no-op — we don't need updates)
-    () => true,      // getSnapshot on client
-    () => false      // getServerSnapshot
+    (callback) => {
+      const id = setTimeout(callback, 0);
+      return () => clearTimeout(id);
+    },
+    () => true,
+    () => false
   );
 
   const swiperRef    = useRef(null);  // Swiper instance
@@ -72,7 +73,7 @@ export default function ServiceCarousel() {
   }, [TOTAL_SLIDES]);
 
   return (
-   <div className=' bg-gradient-purple-2 -mt-11 pt-11'>
+   <div className=' bg-gradient-purple-2 -mt-11 pt-40'>
    <StatsBar />
     <div
       ref={containerRef}
@@ -85,16 +86,16 @@ export default function ServiceCarousel() {
 
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
-              <h2 className="text-4xl md:text-5xl font-extrabold text-white font-['Syne',sans-serif]">
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white font-family-heading">
                {service.sectionTitle}
               </h2>
-              <p className="max-w-xl text-sm md:text-base text-white/80 leading-relaxed font-['DM_Sans',sans-serif]">
+              <p className="max-w-xl text-sm md:text-base text-white/80 leading-relaxed font-family-description">
                 {service.sectionDescription}
               </p>
             </div>
 
             {/* Swiper — only rendered after client mount to avoid SSR 1-slide flash */}
-            <div className="w-full h-[340px]">
+            <div className="w-full h-85">
               {mounted && (
                 <Swiper
                   onSwiper={(swiper) => {

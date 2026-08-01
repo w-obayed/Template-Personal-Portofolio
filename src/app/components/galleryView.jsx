@@ -2,20 +2,33 @@
 
 import React, { useEffect, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useService } from "../../api/services";
 import PhotoCard from './ui/photoCard'
 import { Autoplay, Mousewheel } from 'swiper/modules';
-import serviceCall from '../../API&Services/services';
 import 'swiper/css';
 
-
+const deterministicShuffle = (array, seed = 12345) => {
+  if (!array || !Array.isArray(array)) return [];
+  const arr = [...array];
+  let s = seed;
+  const random = () => {
+    const x = Math.sin(s++) * 10000;
+    return x - Math.floor(x);
+  };
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
 export default function GalleryView() {
+  const { data: images } = useService("gallery");
   const swiperRefs = useRef([]);
-  const images = serviceCall("gallery") || [] ;
 
-  const slider1 = images.slice(0, 8);
-  const slider2 = images.slice(8, 16);
-  const slider3 = images.slice(16, 24);
+  const slider1 = deterministicShuffle(images, 11).slice(0, 8);
+  const slider2 = deterministicShuffle(images, 22).slice(0, 8);
+  const slider3 = deterministicShuffle(images, 33).slice(0, 8);
 
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import React from 'react'
 
 function photoCard({ src }) {
   return (
-   <div className="w-full h-[180px]">
+   <div className="relative w-full h-45">
   <Image
     src={src}
     alt="Description"

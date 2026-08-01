@@ -3,12 +3,12 @@
 import { useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Lenis from "lenis";
-import services from "../../API&Services/services";
+import { useService, sanitizeHtml } from "../../api/services";
 import "lenis/dist/lenis.css";
 import "swiper/css";
 import Link from "next/link";
 
-const VH_PER_SLIDE = 30;
+const VH_PER_SLIDE = 12;
 
 export default function WorkSlider() {
   const swiperRef   = useRef(null);   
@@ -16,8 +16,8 @@ export default function WorkSlider() {
   const activeIdxRef = useRef(0);     
   const rafIdRef    = useRef(null);
 
-  const projectData = services("Project") || [];
-  const project = projectData.body;
+  const { data: projectData } = useService("portfolio");
+  const project = projectData.body ?? [];
   const TOTAL_SLIDES = 1 + project.length;
   
 
@@ -58,7 +58,12 @@ export default function WorkSlider() {
       cancelAnimationFrame(rafIdRef.current);
       lenis.destroy();
     };
-  }, []);
+  }, [TOTAL_SLIDES]);
+
+   // Handle WhatsApp button click
+  const handleWhatsAppClick = () => {
+    window.open("https://wa.me/8801638512035", "_blank");
+  };
 
   return (
     <div
@@ -96,17 +101,17 @@ export default function WorkSlider() {
             className="w-full mt-20"
           >
             {/* ── Intro slide ── */}
-            <SwiperSlide className=" items-center justify-center flex!">
-              <div className=" flex flex-col gap-6 px-4 pt-16">
-                <h2 className="text-3xl lg:text-5xl font-bold text-white leading-tight font-['Syne',sans-serif]"
+            <SwiperSlide className="">
+              <div className=" flex flex-col justify-center gap-6 p-2 md:p-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-white leading-tight font-family-heading"
                 dangerouslySetInnerHTML={{
-                    __html: projectData.head.title,
+                    __html: sanitizeHtml(projectData.head.title),
                 }}>
                 </h2>
-                <p className="text-white/50 text-sm leading-relaxed max-w-xs font-['DM_Sans',sans-serif]">
+                <p className="text-white/80 text-sm leading-relaxed max-w-xs font-family-description">
                   {projectData.head.description}
                 </p>
-                <button className="flex items-center gap-2 border border-white/25 rounded-full px-5 py-2.5 text-black bg-white text-xs font-semibold tracking-widest hover:border-white/50 hover:bg-white/5 transition-all w-fit font-['DM_Sans',sans-serif]">
+                <button onClick={handleWhatsAppClick} className="flex items-center gap-2 border border-white/25 rounded-full px-5 py-2.5 text-black bg-white text-xs font-semibold tracking-widest cursor-pointer transition-all w-fit font-family-heading">
                   <span className="w-2 h-2 rounded-full bg-green-400" />
                   {projectData.head.btn}
                 </button>
@@ -118,24 +123,27 @@ export default function WorkSlider() {
               <SwiperSlide key={item.id}>
                 {({ isActive }) => (
                   <div
-                    className="rounded-2xl overflow-hidden transition-all duration-500"
+                    className="rounded-2xl flex flex-col overflow-hidden transition-all duration-500 p-2 md:p-6 space-y-4"
                     style={{
                       height:    "420px",
                       background: item.bgColor,
-                      boxShadow:  isActive ? `0 0 60px ${item.accentColor}44` : "none",
+                      boxShadow:  isActive ? `0 0 60px ${item.bgColor}44` : "none",
                       opacity:    isActive ? 1 : 0.5,
                       transform:  isActive ? "scale(1)" : "scale(0.92)",
                     }}
                   >
                     {/* Card header */}
-                    <div className="flex items-center justify-between px-5 pt-5 pb-3">
-                      <span className="text-white text-lg font-semibold tracking-wide font-['Syne',sans-serif]">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white text-lg font-semibold tracking-wide font-family-heading">
                         {item.client}
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="text-white/60 text-sm font-['DM_Sans',sans-serif]">
-                          {item.category}
-                        </span>
+                         <Link href={item.url}
+                           onClick={(e) => e.stopPropagation()}
+                           target="_blank"
+                           rel="noopener noreferrer" className="text-white/80 text-sm font-family-description">
+                          View Project
+                        </Link>
                        <Link
                            href={item.url}
                            onClick={(e) => e.stopPropagation()}
@@ -157,10 +165,10 @@ export default function WorkSlider() {
                     </div>
 
                     {/* Card image */}
-                    <div className="mx-3 rounded-xl overflow-hidden h-[340px]">
+                    <div className="rounded-xl flex-1 overflow-hidden">
                       <img
                         src={item.image}
-                        alt={item.imageAlt}
+                        alt={item.imageAlt || "Project image"}
                         className="w-full h-full object-cover"
                         draggable={false}
                       />
