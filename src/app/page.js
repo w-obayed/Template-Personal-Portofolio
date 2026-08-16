@@ -1,5 +1,4 @@
 "use client";
-
 import Navbar from "./components/navbar";
 import EducationAndExperience from "./components/educationAndExperience";
 import HeroSection from "./components/hero";
@@ -11,6 +10,7 @@ import WorkSlider from "./components/workSlider";
 import VerticalSlider from "./components/mordernCard";
 import Testimonial from "./components/testimonial";
 import GetInTouch from "./components/footer";
+import TechStackSection from "./components/techstacksection";
 
 export default function Home() {
   return (
@@ -21,6 +21,9 @@ export default function Home() {
       </section>
       <section id="service">
         <ServiceCarousel />
+      </section>
+      <section id="techstack">
+        <TechStackSection />
       </section>
       <section id="portfolio">
         <VerticalSlider />

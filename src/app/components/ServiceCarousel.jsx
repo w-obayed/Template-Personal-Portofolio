@@ -73,7 +73,7 @@ export default function ServiceCarousel() {
   }, [TOTAL_SLIDES]);
 
   return (
-   <div className=' bg-gradient-purple-2 -mt-11 pt-40'>
+   <div className='bg-gradient-purple-2 -mt-11 pt-40'>
    <StatsBar />
     <div
       ref={containerRef}

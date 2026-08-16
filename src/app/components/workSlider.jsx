@@ -103,7 +103,7 @@ export default function WorkSlider() {
             {/* ── Intro slide ── */}
             <SwiperSlide className="">
               <div className=" flex flex-col justify-center gap-6 p-2 md:p-4">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white leading-tight font-family-heading"
+                <h2 className="text-3xl lg:text-5xl font-bold text-white leading-tight font-family-heading"
                 dangerouslySetInnerHTML={{
                     __html: sanitizeHtml(projectData.head.title),
                 }}>

@@ -6,7 +6,7 @@ function GradientButton({ children, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="relative p-px rounded-full overflow-hidden bg-transparent shadow-2xl"
+      className="relative p-px rounded-full overflow-hidden bg-transparent shadow-2xl cursor-pointer"
     >
       {/* ── Comet 1: clockwise, starts at 0° ── */}
       <motion.div

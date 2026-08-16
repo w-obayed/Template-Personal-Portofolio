@@ -70,7 +70,7 @@ export default function GalleryView() {
 
 
   return (
-    <div className="w-full h-auto bg-black space-y-4 font-sans">
+    <div className="w-full h-auto bg-black space-y-4">
       <div className="">
         <Swiper
          onSwiper={(swiper) => {

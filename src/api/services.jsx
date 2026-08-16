@@ -50,10 +50,10 @@ const staticData = (srv) => {
 
   if (srv === "hero") {
     return {
-      title:       "Hello, Azad",
+      title:       "Hello I Am Azad",
       name:        "Crafting",
       description: "Digital Experiences That Inspire & Convert.",
-      src:         "/azad.png",
+      src:         "/azad-hero.png",
     };
   }
 
@@ -227,9 +227,9 @@ const staticData = (srv) => {
   if (srv === "portfolio") {
     return {
       head: {
-        title:       `We let <span class="text-orange-400">our work</span><br />speak for itself.`,
-        description: "Our experts develop customized native apps and software solutions using innovative technologies for your success.",
-        btn:         "GET IN TOUCH NOW",
+        title:       `Turning <span class="text-orange-400">Ideas Into</span><br />Digital Experiences.`,
+        description: "Every project is designed with strategy, creativity, and precision—helping businesses build stronger brands, engage their audiences, and achieve measurable results.",
+        btn:         "Start Your Project",
       },
       body: [
         { id: 1,  client: "KTM",         url: "https://orange-blood.ktm.com",         bgColor: "#7c2c00",  image: "/portfolio/portfolio-3.webp",                  imageAlt: "KTM"  },
@@ -355,7 +355,7 @@ if (srv === "footer") {
       social: [
         { icon: "/icon/f-icon-1.png", label: "E-mail",  value: "md1azad0@gmail.com",              href: "mailto:md1azad0@gmail.com"              },
         { icon: "/icon/f-icon-3.png", label: "Linkedin", value: "mdazad24", href: "https://www.linkedin.com/in/mdazad24" },
-        { icon: "/icon/f-icon-4.png", label: "Whatsapp",  value: "+8801638-512035", href: "https://wa.me/+8801638-512035"   },
+        { icon: "/icon/f-icon-4.png", label: "Whatsapp",  value: "+8801638-512035", href: "https://api.whatsapp.com/send/?phone=8801638512035&text&type=phone_number&app_absent=0"   },
         { icon: "/icon/f-icon-2.png", label: "Call",     value: "+8809638612035",                         href: "tel:+8809638612035"                            },
       ],
       logo: "logo.webp",
@@ -367,10 +367,9 @@ if (srv === "footer") {
         { label: "Contact", href: "contact" }
       ],
       icon: [
-        { icon: "/social-icon/Socialicon-1.png", href: "#" },
-        { icon: "/social-icon/Socialicon-3.png",  href: "#" },
-        { icon: "/social-icon/Socialicon-4.png",    href: "#" },
-        { icon: "/social-icon/Socialicon-2.png", href: "#" },
+        { icon: "/social-icon/Socialicon-1.png", href: "https://www.facebook.com/Azad8433" },
+        { icon: "/social-icon/Socialicon-3.png",  href: "https://www.linkedin.com/in/mdazad24/" },
+        { icon: "/social-icon/Socialicon-4.png",    href: "https://www.youtube.com/@glowingcoder" },
       ],
     };
   }

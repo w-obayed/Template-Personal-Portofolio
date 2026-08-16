@@ -12,7 +12,7 @@ function EducationAndExperience() {
 
         {/* Title */}
         <div className="flex justify-center mb-20">
-         <div className="p-px rounded-2xl bg-linear-to-r from-[#6E374A] to-[#5A3A32]">
+         <div className="p-px rounded-2xl bg-linear-to-r from-[#6E374A] to-[#5A3A32] text-center">
             <h2 className="px-8 py-3 bg-[#11081b] backdrop-blur-md rounded-2xl text-4xl md:text-5xl font-semibold text-white font-family-heading">
               {journeyData.title}
             </h2>
@@ -25,7 +25,7 @@ function EducationAndExperience() {
           {/* Middle Line - Hidden only on mobile */}
           <div className="max-sm:hidden absolute left-1/2 top-0 transform -translate-x-1/2 w-0.75 h-full bg-linear-to-r from-[#6E374A] to-[#5A3A32]"></div>
 
-          <div className="space-y-20">
+          <div className="space-y-10 md:space-y-20">
             {journeyData.item.map((item, index) => {
               const isLeft = index % 2 === 0;
 

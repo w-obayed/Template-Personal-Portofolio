@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-function photoCard({ src }) {
+function PhotoCard({ src }) {
   return (
    <div className="relative w-full h-45">
   <Image
@@ -14,4 +14,4 @@ function photoCard({ src }) {
   )
 }
 
-export default photoCard
+export default PhotoCard
