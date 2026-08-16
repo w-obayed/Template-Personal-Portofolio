@@ -43,11 +43,6 @@ export default function Home() {
       <section id="contact">
         <GetInTouch />
       </section>
-      <section>
-        <div className="h-screen flex items-center justify-center">
-          <p className="text-2xl font-bold">Hello World</p>
-        </div>
-      </section>
     </>
   );
 }
