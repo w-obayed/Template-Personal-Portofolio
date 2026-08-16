@@ -72,7 +72,7 @@ export default function IndependentSlider({
             <div
               className={`
                 flex flex-row items-center justify-center gap-2
-                px-2 py-1 rounded-full
+                px-2.5 py-1.5 rounded-full
                 border border-current border-opacity-30
                 transition-all duration-300
                 cursor-default
@@ -89,7 +89,7 @@ export default function IndependentSlider({
               </div>
 
               {/* Name */}
-              <p className={`text-[14px] font-normal ${theme.text} text-center whitespace-nowrap font-family-description`}>
+              <p className={`text-[16px] font-normal ${theme.text} text-center whitespace-nowrap font-family-description`}>
                 {item.name}
               </p>
             </div>

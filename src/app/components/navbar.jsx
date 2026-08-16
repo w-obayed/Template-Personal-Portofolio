@@ -103,23 +103,23 @@ export default function Navbar() {
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-12">
-          <div className="flex items-center justify-between h-22">
+          <div className="flex items-center justify-between h-22 gap-2 md:gap-4">
 
             {/* Logo */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15, duration: 0.5 }}
-              className="flex items-center gap-3"
+              className="flex items-center shrink-0"
             >
               <Link href="/">
-                <Image className="w-40 h-22" width={160} height={88} src={navManu?.logo || "/logo.webp"} alt="Logo" />
+                <Image className="w-32 md:w-36 lg:w-40 h-auto" width={160} height={88} src={navManu?.logo || "/logo.webp"} alt="Logo" priority />
               </Link>
             </motion.div>
 
             {/* Desktop Nav Links */}
             <motion.ul
-              className="hidden md:flex items-center gap-1"
+              className="hidden md:flex flex-1 items-center justify-center gap-1 lg:gap-3 xl:gap-6"
               initial="hidden"
               animate="visible"
               variants={{
@@ -137,15 +137,22 @@ export default function Navbar() {
                 >
                   <motion.button
                     onClick={() => handleNavigation(link)}
-                    className="relative px-4 py-2 text-xl text-gray-300 rounded-md group font-family-heading font-medium cursor-pointer bg-transparent border-none"
-                    whileHover={{ color: "#ffffff" }}
+                    className="relative px-2.5 lg:px-4 py-2 text-sm md:text-sm lg:text-base xl:text-xl text-gray-300 rounded-md font-family-heading font-medium cursor-pointer bg-transparent border-none whitespace-nowrap"
+                    initial="initial"
+                    whileHover="hover"
+                    variants={{
+                      initial: { color: "#d1d5db" },
+                      hover: { color: "#ffffff" },
+                    }}
                   >
                     {link.label}
                     {/* Underline hover */}
                     <motion.span
-                      className="absolute bottom-0.5 left-4 right-4 h-[1.5px] rounded-full bg-[linear-gradient(90deg,#22c55e,#eab308,#a855f7)]"
-                      initial={{ scaleX: 0 }}
-                      whileHover={{ scaleX: 1 }}
+                      className="absolute bottom-0.5 left-2.5 right-2.5 lg:left-4 lg:right-4 h-[1.5px] rounded-full bg-[linear-gradient(90deg,#22c55e,#eab308,#a855f7)]"
+                      variants={{
+                        initial: { scaleX: 0 },
+                        hover: { scaleX: 1 },
+                      }}
                       transition={{ duration: 0.25 }}
                       style={{ originX: 0 }}
                     />
@@ -156,7 +163,7 @@ export default function Navbar() {
 
             {/* Right: CTA + Hamburger */}
             <motion.div
-              className="flex items-center gap-4"
+              className="flex items-center justify-end shrink-0 gap-3 md:gap-4"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}

@@ -7,6 +7,7 @@ import { useService } from "../../api/services";
 import ServiceCard from "./ui/serviceCard";
 import 'swiper/css';
 import StatsBar from './ui/statbar';
+import TechStackSection from './techstacksection';
 
 // How much vertical scroll distance each slide gets (vh)
 const VH_PER_SLIDE = 30;
@@ -131,6 +132,7 @@ export default function ServiceCarousel() {
         </section>
       </div>
     </div>
+    <TechStackSection/>
    </div>
   );
 }

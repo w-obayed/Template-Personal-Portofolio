@@ -1,7 +1,7 @@
 import React from "react";
 
 export const threeSlidersData = {
-  section_title: "WHAT WE WORK WITH",
+  section_title: "Technologies I Work With",
   sliders: [
     {
       id: "slider-1",
@@ -26,7 +26,7 @@ export const threeSlidersData = {
     {
       id: "slider-2",
       direction: "rtl",
-      colorTheme: "cyan",
+      colorTheme: "red",
       items: [
         { id: "framer-motion", name: "Framer Motion", icon: "motion" },
         { id: "flutter", name: "Flutter", icon: "flutter" },
@@ -75,11 +75,11 @@ export const colorThemes = {
     icon: "text-purple-400",
     hover: "hover:bg-purple-500/20 hover:border-purple-500/50",
   },
-  cyan: {
-    badge: "bg-cyan-500/10 border-cyan-500/30",
-    text: "text-cyan-400",
-    icon: "text-cyan-400",
-    hover: "hover:bg-cyan-500/20 hover:border-cyan-500/50",
+  red: {
+    badge: "bg-red-950/10 border-red-950/30",
+    text: "text-red-400",
+    icon: "text-red-400",
+    hover: "hover:bg-red-950/20 hover:border-red-950/50",
   },
   green: {
     badge: "bg-green-500/10 border-green-500/30",

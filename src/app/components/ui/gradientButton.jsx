@@ -34,7 +34,7 @@ function GradientButton({ children, onClick }) {
 
       {/* ── Inner button face ── */}
       <motion.div
-        className="relative rounded-full px-5 py-2 font-family-heading bg-linear-to-r from-[#6a89cc] to-[#dcdde1] font-medium text-xl text-black z-10 "
+        className="relative rounded-full px-5 py-2 font-family-heading bg-linear-to-r from-[#6a89cc] to-[#dcdde1] font-medium text-xl md:text-base lg:text-xl text-black z-10 "
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.97 }}
       >
